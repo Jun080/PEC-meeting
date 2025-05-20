@@ -5,31 +5,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Supabase</title>
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     </head>
     <body>
-        <div id="prenoms-container" class="p-4 space-y-2"></div>
+        <h1>Utilisateurs</h1>
+        <ul id="user-list"></ul>
 
         <script type="module">
-            import { client } from "../supabase.js";
+            import { getAllUserNames } from "../Services/userService.js";
 
-            async function fetchPrenoms() {
-                const { data, error } = await client
-                    .from("utilisateurs")
-                    .select("prenom");
-                if (error) {
-                    console.error(error);
-                    return;
-                }
-                const container = document.getElementById("prenoms-container");
-                data.forEach((user) => {
-                    const p = document.createElement("p");
-                    p.textContent = user.prenom;
-                    container.appendChild(p);
+            const list = document.getElementById("user-list");
+
+            try {
+                const users = await getAllUserNames();
+                users.forEach((name) => {
+                    const li = document.createElement("li");
+                    li.textContent = name;
+                    list.appendChild(li);
                 });
+            } catch (err) {
+                list.innerHTML = `<li>Erreur : ${err.message}</li>`;
             }
-
-            fetchPrenoms();
         </script>
     </body>
 </html>

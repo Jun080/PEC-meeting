@@ -1,0 +1,7 @@
+import { client } from '../supabase.js';
+
+export async function getAllUsers() {
+  const { data, error } = await client.from('utilisateurs').select('*');
+  if (error) throw error;
+  return data;
+}
