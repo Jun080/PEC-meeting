@@ -5,3 +5,13 @@ export async function getAllUsers() {
   if (error) throw error;
   return data;
 }
+
+export async function getUserById(id) {
+    const { data, error } = await client
+        .from('utilisateurs')
+        .select('*')
+        .eq('id', id)
+        .single();
+    if (error) throw error;
+    return data;
+}
