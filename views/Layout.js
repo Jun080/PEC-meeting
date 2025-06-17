@@ -15,15 +15,8 @@ export default function Layout(content) {
               {
                 tag: Link,
                 attributes: [
-                  ["link", "/home"],
+                  ["link", "/"],
                   ["title", "Accueil"],
-                ],
-              },
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/gallery"],
-                  ["title", "Galerie"],
                 ],
               },
               {
