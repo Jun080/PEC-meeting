@@ -5,6 +5,7 @@ const ShowUsers = function () {
 
   return {
     tag: "div",
+    attributes: [["class", "homepage"]],
     children: [
       {
         tag: "h1",
