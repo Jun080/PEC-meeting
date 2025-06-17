@@ -1,4 +1,5 @@
 import generateStructure from "../lib/generateStructure.js";
+import Layout from "../views/Layout.js";
 
 const browserRouterOptions = {};
 
@@ -7,13 +8,15 @@ export default function BrowserRouter(props) {
   const rootElement = props.rootElement;
   const baseUrl = props.baseUrl ?? "";
   browserRouterOptions.baseUrl = baseUrl;
-  console.log(browserRouterOptions);
-  function generatePage() {
+
+  //TODO: Modifier pour gérer l'async (marhce pas pour l'instant)
+  async function generatePage() {
     const path = window.location.pathname.slice(baseUrl.length);
-    const struct = routes[path] ?? routes["*"];
-    const page = generateStructure(struct);
-    if (rootElement.childNodes.length === 0) rootElement.appendChild(page);
-    else rootElement.replaceChild(page, rootElement.childNodes[0]);
+    const struct = (await routes[path]) ?? routes["*"];
+    const layoutStructure = Layout(struct);
+    const finalPage = generateStructure(layoutStructure);
+    if (rootElement.childNodes.length === 0) rootElement.appendChild(finalPage);
+    else rootElement.replaceChild(finalPage, rootElement.childNodes[0]);
   }
 
   window.addEventListener("popstate", generatePage);

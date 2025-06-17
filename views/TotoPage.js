@@ -3,10 +3,6 @@ import createElement from "../lib/createElement.js";
 function Toto() {
   return createElement(
     "div",
-    createElement(Link, {
-      link: "/home",
-      title: "HomePage",
-    }),
     createElement(
       "ul",
       {},

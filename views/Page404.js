@@ -5,20 +5,6 @@ const Page404 = function () {
     tag: "div",
     children: [
       {
-        tag: Link,
-        attributes: [
-          ["link", "/home"],
-          ["title", "HomePage"],
-        ],
-      },
-      {
-        tag: Link,
-        attributes: [
-          ["link", "/gallery"],
-          ["title", "Gallery"],
-        ],
-      },
-      {
         tag: "h1",
         children: ["Tu t'es perdu !!! Game Over !!!"],
       },

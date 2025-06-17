@@ -26,13 +26,6 @@ export default function TablePage() {
     tag: "div",
     children: [
       {
-        tag: Link,
-        attributes: [
-          ["link", "/gallery"],
-          ["title", "Gallery"],
-        ],
-      },
-      {
         tag: "table",
         attributes: [
           ["id", "table1"],
