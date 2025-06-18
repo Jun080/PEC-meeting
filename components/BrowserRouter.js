@@ -12,10 +12,8 @@ export default function BrowserRouter(props) {
   //TODO: Modifier pour gérer l'async (marhce pas pour l'instant)
   async function generatePage() {
     const path = window.location.pathname.slice(baseUrl.length);
-    const route = routes[path] ?? routes["*"];
-    const struct = await route.tag();
-    const layoutStructure = Layout(struct);
-    const finalPage = generateStructure(layoutStructure);
+    const struct = routes[path] ?? routes["*"];
+    const finalPage = await generateStructure(struct);
 
     if (rootElement.childNodes.length === 0) rootElement.appendChild(finalPage);
     else rootElement.replaceChild(finalPage, rootElement.childNodes[0]);

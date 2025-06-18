@@ -1,6 +1,7 @@
 import { BrowserLink as Link } from "../components/BrowserRouter.js";
 
-export default function Layout(content) {
+export default function Layout(props) {
+    const content = props.content
   return {
     tag: "div",
     attributes: [["class", "layout"]],
