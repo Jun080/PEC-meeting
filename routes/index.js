@@ -9,9 +9,42 @@ export default {
     attributes: [["content", { tag: HomePage }]],
   },
   "*": {
-    tag: Page404,
+    tag: Layout,
+    attributes: [["content", { tag: Page404 }]],
   },
   "/users": {
-    tag: ShowUsers,
+    tag: Layout,
+    attributes: [["content", { tag: ShowUsers }]],
   },
 };
+
+// TODO: gérer les routes en nesting (ex: /users/:id/likes) on devrait applatir les routes pour que la machine possède chaque route complète
+// const v2 = {
+//   "/": {
+//     component: Layout,
+//     routes: {
+//       users: {
+//         component: "",
+//         routes: {
+//           "": ShowUsers,
+//           ":id": ShowUser,
+//           routes: {
+//             "": ShowUsers,
+//             comments: ShowUser,
+//           },
+//         },
+//       },
+//       products: {
+//         component: ShowProducts,
+//       },
+//     },
+//   },
+//   "*": {
+//     tag: Layout,
+//     attributes: [["content", { tag: Page404 }]],
+//   },
+//   "/users": {
+//     tag: Layout,
+//     attributes: [["content", { tag: ShowUsers }]],
+//   },
+// };
