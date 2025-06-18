@@ -27,6 +27,13 @@ export default function Layout(props) {
                   ["title", "Utilisateurs"],
                 ],
               },
+              {
+                tag: Link,
+                attributes: [
+                  ["link", "/inscription"],
+                  ["title", "Inscription"],
+                ],
+              },
             ],
           },
         ],
