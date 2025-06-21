@@ -2,6 +2,7 @@ import Page404 from "../views/Page404.js";
 import ShowUsers from "../views/ShowUsers.js";
 import HomePage from "../views/HomePage.js";
 import Layout from "../views/Layout.js";
+import RegisterPage from "../views/RegisterPage.js";
 
 export default {
   "/": {
@@ -15,6 +16,10 @@ export default {
   "/users": {
     tag: Layout,
     attributes: [["content", { tag: ShowUsers }]],
+  },
+  "/inscription": {
+    tag: Layout,
+    attributes: [["content", { tag: RegisterPage }]],
   },
 };
 
