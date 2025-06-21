@@ -18,7 +18,7 @@ export default {
   },
 };
 
-// TODO: gérer les routes en nesting (ex: /users/:id/likes) on devrait applatir les routes pour que la machine possède chaque route complète
+// TODO: gérer les routes en nesting (ex: /users/:id/likes) on devrait applatir les routes pour que la machine possède chaque route complète. Si l'on crée un route du style /:event faire en sorte que si l'event possède le même nom qu'une autre page fixe (style /users) cela ne crée pas de conflit et que la page fixe soit prioritaire, sinon on peut utiliser l'id /:id pour qu'il n'y ait pas de problème
 // const v2 = {
 //   "/": {
 //     component: Layout,
