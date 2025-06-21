@@ -3,6 +3,7 @@ import ShowUsers from "../views/ShowUsers.js";
 import HomePage from "../views/HomePage.js";
 import Layout from "../views/Layout.js";
 import RegisterPage from "../views/RegisterPage.js";
+import Bienvenue from "../views/Bienvenue.js";
 
 export default {
   "/": {
@@ -20,6 +21,10 @@ export default {
   "/inscription": {
     tag: Layout,
     attributes: [["content", { tag: RegisterPage }]],
+  },
+  "/bienvenue": {
+    tag: Layout,
+    attributes: [["content", { tag: Bienvenue }]],
   },
 };
 

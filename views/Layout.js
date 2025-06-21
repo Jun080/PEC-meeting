@@ -1,7 +1,7 @@
 import { BrowserLink as Link } from "../components/BrowserRouter.js";
 
 export default function Layout(props) {
-    const content = props.content
+  const content = props.content;
   return {
     tag: "div",
     attributes: [["class", "layout"]],
@@ -32,6 +32,13 @@ export default function Layout(props) {
                 attributes: [
                   ["link", "/inscription"],
                   ["title", "Inscription"],
+                ],
+              },
+              {
+                tag: Link,
+                attributes: [
+                  ["link", "/bienvenue"],
+                  ["title", "Bienvenue"],
                 ],
               },
             ],
