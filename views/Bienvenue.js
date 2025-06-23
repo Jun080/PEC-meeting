@@ -29,23 +29,179 @@ const Bienvenue = function () {
             children: [
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 1"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 2"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 3"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 4"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
             ],
           },
@@ -93,23 +249,179 @@ const Bienvenue = function () {
             children: [
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 1"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 2"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 3"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 tag: "div",
-                attributes: [["class", "card"]],
-                children: ["carte 4"],
+                attributes: [["class", "vertical-card"]],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
               },
             ],
           },
@@ -135,15 +447,132 @@ const Bienvenue = function () {
                 children: [
                   {
                     tag: "div",
-                    children: ["carte 1"],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
                   },
                   {
                     tag: "div",
-                    children: ["carte 2"],
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
                   },
                   {
                     tag: "div",
-                    children: ["carte 3"],
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
+                  },
+                  {
+                    tag: "div",
+                children: [
+                  {
+                    tag: "img",
+                    attributes: [["src", "../Assets/images/eventImage.png"]],
+                  },
+                  {
+                    tag: "div",
+                    attributes: [["class", "card-content"]],
+                    children: [
+                      {
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                          {
+                            tag: "p",
+                            children: ["Night Tapes"],
+                          },
+                          {
+                            tag: "div",
+                            attributes: [["class", "card-date"]],
+                            children: [
+                              {
+                                tag: "p",
+                                children: ["18 novembre 2025 - 19:30"],
+                              },
+                              {
+                                tag: "p",
+                                children: ["Point Ephémère - Paris"],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        tag: "p",
+                        children: ["18,9€"],
+                      },
+                    ],
+                  },
+                ],
                   },
                 ],
               },
