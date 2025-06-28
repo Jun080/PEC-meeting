@@ -1,3 +1,5 @@
+import VerticalCard from "../components/VerticalCard.js";
+
 const Bienvenue = function () {
     return {
         tag: "div",
@@ -31,254 +33,34 @@ const Bienvenue = function () {
                         tag: "div",
                         attributes: [["class", "cards-row"]],
                         children: [
-                            {
-                                tag: "div",
-                                attributes: [["class", "vertical-card"]],
-                                children: [
-                                    {
-                                        tag: "img",
-                                        attributes: [
-                                            [
-                                                "src",
-                                                "../Assets/images/eventImage.png",
-                                            ],
-                                        ],
-                                    },
-                                    {
-                                        tag: "div",
-                                        attributes: [["class", "card-content"]],
-                                        children: [
-                                            {
-                                                tag: "div",
-                                                attributes: [
-                                                    ["class", "card-text"],
-                                                ],
-                                                children: [
-                                                    {
-                                                        tag: "p",
-                                                        children: [
-                                                            "Night Tapes",
-                                                        ],
-                                                    },
-                                                    {
-                                                        tag: "div",
-                                                        attributes: [
-                                                            [
-                                                                "class",
-                                                                "card-date",
-                                                            ],
-                                                        ],
-                                                        children: [
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "18 novembre 2025 - 19:30",
-                                                                ],
-                                                            },
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "Point Ephémère - Paris",
-                                                                ],
-                                                            },
-                                                        ],
-                                                    },
-                                                ],
-                                            },
-                                            {
-                                                tag: "p",
-                                                children: ["18,9€"],
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                            {
-                                tag: "div",
-                                attributes: [["class", "vertical-card"]],
-                                children: [
-                                    {
-                                        tag: "img",
-                                        attributes: [
-                                            [
-                                                "src",
-                                                "../Assets/images/eventImage.png",
-                                            ],
-                                        ],
-                                    },
-                                    {
-                                        tag: "div",
-                                        attributes: [["class", "card-content"]],
-                                        children: [
-                                            {
-                                                tag: "div",
-                                                attributes: [
-                                                    ["class", "card-text"],
-                                                ],
-                                                children: [
-                                                    {
-                                                        tag: "p",
-                                                        children: [
-                                                            "Night Tapes",
-                                                        ],
-                                                    },
-                                                    {
-                                                        tag: "div",
-                                                        attributes: [
-                                                            [
-                                                                "class",
-                                                                "card-date",
-                                                            ],
-                                                        ],
-                                                        children: [
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "18 novembre 2025 - 19:30",
-                                                                ],
-                                                            },
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "Point Ephémère - Paris",
-                                                                ],
-                                                            },
-                                                        ],
-                                                    },
-                                                ],
-                                            },
-                                            {
-                                                tag: "p",
-                                                children: ["18,9€"],
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                            {
-                                tag: "div",
-                                attributes: [["class", "vertical-card"]],
-                                children: [
-                                    {
-                                        tag: "img",
-                                        attributes: [
-                                            [
-                                                "src",
-                                                "../Assets/images/eventImage.png",
-                                            ],
-                                        ],
-                                    },
-                                    {
-                                        tag: "div",
-                                        attributes: [["class", "card-content"]],
-                                        children: [
-                                            {
-                                                tag: "div",
-                                                attributes: [
-                                                    ["class", "card-text"],
-                                                ],
-                                                children: [
-                                                    {
-                                                        tag: "p",
-                                                        children: [
-                                                            "Night Tapes",
-                                                        ],
-                                                    },
-                                                    {
-                                                        tag: "div",
-                                                        attributes: [
-                                                            [
-                                                                "class",
-                                                                "card-date",
-                                                            ],
-                                                        ],
-                                                        children: [
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "18 novembre 2025 - 19:30",
-                                                                ],
-                                                            },
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "Point Ephémère - Paris",
-                                                                ],
-                                                            },
-                                                        ],
-                                                    },
-                                                ],
-                                            },
-                                            {
-                                                tag: "p",
-                                                children: ["18,9€"],
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                            {
-                                tag: "div",
-                                attributes: [["class", "vertical-card"]],
-                                children: [
-                                    {
-                                        tag: "img",
-                                        attributes: [
-                                            [
-                                                "src",
-                                                "../Assets/images/eventImage.png",
-                                            ],
-                                        ],
-                                    },
-                                    {
-                                        tag: "div",
-                                        attributes: [["class", "card-content"]],
-                                        children: [
-                                            {
-                                                tag: "div",
-                                                attributes: [
-                                                    ["class", "card-text"],
-                                                ],
-                                                children: [
-                                                    {
-                                                        tag: "p",
-                                                        children: [
-                                                            "Night Tapes",
-                                                        ],
-                                                    },
-                                                    {
-                                                        tag: "div",
-                                                        attributes: [
-                                                            [
-                                                                "class",
-                                                                "card-date",
-                                                            ],
-                                                        ],
-                                                        children: [
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "18 novembre 2025 - 19:30",
-                                                                ],
-                                                            },
-                                                            {
-                                                                tag: "p",
-                                                                children: [
-                                                                    "Point Ephémère - Paris",
-                                                                ],
-                                                            },
-                                                        ],
-                                                    },
-                                                ],
-                                            },
-                                            {
-                                                tag: "p",
-                                                children: ["18,9€"],
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
+                            VerticalCard({
+                                imageUrl: "../Assets/images/eventImage.png",
+                                title: "Night Tapes",
+                                date: "18 novembre 2025 - 19:30",
+                                place: "Point Ephémère - Paris",
+                                price: "18,13€",
+                            }),
+                            VerticalCard({
+                                imageUrl: "../Assets/images/eventImage.png",
+                                title: "Concert d'Ilian",
+                                date: "12 avril 2025 - 19h",
+                                place: "Paris",
+                                price: "7€",
+                            }),
+                            VerticalCard({
+                                imageUrl: "../Assets/images/eventImage.png",
+                                title: "Jeux de Société",
+                                date: "13 juin 2025",
+                                place: "Paris",
+                                price: "5€",
+                            }),
+                            VerticalCard({
+                                imageUrl: "../Assets/images/eventImage.png",
+                                title: "DAY TRIP",
+                                date: "10 septembre 2025",
+                                place: "Etretat",
+                                price: "18,13€",
+                            }),
                         ],
                     },
                 ],
