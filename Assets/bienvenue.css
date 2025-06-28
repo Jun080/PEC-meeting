@@ -1,5 +1,39 @@
 @import url("./variables.css");
 
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+}
+
+.welcome h1 {
+    color: var(--text-dark-imperial-blue);
+}
+
+.first-section {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 35px;
+}
+
+.first-section div:first-child {
+    color: var(--text-cobalt-blue);
+}
+
+.first-section .p-highlight {
+    margin: 0;
+}
+
+.first-section .h2-big {
+    margin: 0;
+    rotate: -15deg;
+    margin-left: 20px;
+    margin-bottom: 4px;
+}
+
 /* Conteneur des cartes */
 .first-section .vertical-card {
     background-color: #00126d;
