@@ -9,6 +9,7 @@ const Bienvenue = function () {
       },
       {
         tag: "section",
+        attributes: [["class", "first-section"]],
         children: [
           {
             tag: "div",
@@ -209,6 +210,7 @@ const Bienvenue = function () {
       },
       {
         tag: "section",
+        attributes: [["class", "second-section"]],
         children: [
           {
             tag: "img",
@@ -238,6 +240,7 @@ const Bienvenue = function () {
       },
       {
         tag: "section",
+        attributes: [["class", "third-section"]],
         children: [
           {
             tag: "h2",
@@ -429,6 +432,7 @@ const Bienvenue = function () {
       },
       {
         tag: "section",
+        attributes: [["class", "fourth-section"]],
         children: [
           {
             tag: "h2",
@@ -582,6 +586,7 @@ const Bienvenue = function () {
       },
       {
         tag: "section",
+        attributes: [["class", "fifth-section"]],
         children: [
           {
             tag: "h2",
