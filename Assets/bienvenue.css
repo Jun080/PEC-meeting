@@ -19,8 +19,13 @@
     gap: 35px;
 }
 
-.first-section div:first-child {
-    color: var(--text-cobalt-blue);
+.first-section .h2,
+.first-section .p-highlight:last-child {
+    color: var(--text-alice-blue);
+}
+
+.first-section .p-highlight:first-child {
+    color: var(--text-blue-marble);
 }
 
 .first-section .p-highlight {
@@ -34,7 +39,6 @@
     margin-bottom: 4px;
 }
 
-/* Conteneur des cartes */
 .first-section .vertical-card {
     background-color: #00126d;
 }
@@ -47,4 +51,32 @@
 
 .cards-row p {
     margin: 0;
+}
+
+.third-section {
+    display: flex;
+    flex-direction: column;
+    gap: 62px;
+}
+
+.third-section .h2-big {
+    color: var(--text-dark-imperial-blue);
+    padding-left: 94px;
+}
+
+.third-section .vertical-card {
+    background-color: var(--bg-shadow-blue);
+}
+
+.third-section .h2:first-child {
+    color: var(--text-dark-imperial-blue);
+}
+
+.third-section .p-highlight:first-child {
+    color: var(--text-blue-marble);
+}
+
+.third-section .h2:last-child,
+.third-section .p-highlight:last-child {
+    color: var(--text-alice-blue);
 }

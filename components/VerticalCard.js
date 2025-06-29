@@ -19,6 +19,7 @@ const VerticalCard = ({ imageUrl, title, date, place, price }) => {
                         children: [
                             {
                                 tag: "p",
+                                attributes: [["class", "h2"]],
                                 children: [title || "Titre de l'événement"],
                             },
                             {
@@ -27,10 +28,12 @@ const VerticalCard = ({ imageUrl, title, date, place, price }) => {
                                 children: [
                                     {
                                         tag: "p",
+                                        attributes: [["class", "p-highlight"]],
                                         children: [date || "Date non définie"],
                                     },
                                     {
                                         tag: "p",
+                                        attributes: [["class", "p-highlight"]],
                                         children: [place || "Lieu non défini"],
                                     },
                                 ],
@@ -39,6 +42,7 @@ const VerticalCard = ({ imageUrl, title, date, place, price }) => {
                     },
                     {
                         tag: "p",
+                        attributes: [["class", "h2"]],
                         children: [price || "Prix non défini"],
                     },
                 ],

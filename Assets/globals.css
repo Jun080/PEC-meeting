@@ -26,7 +26,6 @@
 
 .vertical-card .card-content > p:last-child,
 .vertical-card .card-text > p:first-child {
-    color: #efedff;
     font-family: "Noto Sans";
     font-size: 25px;
     font-style: normal;
@@ -47,14 +46,6 @@
     font-style: normal;
     font-weight: 700;
     line-height: 17px;
-}
-
-.vertical-card .card-date > p:first-child {
-    color: #82b4d3;
-}
-
-.vertical-card .card-date > p:last-child {
-    color: #efedff;
 }
 /* FIN Cartes d'événements - style vertical */
 
