@@ -19,12 +19,16 @@
     gap: 35px;
 }
 
-.first-section .h2,
-.first-section .p-highlight:last-child {
+.first-section div:first-child {
+    color: var(--text-cobalt-blue);
+}
+
+.cards-row .h2,
+.cards-row .p-highlight:last-child {
     color: var(--text-alice-blue);
 }
 
-.first-section .p-highlight:first-child {
+.cards-row .p-highlight:first-child {
     color: var(--text-blue-marble);
 }
 
