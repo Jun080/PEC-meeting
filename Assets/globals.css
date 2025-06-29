@@ -1,0 +1,94 @@
+@import url("./variables.css");
+
+/* Cartes d'événements - style vertical */
+.vertical-card {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 0;
+    border-radius: 16px;
+}
+
+.vertical-card .card-content {
+    display: flex;
+    gap: 15px;
+    padding: 14px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.vertical-card .card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0;
+}
+
+.vertical-card .card-content > p:last-child,
+.vertical-card .card-text > p:first-child {
+    color: #efedff;
+    font-family: "Noto Sans";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 25px;
+}
+
+.vertical-card .card-date {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+
+.vertical-card .card-date p {
+    font-family: "Noto Sans";
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 17px;
+}
+
+.vertical-card .card-date > p:first-child {
+    color: #82b4d3;
+}
+
+.vertical-card .card-date > p:last-child {
+    color: #efedff;
+}
+/* FIN Cartes d'événements - style vertical */
+
+/* Cartes d'événements - style vertical */
+.horizontal-card {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    gap: 10px;
+    border-radius: 15px;
+}
+
+.horizontal-card p {
+    margin: 0;
+}
+
+.horizontal-card .card-content {
+    display: flex;
+    gap: 30px;
+    padding: 10px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.horizontal-card .card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.horizontal-card .card-date {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+}

@@ -380,6 +380,9 @@ const Bienvenue = function () {
                                 children: [
                                     {
                                         tag: "div",
+                                        attributes: [
+                                            ["class", "horizontal-card"],
+                                        ],
                                         children: [
                                             {
                                                 tag: "img",
@@ -448,6 +451,9 @@ const Bienvenue = function () {
                                     },
                                     {
                                         tag: "div",
+                                        attributes: [
+                                            ["class", "horizontal-card"],
+                                        ],
                                         children: [
                                             {
                                                 tag: "img",
@@ -516,6 +522,9 @@ const Bienvenue = function () {
                                     },
                                     {
                                         tag: "div",
+                                        attributes: [
+                                            ["class", "horizontal-card"],
+                                        ],
                                         children: [
                                             {
                                                 tag: "img",
