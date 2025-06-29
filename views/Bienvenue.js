@@ -79,11 +79,13 @@ const Bienvenue = function () {
                         attributes: [["class", "banner"]],
                         children: [
                             {
-                                tag: "h3",
+                                tag: "h2",
+                                attributes: [["class", "h2"]],
                                 children: ["Pas intéressé.e ?"],
                             },
                             {
                                 tag: "p",
+                                attributes: [["class", "p"]],
                                 children: [
                                     "Recherche l'évènnement de tes rêves et plus encore !",
                                 ],

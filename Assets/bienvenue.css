@@ -57,6 +57,29 @@
     margin: 0;
 }
 
+.second-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.second-section .banner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 40px 56px;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 0px 16px 16px 0px;
+    background-color: var(--bg-shadow-blue);
+    color: var(--text-alice-blue);
+}
+
+.second-section .banner h2,
+.second-section .banner p {
+    margin: 0 !important;
+}
+
 .third-section {
     display: flex;
     flex-direction: column;

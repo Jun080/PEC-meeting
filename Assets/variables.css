@@ -34,7 +34,7 @@
 /* Classes de typographie */
 .h1-big {
     font-family: "Climate Crisis", sans-serif;
-    font-size: 50px;
+    font-size: 80px;
     font-weight: 800; /* regular pour Climate Crisis équivaut à 800 */
     line-height: 1.2;
 }
