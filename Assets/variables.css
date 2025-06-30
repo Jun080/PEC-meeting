@@ -102,7 +102,7 @@
     line-height: 1.4;
 }
 
-.bouton {
+button {
     font-family: "Noto Sans", sans-serif;
     font-size: 20px;
     font-weight: 700; /* bold */

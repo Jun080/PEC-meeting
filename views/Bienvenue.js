@@ -92,6 +92,7 @@ const Bienvenue = function () {
                             },
                             {
                                 tag: "button",
+                                attributes: [["class", "bouton-primary-1"]],
                                 children: ["rechercher"],
                             },
                         ],

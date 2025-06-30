@@ -47,9 +47,8 @@
     font-weight: 700;
     line-height: 17px;
 }
-/* FIN Cartes d'événements - style vertical */
 
-/* Cartes d'événements - style vertical */
+/* Cartes d'événements - style horizontal */
 .horizontal-card {
     display: flex;
     flex-direction: row;
@@ -82,4 +81,98 @@
     flex-direction: column;
     gap: 8px;
     padding: 0;
+}
+
+button {
+    all: unset;
+}
+
+/* Boutons */
+.bouton-primary-1 {
+    display: inline-flex;
+    padding: 12px 38px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    background: var(--bg-cobalt-blue);
+    color: var(--text-alice-blue);
+}
+
+.bouton-primary-1:hover {
+    background: var(--bg-cornflower-blue);
+}
+
+.bouton-primary-2 {
+    display: inline-flex;
+    padding: 12px 38px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    background: var(--bg-shadow-blue);
+    color: var(--text-alice-blue);
+}
+
+.bouton-primary-2:hover {
+    background: var(--bg-alice-blue);
+    color: var(--text-shadow-blue);
+}
+
+.bouton-secondary-1 {
+    display: inline-flex;
+    padding: 12px 38px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    border: 2px solid var(--bg-cornflower-blue);
+    color: var(--text-cornflower-blue);
+}
+
+.bouton-secondary-1:hover {
+    background: var(--bg-cornflower-blue);
+    color: var(--text-alice-blue);
+}
+
+.bouton-secondary-2 {
+    display: inline-flex;
+    padding: 12px 38px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    border: 2px solid var(--bg-shadow-blue);
+    color: var(--text-shadow-blue);
+}
+
+.bouton-secondary-2:hover {
+    background: var(--bg-shadow-blue);
+    color: var(--text-alice-blue);
+}
+
+.bouton-tertiary-1 {
+    color: var(--text-cornflower-blue);
+    padding-bottom: 5px;
+    box-shadow: 0 1px 0 0 transparent;
+    transition: box-shadow 0.3s ease;
+}
+
+.bouton-tertiary-1:hover {
+    box-shadow: 0 1px 0 0 var(--bg-cornflower-blue);
+}
+
+.bouton-tertiary-2 {
+    color: var(--text-shadow-blue);
+    padding-bottom: 5px;
+    box-shadow: 0 1px 0 0 transparent;
+    transition: box-shadow 0.3s ease;
+}
+
+.bouton-tertiary-2:hover {
+    box-shadow: 0 1px 0 0 var(--bg-shadow-blue);
 }
