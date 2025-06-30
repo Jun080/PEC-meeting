@@ -1,5 +1,9 @@
 @import url("./variables.css");
 
+body {
+    all: unset;
+}
+
 /* Cartes d'événements - style vertical */
 .vertical-card {
     display: flex;
@@ -83,11 +87,12 @@
     padding: 0;
 }
 
+/* Boutons */
+
 button {
     all: unset;
 }
 
-/* Boutons */
 .bouton-primary-1 {
     display: inline-flex;
     padding: 12px 38px;

@@ -150,6 +150,7 @@ const Bienvenue = function () {
                 children: [
                     {
                         tag: "h2",
+                        attributes: [["class", "h2-big"]],
                         children: ["Évennements proches de chez vous"],
                     },
                     {
@@ -157,7 +158,7 @@ const Bienvenue = function () {
                         children: [
                             {
                                 tag: "div",
-                                children: ["Map"],
+                                children: ["Map placeholder"],
                             },
                             {
                                 tag: "div",
@@ -199,10 +200,12 @@ const Bienvenue = function () {
                 children: [
                     {
                         tag: "h2",
+                        attributes: [["class", "h2-footer"]],
                         children: ["Convaincu ?"],
                     },
                     {
                         tag: "button",
+                        attributes: [["class", "bouton-primary-1"]],
                         children: ["Accéder à la page d'accueil"],
                     },
                 ],

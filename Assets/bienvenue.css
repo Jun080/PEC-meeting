@@ -107,3 +107,59 @@
 .third-section .p-highlight:last-child {
     color: var(--text-alice-blue);
 }
+
+.fourth-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 62px;
+    width: 100%;
+}
+
+.fourth-section > div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: auto;
+    gap: 10px;
+}
+
+.fourth-section > div > div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45%;
+    background-color: grey;
+}
+
+.map-cards {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    gap: 10px;
+    padding: 10px;
+}
+
+.map-cards .horizontal-card {
+    background-color: var(--bg-cadet-grey);
+    border: 1px solid var(--bg-dark-imperial-blue);
+    color: var(--text-dark-imperial-blue);
+}
+
+.fifth-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 39px;
+    border: 1px solid var(--bg-dark-imperial-blue);
+    width: 100%;
+    padding: 40px 0;
+    background-color: var(--bg-shadow-blue);
+}
+
+.fifth-section h2 {
+    color: var(--text-dark-imperial-blue);
+    margin: 0;
+}
