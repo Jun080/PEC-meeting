@@ -1,5 +1,6 @@
 import Page404 from "../views/Page404.js";
 import ShowUsers from "../views/ShowUsers.js";
+import ShowUser from "../views/ShowUser.js";
 import HomePage from "../views/HomePage.js";
 import Layout from "../views/Layout.js";
 import RegisterPage from "../views/RegisterPage.js";
@@ -10,13 +11,13 @@ export default {
     tag: Layout,
     attributes: [["content", { tag: HomePage }]],
   },
-  "*": {
-    tag: Layout,
-    attributes: [["content", { tag: Page404 }]],
-  },
   "/users": {
     tag: Layout,
     attributes: [["content", { tag: ShowUsers }]],
+  },
+  "/user/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: ShowUser }]],
   },
   "/inscription": {
     tag: Layout,
@@ -25,6 +26,10 @@ export default {
   "/bienvenue": {
     tag: Layout,
     attributes: [["content", { tag: Bienvenue }]],
+  },
+  "*": {
+    tag: Layout,
+    attributes: [["content", { tag: Page404 }]],
   },
 };
 
