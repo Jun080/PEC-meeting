@@ -1,15 +1,18 @@
 import Page404 from "../views/Page404.js";
 import ShowUsers from "../views/ShowUsers.js";
 import ShowUser from "../views/ShowUser.js";
-import HomePage from "../views/HomePage.js";
 import Layout from "../views/Layout.js";
 import RegisterPage from "../views/RegisterPage.js";
 import Bienvenue from "../views/Bienvenue.js";
+import APropos from "../views/APropos.js";
+import Evenements from "../views/Evenements.js";
+import Communautes from "../views/Communautes.js";
+import Dashboard from "../views/Dashboard.js";
 
 export default {
   "/": {
     tag: Layout,
-    attributes: [["content", { tag: HomePage }]],
+    attributes: [["content", { tag: Bienvenue }]],
   },
   "/users": {
     tag: Layout,
@@ -26,6 +29,22 @@ export default {
   "/bienvenue": {
     tag: Layout,
     attributes: [["content", { tag: Bienvenue }]],
+  },
+  "/a-propos": {
+    tag: Layout,
+    attributes: [["content", { tag: APropos }]],
+  },
+  "/evenements": {
+    tag: Layout,
+    attributes: [["content", { tag: Evenements }]],
+  },
+  "/communautes": {
+    tag: Layout,
+    attributes: [["content", { tag: Communautes }]],
+  },
+  "/dashboard": {
+    tag: Layout,
+    attributes: [["content", { tag: Dashboard }]],
   },
   "*": {
     tag: Layout,

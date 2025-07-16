@@ -98,10 +98,17 @@ export function BrowserLink(props) {
   console.log(browserRouterOptions);
   const link = props.link;
   const title = props.title;
+  const className = props.class;
+
+  const attributes = [["href", browserRouterOptions.baseUrl + link]];
+  
+  if (className) {
+    attributes.push(["class", className]);
+  }
 
   return {
     tag: "a",
-    attributes: [["href", browserRouterOptions.baseUrl + link]],
+    attributes: attributes,
     events: {
       click: [
         function (event) {
