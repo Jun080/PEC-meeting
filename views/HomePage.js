@@ -1,8 +1,6 @@
 import { getAllUserNames } from "../Services/userService.js";
 
-const ShowUsers = function () {
-  const users = getAllUserNames();
-
+const HomePage = function () {
   return {
     tag: "div",
     attributes: [["class", "homepage"]],
@@ -15,4 +13,4 @@ const ShowUsers = function () {
   };
 };
 
-export default ShowUsers;
+export default HomePage;

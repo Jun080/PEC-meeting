@@ -1,0 +1,110 @@
+/* Import des fonts */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap");
+
+/* Variables globales */
+:root {
+    /* Textes */
+    --text-cornflower-blue: #7897ff;
+    --text-cobalt-blue: #0043b1;
+    --text-dark-imperial-blue: #00126d;
+    --text-outer-space: #444655;
+    --text-bright-gray: #e6f4f1;
+    --text-shadow-blue: #7878ac;
+    --text-alice-blue: #efedff;
+    --text-blue-marble: #82b4d3;
+    --text-gunmetal: #212b30;
+
+    /* Fill/Backgrounds */
+    --bg-gunmetal: #212b30;
+    --bg-charcoal: #324048;
+    --bg-paynes-gray: #4b606c;
+    --bg-slate-grey: #66808f;
+    --bg-cadet-grey: #9fb1bc;
+    --bg-cornflower-blue: #7897ff;
+    --bg-dark-imperial-blue: #00126d;
+    --bg-cobalt-blue: #0043b1;
+    --bg-outer-space: #444655;
+    --bg-bright-gray: #e6f4f1;
+    --bg-shadow-blue: #7878ac;
+    --bg-alice-blue: #efedff;
+    --bg-blue-marble: #82b4d3;
+}
+
+/* Classes de typographie */
+.h1-big {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 80px;
+    font-weight: 800; /* regular pour Climate Crisis équivaut à 800 */
+    line-height: 1.2;
+}
+
+.h1 {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 35px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.h2 {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 25px;
+    font-weight: 800; /* extrabold */
+    line-height: 1.3;
+}
+
+.h2-chiffres-benco {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.h2-footer {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.h2-big {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 36px;
+    font-weight: 800; /* extrabold */
+    line-height: 1.3;
+}
+
+.h3 {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 700; /* bold */
+    line-height: 1.4;
+}
+
+.p {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 500; /* medium */
+    line-height: 1.5;
+}
+
+.p-highlight {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 700; /* bold */
+    line-height: 1.5;
+}
+
+.p-small {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 400; /* regular */
+    line-height: 1.4;
+}
+
+button {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 700; /* bold */
+    line-height: 1.2;
+}

@@ -1,29 +1,39 @@
 import Page404 from "../views/Page404.js";
 import ShowUsers from "../views/ShowUsers.js";
+import ShowUser from "../views/ShowUser.js";
 import HomePage from "../views/HomePage.js";
 import Layout from "../views/Layout.js";
 import RegisterPage from "../views/RegisterPage.js";
+import Bienvenue from "../views/Bienvenue.js";
 
 export default {
   "/": {
     tag: Layout,
     attributes: [["content", { tag: HomePage }]],
   },
-  "*": {
-    tag: Layout,
-    attributes: [["content", { tag: Page404 }]],
-  },
   "/users": {
     tag: Layout,
     attributes: [["content", { tag: ShowUsers }]],
+  },
+  "/user/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: ShowUser }]],
   },
   "/inscription": {
     tag: Layout,
     attributes: [["content", { tag: RegisterPage }]],
   },
+  "/bienvenue": {
+    tag: Layout,
+    attributes: [["content", { tag: Bienvenue }]],
+  },
+  "*": {
+    tag: Layout,
+    attributes: [["content", { tag: Page404 }]],
+  },
 };
 
-// TODO: gérer les routes en nesting (ex: /users/:id/likes) on devrait applatir les routes pour que la machine possède chaque route complète
+// TODO: gérer les routes en nesting (ex: /users/:id/likes) on devrait applatir les routes pour que la machine possède chaque route complète. Si l'on crée un route du style /:event faire en sorte que si l'event possède le même nom qu'une autre page fixe (style /users) cela ne crée pas de conflit et que la page fixe soit prioritaire, sinon on peut utiliser l'id /:id pour qu'il n'y ait pas de problème
 // const v2 = {
 //   "/": {
 //     component: Layout,
