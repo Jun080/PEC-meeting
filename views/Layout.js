@@ -1,8 +1,18 @@
 import { BrowserLink as Link } from "../components/BrowserRouter.js";
-import Footer from "./Footer.js"; // Import Footer component
+import Footer from "./Footer.js";
+import Navbar from "./Navbar.js";
+
+// Fonction simulée pour vérifier l'état de connexion
+function isUserLoggedIn() {
+  // Pour l'instant, retourne false par défaut
+  // À remplacer par votre logique d'authentification
+  return localStorage.getItem('user') !== null;
+}
+
 export default function Layout(props) {
   const content = props.content;
   const params = props.params;
+  const isLoggedIn = isUserLoggedIn();
 
   let contentWithParams = content;
   if (params && content && content.tag) {
@@ -17,43 +27,8 @@ export default function Layout(props) {
     attributes: [["class", "layout"]],
     children: [
       {
-        tag: "div",
-        attributes: [["class", "header"]],
-        children: [
-          {
-            tag: "nav",
-            children: [
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/"],
-                  ["title", "Accueil"],
-                ],
-              },
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/users"],
-                  ["title", "Utilisateurs"],
-                ],
-              },
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/inscription"],
-                  ["title", "Inscription"],
-                ],
-              },
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/bienvenue"],
-                  ["title", "Bienvenue"],
-                ],
-              },
-            ],
-          },
-        ],
+        tag: Navbar,
+        attributes: [["isLoggedIn", isLoggedIn]],
       },
       {
         tag: "main",
@@ -61,7 +36,7 @@ export default function Layout(props) {
         children: contentWithParams ? [contentWithParams] : [],
       },
       {
-        tag: Footer, // Footer component in Footer.js
+        tag: Footer,
       },
     ],
   };
