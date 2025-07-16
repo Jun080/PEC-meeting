@@ -1,3 +1,5 @@
+import { BrowserLink as Link } from "../components/BrowserRouter.js";
+
 export default function Footer() {
   return {
     tag: "footer",
@@ -27,10 +29,58 @@ export default function Footer() {
                         tag: "ul",
                         attributes: [["class", "footer-section"]],
                         children: [
-                          { tag: "li", children: ["À propos"] },
-                          { tag: "li", children: ["Événements"] },
-                          { tag: "li", children: ["Communautés"] },
-                          { tag: "li", children: ["Contact"] },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/a-propos"],
+                                  ["title", "À propos"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/evenements"],
+                                  ["title", "Événements"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/communautes"],
+                                  ["title", "Communautés"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/a-propos"],
+                                  ["title", "Contact"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
                         ],
                       },
                     ],
@@ -46,10 +96,58 @@ export default function Footer() {
                       {
                         tag: "ul",
                         children: [
-                          { tag: "li", children: ["Profil"] },
-                          { tag: "li", children: ["Dashboard"] },
-                          { tag: "li", children: ["Notifications"] },
-                          { tag: "li", children: ["Calendrier"] },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/users"],
+                                  ["title", "Profil"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/dashboard"],
+                                  ["title", "Dashboard"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/dashboard"],
+                                  ["title", "Notifications"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
+                          { 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
+                                  ["link", "/evenements"],
+                                  ["title", "Calendrier"],
+                                  ["class", "footer-link"],
+                                ],
+                              }
+                            ] 
+                          },
                         ],
                       },
                     ],
@@ -61,24 +159,32 @@ export default function Footer() {
                 attributes: [["class", "footer-right"]],
                 children: [
                   {
-                    tag: "div",
-                    attributes: [["class", "action-box blue"]],
+                    tag: Link,
+                    attributes: [
+                      ["link", "/evenements"],
+                      ["title", ""],
+                      ["class", "action-box blue"],
+                    ],
                     children: [
                       { tag: "p", children: ["Organiser un événement"] },
                       {
-                        tag: "button",
+                        tag: "span",
                         attributes: [["class", "arrow-button"]],
                         children: ["→"],
                       },
                     ],
                   },
                   {
-                    tag: "div",
-                    attributes: [["class", "action-box white"]],
+                    tag: Link,
+                    attributes: [
+                      ["link", "/dashboard"],
+                      ["title", ""],
+                      ["class", "action-box white"],
+                    ],
                     children: [
                       { tag: "p", children: ["Mon espace perso"] },
                       {
-                        tag: "button",
+                        tag: "span",
                         attributes: [["class", "arrow-button"]],
                         children: ["→"],
                       },

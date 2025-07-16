@@ -56,6 +56,16 @@
   font-family: NotoSans, sans-serif;
 }
 
+.footer-link {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: #7897FF;
+}
+
 .footer-right {
   display: flex;
   flex-direction: column;
@@ -70,6 +80,13 @@
   position: relative;
   width: 100%;
   min-height: 80px;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.2s;
+}
+
+.action-box:hover {
+  transform: translateY(-2px);
 }
 
 .action-box p {
