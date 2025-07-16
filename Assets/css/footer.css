@@ -112,7 +112,7 @@
 }
 
 .logo-icon {
-  background-image: url('./images/logo-meetup-connect.webp');
+  background-image: url('../images/logo-meetup-connect.webp');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
