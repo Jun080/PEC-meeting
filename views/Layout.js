@@ -1,5 +1,5 @@
 import { BrowserLink as Link } from "../components/BrowserRouter.js";
-
+import Footer from "./Footer.js"; // Import Footer component
 export default function Layout(props) {
   const content = props.content;
   const params = props.params;
@@ -61,14 +61,7 @@ export default function Layout(props) {
         children: contentWithParams ? [contentWithParams] : [],
       },
       {
-        tag: "footer",
-        attributes: [["class", "app-footer"]],
-        children: [
-          {
-            tag: "p",
-            children: ["2025 Meetup"],
-          },
-        ],
+        tag: Footer, // Footer component in Footer.js
       },
     ],
   };
