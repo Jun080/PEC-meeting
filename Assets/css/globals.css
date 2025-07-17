@@ -4,6 +4,20 @@ body {
     all: unset;
 }
 
+* {
+    transition: all 0.4s ease;
+}
+
+@font-face {
+    font-family: 'ClimateCrisis';
+    src: url("../fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf");
+}
+
+@font-face {
+  font-family: NotoSans;
+  src: url(./fonts/NotoSans-VariableFont_wdth\,wght.ttf);
+}
+
 /* Cartes d'événements - style vertical */
 .vertical-card {
     display: flex;
@@ -180,4 +194,65 @@ button {
 
 .bouton-tertiary-2:hover {
     box-shadow: 0 1px 0 0 var(--bg-shadow-blue);
+}
+
+.card-big {
+    border-radius: 6px;
+    padding: 1.5rem;
+    position: relative;
+    width: 100%;
+    max-width: 270px;
+    min-height: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+.card-big p {
+    margin: 0;
+}
+
+.card-big.cornflower-blue {
+    background-color: var(--bg-cornflower-blue);
+    color: var(--text-dark-imperial-blue);
+}
+
+.card-big.cornflower-blue:hover {
+    background-color: var(--bg-cobalt-blue);
+    color: var(--text-alice-blue);
+}
+
+.card-big.alice-blue {
+    background-color: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+}
+
+.card-big.alice-blue:hover {
+    background-color: var(--bg-cornflower-blue);
+    color: var(--text-dark-imperial-blue);
+}
+
+.card-big::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
+}
+
+.card-big.cornflower-blue::after {
+    background-image: url('../images/icons/icon-arrow-alice-blue.svg');
+}
+
+.card-big.alice-blue::after {
+    background-image: url('../images/icons/icon-arrow-dark-imperial-blue.svg');
+}
+
+.card-big.alice-blue:hover::after {
+    background-image: url('../images/icons/icon-arrow-alice-blue.svg');
 }
