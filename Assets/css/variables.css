@@ -86,7 +86,7 @@ h3, .h3 {
     line-height: 20px;
 }
 
-p, .p {
+p, .p, input, input::placeholder {
     font-family: "Noto Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
@@ -106,10 +106,14 @@ p, .p {
     line-height: 17px;
 }
 
-button, .btn, .card-big p {
+button, .btn, .card-big p, .bouton-primary-1, .bouton-primary-2, .bouton-secondary-1, .bouton-secondary-2, .bouton-tertiary-1, .bouton-tertiary-2 {
     font-family: "Noto Sans", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: 19px;
+}
+
+.m-auto {
+    margin: 0 auto;
 }

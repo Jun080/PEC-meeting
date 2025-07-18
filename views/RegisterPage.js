@@ -21,12 +21,13 @@ export default function UserPage() {
                     const role = form.elements["role"].value;
 
                     try {
+                        const hashedPassword = await window.dcodeIO.bcrypt.hash(mot_de_passe, 10);
                         await createUser({
                             prenom,
                             nom,
                             mail,
                             tel,
-                            mot_de_passe,
+                            mot_de_passe: hashedPassword,
                             date_naissance: date_naissance || null,
                             centres_interet,
                             lieu,
