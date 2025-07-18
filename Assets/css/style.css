@@ -2,6 +2,8 @@
 @import url("./navbar.css");
 @import url("./globals.css");
 @import url("./bienvenue.css");
+@import url("./login.css");
+@import url("./dashboard.css");
 
 html, body {
     height: 100%;

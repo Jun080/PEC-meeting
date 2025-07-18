@@ -3,6 +3,7 @@ import ShowUsers from "../views/ShowUsers.js";
 import ShowUser from "../views/ShowUser.js";
 import Layout from "../views/Layout.js";
 import RegisterPage from "../views/RegisterPage.js";
+import LoginPage from "../views/LoginPage.js";
 import Bienvenue from "../views/Bienvenue.js";
 import APropos from "../views/APropos.js";
 import Evenements from "../views/Evenements.js";
@@ -25,6 +26,9 @@ export default {
   "/inscription": {
     tag: Layout,
     attributes: [["content", { tag: RegisterPage }]],
+  },
+  "/connexion": {
+    tag: LoginPage,
   },
   "/bienvenue": {
     tag: Layout,
