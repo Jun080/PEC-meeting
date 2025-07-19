@@ -32,7 +32,7 @@ export default function Layout(props) {
       },
       {
         tag: "main",
-        attributes: [["class", "page-content"]],
+        attributes: [["class", "page-content container"]],
         children: contentWithParams ? [contentWithParams] : [],
       },
       {

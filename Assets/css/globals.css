@@ -8,8 +8,13 @@ body {
     transition: all 0.4s ease !important;
 }
 
-a {
+button {
+    all: unset;
+}
+
+a, button {
     text-decoration: none;
+    cursor: pointer;
 }
 
 @font-face {
@@ -105,12 +110,6 @@ a {
     padding: 0;
 }
 
-/* Boutons */
-
-button {
-    all: unset;
-}
-
 .bouton-primary-1 {
     display: inline-flex;
     width: max-content;
@@ -140,6 +139,23 @@ button {
 .bouton-primary-2:hover {
     background: var(--bg-alice-blue);
     color: var(--text-shadow-blue);
+}
+
+.bouton-primary-3 {
+    display: inline-flex;
+    width: max-content;
+    padding: 12px 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background: var(--bg-cobalt-blue);
+    color: var(--text-alice-blue);
+    border: 2px solid var(--bg-cobalt-blue);
+}
+
+.bouton-primary-3:hover {
+    background: var(--bg-cornflower-blue);
+    color: var(--text-dark-imperial-blue);
 }
 
 .bouton-secondary-1 {
@@ -287,4 +303,33 @@ button {
 
 .form-group input::placeholder {
     color: var(--text-alice-blue);
+}
+
+
+.container {
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 1199px) {
+    .container {
+        max-width: 960px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 991px) {
+    .container {
+        max-width: 720px;
+        width: calc(100% - 72px);
+        margin: 0 36px;
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        max-width: 100%;
+    }
 }

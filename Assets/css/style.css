@@ -5,6 +5,7 @@
 @import url("./login.css");
 @import url("./register.css");
 @import url("./dashboard.css");
+@import url("./account.css");
 
 html, body {
     height: 100%;

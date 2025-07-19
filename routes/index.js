@@ -9,6 +9,7 @@ import APropos from "../views/APropos.js";
 import Evenements from "../views/Evenements.js";
 import Communautes from "../views/Communautes.js";
 import Dashboard from "../views/Dashboard.js";
+import AccountPage from "../views/AccountPage.js";
 
 export default {
   "/": {
@@ -48,6 +49,10 @@ export default {
   "/dashboard": {
     tag: Layout,
     attributes: [["content", { tag: Dashboard }]],
+  },
+  "/compte": {
+    tag: Layout,
+    attributes: [["content", { tag: AccountPage }]],
   },
   "*": {
     tag: Layout,

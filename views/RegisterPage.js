@@ -408,7 +408,7 @@ async function submitRegistration(skipOptional = false) {
         
         await createUser(userData);
         
-        window.location.pathname = '/dashboard';
+        window.location.pathname = '/compte';
         
     } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
