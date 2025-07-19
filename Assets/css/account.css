@@ -119,6 +119,15 @@
     gap: 2rem;
 }
 
+.profile-first-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.profile-first-row .profile-field {
+    flex: revert;
+}
+
 .profile-field {
     flex: 1;
 }
@@ -127,18 +136,31 @@
     color: var(--text-dark-imperial-blue);
 }
 
+.profile-value.editable {
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.profile-value.editable:hover {
+    color: var(--text-cornflower-blue);
+}
+
+.profile-edit-input {
+    width: 100%;
+    padding: 4px 8px;
+    border: 2px solid var(--bg-cornflower-blue);
+    border-radius: 4px;
+    color: var(--text-dark-imperial-blue);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.profile-edit-input:focus {
+    border-color: var(--bg-dark-imperial-blue);
+}
+
 .profile-content {
     padding: 2rem 0;
-}
-
-.profile-content h2 {
-    color: var(--text-dark-imperial-blue);
-    margin-bottom: 0.5rem;
-}
-
-.profile-content p {
-    color: var(--text-dark-imperial-blue);
-    line-height: 1.6;
 }
 
 @media (max-width: 768px) {

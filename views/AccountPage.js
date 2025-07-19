@@ -2,6 +2,75 @@ import { getCurrentUser, getUserProfile } from '../Models/userModel.js';
 
 let userProfileData = null;
 
+function makeEditable(event) {
+    const element = event.currentTarget;
+    const textNode = element.childNodes[0];
+    const text = textNode.textContent;
+    const fieldType = element.dataset.field;
+    
+    const input = document.createElement("input");
+    input.value = text;
+    input.className = "profile-edit-input";
+    
+    element.appendChild(input);
+    input.focus();
+    element.removeChild(textNode);
+    element.removeEventListener("click", makeEditable);
+    
+    input.addEventListener("blur", async function onBlur(event) {
+        const input = event.currentTarget;
+        const newValue = input.value;
+        const textNode = document.createTextNode(newValue);
+        const element = input.parentNode;
+        
+        await saveFieldValue(fieldType, newValue);
+        
+        element.replaceChild(textNode, input);
+        element.addEventListener("click", makeEditable);
+    });
+    
+    input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            input.blur();
+        }
+    });
+}
+
+async function saveFieldValue(fieldType, value) {
+    try {
+        if (!userProfileData || !userProfileData.id) return;
+        
+        const { client } = await import('../supabase.js');
+        
+        const fieldMapping = {
+            'prenom': 'prenom',
+            'nom': 'nom', 
+            'email': 'mail',
+            'phone': 'tel',
+            'city': 'lieu'
+        };
+        
+        const column = fieldMapping[fieldType];
+        if (!column) return;
+        
+        const { error } = await client
+            .from('utilisateurs')
+            .update({ [column]: value })
+            .eq('id', userProfileData.id);
+            
+        if (error) {
+            console.error('Erreur lors de la sauvegarde:', error);
+            alert('Erreur lors de la sauvegarde');
+        } else {
+            userProfileData[column] = value;
+            console.log(`${fieldType} mis à jour:`, value);
+        }
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde:', error);
+        alert('Erreur lors de la sauvegarde');
+    }
+}
+
 export default function AccountPage() {
     setTimeout(() => loadUserProfile(), 100);
     
@@ -140,20 +209,23 @@ export default function AccountPage() {
                                         attributes: [["class", "profile-info"]],
                                         children: [
                                             {
-                                                tag: "h2",
-                                                attributes: [["class", "profile-name h1"], ["id", "profile-name"]],
-                                            },
-                                            {
                                                 tag: "div",
-                                                attributes: [["class", "profile-row"]],
+                                                attributes: [["class", "profile-first-row"]],
                                                 children: [
                                                     {
                                                         tag: "div",
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
                                                             {
-                                                                tag: "p",
-                                                                attributes: [["class", "profile-value h3"], ["id", "profile-email"]],
+                                                                tag: "h2",
+                                                                attributes: [
+                                                                    ["class", "profile-value h1 editable"], 
+                                                                    ["id", "profile-prenom"],
+                                                                    ["data-field", "prenom"]
+                                                                ],
+                                                                events: {
+                                                                    click: [makeEditable]
+                                                                },
                                                             }
                                                         ]
                                                     },
@@ -162,8 +234,15 @@ export default function AccountPage() {
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
                                                             {
-                                                                tag: "p",
-                                                                attributes: [["class", "profile-value h3"], ["id", "profile-phone"]],
+                                                                tag: "h2",
+                                                                attributes: [
+                                                                    ["class", "profile-value h1 editable"], 
+                                                                    ["id", "profile-nom"],
+                                                                    ["data-field", "nom"]
+                                                                ],
+                                                                events: {
+                                                                    click: [makeEditable]
+                                                                },
                                                             }
                                                         ]
                                                     }
@@ -179,7 +258,14 @@ export default function AccountPage() {
                                                         children: [
                                                             {
                                                                 tag: "p",
-                                                                attributes: [["class", "profile-value h3"], ["id", "profile-birthdate"]],
+                                                                attributes: [
+                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["id", "profile-email"],
+                                                                    ["data-field", "email"]
+                                                                ],
+                                                                events: {
+                                                                    click: [makeEditable]
+                                                                },
                                                             }
                                                         ]
                                                     },
@@ -189,7 +275,52 @@ export default function AccountPage() {
                                                         children: [
                                                             {
                                                                 tag: "p",
-                                                                attributes: [["class", "profile-value h3"], ["id", "profile-city"]],
+                                                                attributes: [
+                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["id", "profile-phone"],
+                                                                    ["data-field", "phone"]
+                                                                ],
+                                                                events: {
+                                                                    click: [makeEditable]
+                                                                },
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                tag: "div",
+                                                attributes: [["class", "profile-row"]],
+                                                children: [
+                                                    {
+                                                        tag: "div",
+                                                        attributes: [["class", "profile-field"]],
+                                                        children: [
+                                                            {
+                                                                tag: "p",
+                                                                attributes: [
+                                                                    ["class", "profile-value h3 editable"], ["id", "profile-birthdate"]
+                                                                ],
+                                                                events: {
+                                                                    click: [makeEditable]
+                                                                },
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        tag: "div",
+                                                        attributes: [["class", "profile-field"]],
+                                                        children: [
+                                                            {
+                                                                tag: "p",
+                                                                attributes: [
+                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["id", "profile-city"],
+                                                                    ["data-field", "city"]
+                                                                ],
+                                                                events: {
+                                                                    click: [makeEditable]
+                                                                },
                                                             }
                                                         ]
                                                     }
@@ -314,20 +445,24 @@ async function loadUserProfile() {
 function updateProfileDisplay() {
     if (!userProfileData) return;
 
-    const nameElement = document.getElementById('profile-name');
-    if (nameElement) {
-        const fullName = `${userProfileData.prenom || 'Prénom'} ${userProfileData.nom || 'Nom'}`;
-        nameElement.textContent = fullName;
+    const prenomElement = document.getElementById('profile-prenom');
+    if (prenomElement) {
+        prenomElement.textContent = userProfileData.prenom || 'Prénom';
+    }
+
+    const nomElement = document.getElementById('profile-nom');
+    if (nomElement) {
+        nomElement.textContent = userProfileData.nom || 'Nom';
     }
 
     const emailElement = document.getElementById('profile-email');
     if (emailElement) {
-        emailElement.textContent = userProfileData.mail || 'Non renseigné';
+        emailElement.textContent = userProfileData.mail || 'Mail non renseigné';
     }
 
     const phoneElement = document.getElementById('profile-phone');
     if (phoneElement) {
-        phoneElement.textContent = userProfileData.tel || 'Non renseigné';
+        phoneElement.textContent = userProfileData.tel || 'Téléphone non renseigné';
     }
 
     const birthdateElement = document.getElementById('profile-birthdate');
@@ -335,13 +470,13 @@ function updateProfileDisplay() {
         if (userProfileData.date_naissance) {
             birthdateElement.textContent = formatDate(userProfileData.date_naissance);
         } else {
-            birthdateElement.textContent = 'Non renseigné';
+            birthdateElement.textContent = 'Date de naissance non renseignée';
         }
     }
 
     const cityElement = document.getElementById('profile-city');
     if (cityElement) {
-        cityElement.textContent = userProfileData.lieu || 'Non renseigné';
+        cityElement.textContent = userProfileData.lieu || 'Ville non renseignée';
     }
 
     const profileImgElement = document.getElementById('profile-img');
