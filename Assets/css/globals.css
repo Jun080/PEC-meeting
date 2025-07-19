@@ -1,7 +1,9 @@
 @import url("./variables.css");
 
 body {
-    all: unset;
+    /* all: unset; */
+    background-color: var(--bg-alice-blue);
+    overflow-x: hidden;
 }
 
 * {
@@ -10,6 +12,14 @@ body {
 
 button {
     all: unset;
+}
+
+p {
+    color: var(--text-cobalt-blue);
+}
+
+p strong {
+    color: var(--text-dark-imperial-blue);
 }
 
 a, button {
@@ -312,8 +322,15 @@ a, button {
     margin: 0 auto;
 }
 
+.container-small {
+    max-width: 946px;
+    width: 100%;
+    margin: 0 auto;
+}
+
 @media (max-width: 1199px) {
-    .container {
+    .container,
+    .container-small {
         max-width: 960px;
         width: 100%;
         margin: 0 auto;
@@ -321,7 +338,8 @@ a, button {
 }
 
 @media (max-width: 991px) {
-    .container {
+    .container,
+    .container-small {
         max-width: 720px;
         width: calc(100% - 72px);
         margin: 0 36px;
@@ -329,7 +347,8 @@ a, button {
 }
 
 @media (max-width: 767px) {
-    .container {
+    .container,
+    .container-small {
         max-width: 100%;
     }
 }
