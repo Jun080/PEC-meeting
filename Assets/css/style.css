@@ -3,6 +3,7 @@
 @import url("./globals.css");
 @import url("./bienvenue.css");
 @import url("./login.css");
+@import url("./register.css");
 @import url("./dashboard.css");
 
 html, body {

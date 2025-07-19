@@ -24,8 +24,7 @@ export default {
     attributes: [["content", { tag: ShowUser }]],
   },
   "/inscription": {
-    tag: Layout,
-    attributes: [["content", { tag: RegisterPage }]],
+    tag: RegisterPage,
   },
   "/connexion": {
     tag: LoginPage,
