@@ -76,12 +76,15 @@ export default function LoginPage() {
 
                                                             try {
                                                                 const result = await authService.login(email, password);
-                                                                console.log('Connexion réussie, redirection vers dashboard');
-                                                                
+                                            
                                                                 window.location.pathname = '/dashboard';
                                                                 
                                                             } catch (error) {
-                                                                console.error('Erreur de connexion:', error);
+                                                                const errorDiv = document.querySelector('.error-message');
+                                                                if (errorDiv) {
+                                                                    errorDiv.textContent = 'Erreur de connexion: ' + error.message;
+                                                                    errorDiv.classList.add('show');
+                                                                }
                                                             }
                                                         },
                                                     ],

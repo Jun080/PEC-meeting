@@ -180,6 +180,7 @@ button {
 
 .bouton-tertiary-1 {
     color: var(--text-cornflower-blue);
+    width: max-content;
     padding-bottom: 5px;
     box-shadow: 0 1px 0 0 transparent;
     transition: box-shadow 0.3s ease;
@@ -191,6 +192,7 @@ button {
 
 .bouton-tertiary-2 {
     color: var(--text-shadow-blue);
+    width: max-content;
     padding-bottom: 5px;
     box-shadow: 0 1px 0 0 transparent;
     transition: box-shadow 0.3s ease;

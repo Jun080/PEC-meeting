@@ -31,10 +31,15 @@ export async function signInUser(email, password) {
     .from('utilisateurs')
     .select('*')
     .eq('mail', email)
-    .eq('mot_de_passe', password)
     .single();
   
   if (error || !data) {
+    throw new Error('Email ou mot de passe incorrect');
+  }
+  
+  const isPasswordValid = await window.dcodeIO.bcrypt.compare(password, data.mot_de_passe);
+  
+  if (!isPasswordValid) {
     throw new Error('Email ou mot de passe incorrect');
   }
   
