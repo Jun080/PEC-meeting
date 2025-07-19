@@ -77,7 +77,7 @@ export default function LoginPage() {
                                                             try {
                                                                 const result = await authService.login(email, password);
                                             
-                                                                window.location.pathname = '/dashboard';
+                                                                window.location.pathname = '/compte';
                                                                 
                                                             } catch (error) {
                                                                 const errorDiv = document.querySelector('.error-message');

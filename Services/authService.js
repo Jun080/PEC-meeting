@@ -1,6 +1,5 @@
 import { signOutUser } from "../Models/userModel.js";
 
-// Service d'authentification
 class AuthService {
     constructor() {
         this.user = null;
@@ -9,7 +8,6 @@ class AuthService {
     }
 
     initializeAuth() {
-        // Pour l'authentification personnalisée, vérifier localStorage
         const userString = localStorage.getItem('user');
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         
@@ -17,9 +15,7 @@ class AuthService {
             try {
                 this.user = JSON.parse(userString);
                 this.isAuthenticated = true;
-                console.log('Utilisateur restauré depuis localStorage:', this.user);
             } catch (error) {
-                console.log('Erreur lors de la restauration de l\'utilisateur');
                 this.clearAuthState();
             }
         }
@@ -33,7 +29,6 @@ class AuthService {
             this.user = result.user;
             this.isAuthenticated = true;
             
-            // Stocker dans localStorage
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('user', JSON.stringify(result.user));
             
@@ -70,7 +65,6 @@ class AuthService {
         return this.isAuthenticated;
     }
 
-    // Vérifier si l'utilisateur est connecté depuis localStorage
     checkLocalAuth() {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const userString = localStorage.getItem('user');
@@ -88,7 +82,6 @@ class AuthService {
         return false;
     }
 
-    // Middleware pour protéger les routes
     requireAuth() {
         if (!this.isLoggedIn() && !this.checkLocalAuth()) {
             window.location.pathname = '/connexion';
@@ -98,18 +91,15 @@ class AuthService {
     }
 }
 
-// Instance singleton
 export const authService = new AuthService();
 
-// Fonction utilitaire pour vérifier l'authentification
 export function requireAuth() {
     return authService.requireAuth();
 }
 
-// Fonction pour rediriger si déjà connecté
 export function redirectIfAuthenticated() {
     if (authService.isLoggedIn() || authService.checkLocalAuth()) {
-        window.location.pathname = '/dashboard';
+        window.location.pathname = '/compte';
         return true;
     }
     return false;

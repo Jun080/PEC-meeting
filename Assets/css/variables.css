@@ -34,6 +34,7 @@
     font-weight: 400;
     line-height: 80px;
     letter-spacing: 2.4px;
+    margin: 0;
 }
 
 h1, .h1 {
@@ -43,6 +44,7 @@ h1, .h1 {
     font-weight: 400;
     line-height: 37px;
     letter-spacing: 1.05px;
+    margin: 0;
 }
 
 h2, .h2 {
@@ -51,6 +53,8 @@ h2, .h2 {
     font-style: normal;
     font-weight: 800;
     line-height: 25px;
+    letter-spacing: 0.75px;
+    margin: 0;
 }
 
 .h2-chiffres-benco {
@@ -60,6 +64,7 @@ h2, .h2 {
     font-weight: 400;
     line-height: 25px;
     letter-spacing: 0.75px;
+    margin: 0;
 }
 
 .h2-footer {
@@ -68,6 +73,7 @@ h2, .h2 {
     font-style: normal;
     font-weight: 400;
     line-height: 32px;
+    margin: 0;
 }
 
 .h2-big {
@@ -76,6 +82,7 @@ h2, .h2 {
     font-style: normal;
     font-weight: 800;
     line-height: 36px;
+    margin: 0;
 }
 
 h3, .h3 {
@@ -84,14 +91,16 @@ h3, .h3 {
     font-style: normal;
     font-weight: 700;
     line-height: 20px;
+    margin: 0;
 }
 
-p, .p, input, input::placeholder {
+p, .p, input, input::placeholder, .account-nav a {
     font-family: "Noto Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
     line-height: 17px;
+    margin: 0;
 }
 
 .highlight {
@@ -104,6 +113,7 @@ p, .p, input, input::placeholder {
     font-style: normal;
     font-weight: 400;
     line-height: 17px;
+    margin: 0;
 }
 
 button, .btn, .card-big p, .bouton-primary-1, .bouton-primary-2, .bouton-secondary-1, .bouton-secondary-2, .bouton-tertiary-1, .bouton-tertiary-2 {
