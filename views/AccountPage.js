@@ -1,75 +1,5 @@
 import { getCurrentUser, getUserProfile } from '../Models/userModel.js';
-
-let userProfileData = null;
-
-function makeEditable(event) {
-    const element = event.currentTarget;
-    const textNode = element.childNodes[0];
-    const text = textNode.textContent;
-    const fieldType = element.dataset.field;
-    
-    const input = document.createElement("input");
-    input.value = text;
-    input.className = "profile-edit-input";
-    
-    element.appendChild(input);
-    input.focus();
-    element.removeChild(textNode);
-    element.removeEventListener("click", makeEditable);
-    
-    input.addEventListener("blur", async function onBlur(event) {
-        const input = event.currentTarget;
-        const newValue = input.value;
-        const textNode = document.createTextNode(newValue);
-        const element = input.parentNode;
-        
-        await saveFieldValue(fieldType, newValue);
-        
-        element.replaceChild(textNode, input);
-        element.addEventListener("click", makeEditable);
-    });
-    
-    input.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            input.blur();
-        }
-    });
-}
-
-async function saveFieldValue(fieldType, value) {
-    try {
-        if (!userProfileData || !userProfileData.id) return;
-        
-        const { client } = await import('../supabase.js');
-        
-        const fieldMapping = {
-            'prenom': 'prenom',
-            'nom': 'nom', 
-            'email': 'mail',
-            'phone': 'tel',
-            'city': 'lieu'
-        };
-        
-        const column = fieldMapping[fieldType];
-        if (!column) return;
-        
-        const { error } = await client
-            .from('utilisateurs')
-            .update({ [column]: value })
-            .eq('id', userProfileData.id);
-            
-        if (error) {
-            console.error('Erreur lors de la sauvegarde:', error);
-            alert('Erreur lors de la sauvegarde');
-        } else {
-            userProfileData[column] = value;
-            console.log(`${fieldType} mis à jour:`, value);
-        }
-    } catch (error) {
-        console.error('Erreur lors de la sauvegarde:', error);
-        alert('Erreur lors de la sauvegarde');
-    }
-}
+import { uploadProfilePhoto, updateUserPhotoUrl } from '../Services/storageService.js';
 
 export default function AccountPage() {
     setTimeout(() => loadUserProfile(), 100);
@@ -194,13 +124,44 @@ export default function AccountPage() {
                                         attributes: [["class", "profile-photo"]],
                                         children: [
                                             {
-                                                tag: "img",
-                                                attributes: [
-                                                    ["src", "../Assets/images/logo.png"],
-                                                    ["alt", "Photo de profil"],
-                                                    ["class", "profile-img"],
-                                                    ["id", "profile-img"]
+                                                tag: "div",
+                                                attributes: [["class", "profile-photo-container"]],
+                                                events: {
+                                                    click: [triggerPhotoUpload]
+                                                },
+                                                children: [
+                                                    {
+                                                        tag: "img",
+                                                        attributes: [
+                                                            ["class", "profile-img"],
+                                                            ["id", "profile-img"]
+                                                        ]
+                                                    },
+                                                    {
+                                                        tag: "div",
+                                                        attributes: [
+                                                            ["class", "photo-overlay"],
+                                                        ],
+                                                        children: [
+                                                            {
+                                                                tag: "p",
+                                                                children: ["Changer"]
+                                                            }
+                                                        ]
+                                                    }
                                                 ]
+                                            },
+                                            {
+                                                tag: "input",
+                                                attributes: [
+                                                    ["type", "file"],
+                                                    ["id", "photo-upload-input"],
+                                                    ["accept", "image/jpeg,image/jpg,image/png,image/webp"],
+                                                    ["style", { display: "none" }]
+                                                ],
+                                                events: {
+                                                    change: [handlePhotoUpload]
+                                                }
                                             }
                                         ]
                                     },
@@ -399,6 +360,113 @@ export default function AccountPage() {
     };
 }
 
+let userProfileData = null;
+
+function makeEditable(event) {
+    const element = event.currentTarget;
+    const textNode = element.childNodes[0];
+    const text = textNode.textContent;
+    const fieldType = element.dataset.field;
+    
+    const input = document.createElement("input");
+    input.value = text;
+    input.className = "profile-edit-input";
+    
+    element.appendChild(input);
+    input.focus();
+    element.removeChild(textNode);
+    element.removeEventListener("click", makeEditable);
+    
+    input.addEventListener("blur", async function onBlur(event) {
+        const input = event.currentTarget;
+        const newValue = input.value;
+        const textNode = document.createTextNode(newValue);
+        const element = input.parentNode;
+        
+        await saveFieldValue(fieldType, newValue);
+        
+        element.replaceChild(textNode, input);
+        element.addEventListener("click", makeEditable);
+    });
+    
+    input.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            input.blur();
+        }
+    });
+}
+
+async function saveFieldValue(fieldType, value) {
+    try {
+        if (!userProfileData || !userProfileData.id) return;
+        
+        const { client } = await import('../supabase.js');
+        
+        const fieldMapping = {
+            'prenom': 'prenom',
+            'nom': 'nom', 
+            'email': 'mail',
+            'phone': 'tel',
+            'city': 'lieu'
+        };
+        
+        const column = fieldMapping[fieldType];
+        if (!column) return;
+        
+        const { error } = await client
+            .from('utilisateurs')
+            .update({ [column]: value })
+            .eq('id', userProfileData.id);
+            
+        if (error) {
+            alert('Erreur lors de la sauvegarde');
+        } else {
+            userProfileData[column] = value;
+        }
+    } catch (error) {
+        alert('Erreur lors de la sauvegarde');
+    }
+}
+
+function triggerPhotoUpload() {
+    const fileInput = document.getElementById('photo-upload-input');
+    if (fileInput) {
+        fileInput.click();
+    }
+}
+
+async function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+        // Afficher un indicateur de chargement
+        const profileImg = document.getElementById('profile-img');
+        const photoContainer = profileImg.parentElement;
+
+        const photoUrl = await uploadProfilePhoto(file, userProfileData.id);
+
+        await updateUserPhotoUrl(userProfileData.id, photoUrl);
+
+        userProfileData.image = photoUrl;
+
+        profileImg.src = photoUrl;
+        profileImg.alt = `Photo de profil de ${userProfileData.prenom || 'l\'utilisateur'}`;
+
+        event.target.value = '';
+
+    } catch (error) {
+        alert(`Erreur lors de l'upload de la photo: ${error.message}`);
+
+        const loadingIndicator = document.querySelector('.photo-loading');
+        if (loadingIndicator) {
+            loadingIndicator.remove();
+        }
+
+        event.target.value = '';
+    }
+}
+
 function switchTab(tabName) {
     const navLinks = document.querySelectorAll('.account-nav-link');
     navLinks.forEach(link => link.classList.remove('active'));
@@ -429,9 +497,7 @@ async function loadUserProfile() {
         
         updateProfileDisplay();
         
-    } catch (error) {
-        console.error('Erreur lors du chargement du profil:', error);
-        
+    } catch (error) {        
         if (error.message.includes('connecté') || error.message.includes('Session')) {  
             alert('Vous devez être connecté pour accéder à cette page');
             window.location.hash = '#/connexion';
@@ -480,8 +546,8 @@ function updateProfileDisplay() {
     }
 
     const profileImgElement = document.getElementById('profile-img');
-    if (profileImgElement && userProfileData.photo_url) {
-        profileImgElement.src = userProfileData.photo_url;
+    if (profileImgElement && userProfileData.image) {
+        profileImgElement.src = userProfileData.image;
         profileImgElement.alt = `Photo de profil de ${userProfileData.prenom || 'l\'utilisateur'}`;
     }
 }
@@ -499,7 +565,6 @@ function formatDate(dateString) {
         
         return `${day}/${month}/${year}`;
     } catch (error) {
-        console.error('Erreur lors du formatage de la date:', error);
         return 'Date invalide';
     }
 }

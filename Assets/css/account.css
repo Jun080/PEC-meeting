@@ -90,8 +90,9 @@
     border-radius: 16px;
 }
 
-.profile-photo {
-    flex-shrink: 0;
+.profile-photo-container {
+    position: relative;
+    cursor: pointer;
 }
 
 .profile-img {
@@ -100,6 +101,25 @@
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--bg-cornflower-blue);
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    background: var(--bg-cornflower-blue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.profile-photo-container:hover .photo-overlay {
+    opacity: 1;
 }
 
 .profile-info {
