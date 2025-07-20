@@ -116,7 +116,7 @@ export default function Navbar(props = {}) {
                   isLoggedIn ? {
                     tag: Link,
                     attributes: [
-                      ["link", "/dashboard"],
+                      ["link", "/compte"],
                       ["title", "Compte"],
                       ["class", "btn-auth"],
                     ],
