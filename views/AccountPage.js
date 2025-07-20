@@ -1,6 +1,7 @@
 import { getCurrentUser, getUserProfile } from '../Models/userModel.js';
-import { uploadProfilePhoto, updateUserPhotoUrl } from '../Services/storageService.js';
+import { uploadProfilePhoto, updateUserPhotoUrl, uploadCommunauteImage } from '../Services/storageService.js';
 import { getCommunautesByReferent, createCommunaute } from '../Models/communauteModel.js';
+import VerticalCard from '../components/VerticalCard.js';
 
 export default function AccountPage() {
     setTimeout(() => loadUserProfile(), 100);
@@ -345,6 +346,16 @@ export default function AccountPage() {
                                         const description = document.getElementById('comm-description').value;
                                         const lieu = document.getElementById('comm-lieu').value;
                                         const status = document.getElementById('comm-status').value;
+                                        const imageInput = document.getElementById('comm-image');
+                                        let imageUrl = '';
+                                        if (imageInput && imageInput.files && imageInput.files[0]) {
+                                            try {
+                                                imageUrl = await uploadCommunauteImage(imageInput.files[0], nom);
+                                            } catch (e) {
+                                                alert('Erreur lors de l\'upload de l\'image : ' + e.message);
+                                                return;
+                                            }
+                                        }
                                         const date_creation = new Date().toISOString();
                                         try {
                                             const newComm = await createCommunaute({
@@ -353,7 +364,8 @@ export default function AccountPage() {
                                                 referent: userProfileData.id,
                                                 date_creation,
                                                 lieu,
-                                                status
+                                                status,
+                                                image: imageUrl
                                             });
                                             alert('Communauté créée !');
                                             document.getElementById('create-communaute-form').reset();
@@ -368,6 +380,7 @@ export default function AccountPage() {
                                     { tag: "textarea", attributes: [["id", "comm-description"], ["placeholder", "Description"], ["required", true]] },
                                     { tag: "input", attributes: [["type", "text"], ["id", "comm-lieu"], ["placeholder", "Lieu"], ["required", true]] },
                                     { tag: "input", attributes: [["type", "text"], ["id", "comm-status"], ["placeholder", "Statut (ex: public/privé)"], ["required", true]] },
+                                    { tag: "input", attributes: [["type", "file"], ["id", "comm-image"], ["accept", "image/*"]] },
                                     { tag: "button", attributes: [["type", "submit"]], children: ["Créer ma communauté"] }
                                 ]
                             },
@@ -614,10 +627,41 @@ async function afficherCommunautesUtilisateur() {
             container.innerHTML = '<p>Aucune communauté créée.</p>';
             return;
         }
-        container.innerHTML = communautes.map(c =>
-            `<div class='comm-card'><h3>${c.nom}</h3><p>${c.description}</p><p><b>Lieu :</b> ${c.lieu}</p><p><b>Status :</b> ${c.status}</p><p><b>Date :</b> ${c.date_creation ? new Date(c.date_creation).toLocaleDateString() : ''}</p></div>`
-        ).join('');
+        container.innerHTML = '';
+        communautes.forEach(c => {
+            const card = VerticalCard({
+                imageUrl: c.image || '../Assets/images/eventImage.png',
+                title: c.nom,
+                place: c.lieu,
+                description: c.description
+            });
+            container.appendChild(renderElement(card));
+        });
     } catch (e) {
         container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
     }
+}
+
+// Fonction utilitaire pour rendre un objet virtuel en DOM réel (si pas déjà présente)
+function renderElement(obj) {
+    if (typeof obj === 'string') return document.createTextNode(obj);
+    const el = document.createElement(obj.tag);
+    if (obj.attributes) {
+        obj.attributes.forEach(([key, value]) => {
+            if (typeof value === 'object' && key === 'style') {
+                Object.assign(el.style, value);
+            } else {
+                el.setAttribute(key, value);
+            }
+        });
+    }
+    if (obj.events) {
+        Object.entries(obj.events).forEach(([event, handlers]) => {
+            handlers.forEach(handler => el.addEventListener(event, handler));
+        });
+    }
+    if (obj.children) {
+        obj.children.forEach(child => el.appendChild(renderElement(child)));
+    }
+    return el;
 }

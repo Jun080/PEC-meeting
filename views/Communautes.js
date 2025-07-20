@@ -39,11 +39,10 @@ async function afficherToutesCommunautes() {
     container.innerHTML = '';
     communautes.forEach(c => {
       const card = VerticalCard({
-        imageUrl: '../Assets/images/eventImage.png',
+        imageUrl: c.image || '../Assets/images/eventImage.png',
         title: c.nom,
-        date: c.date_creation ? new Date(c.date_creation).toLocaleDateString() : '',
         place: c.lieu,
-        price: c.status
+        description: c.description
       });
       container.appendChild(renderElement(card));
     });

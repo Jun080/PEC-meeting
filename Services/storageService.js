@@ -51,3 +51,16 @@ export async function updateUserPhotoUrl(userId, photoUrl) {
         throw error;
     }
 }
+
+export async function uploadCommunauteImage(file, communauteName) {
+    const fileExt = file.name.split('.').pop();
+    const filePath = `communaute_${communauteName}_${Date.now()}.${fileExt}`;
+    const { data, error } = await client.storage.from('communautes-images').upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+    });
+    if (error) throw error;
+    // Récupérer l'URL publique
+    const { data: publicUrlData } = client.storage.from('communautes-images').getPublicUrl(filePath);
+    return publicUrlData.publicUrl;
+}

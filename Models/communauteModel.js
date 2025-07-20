@@ -17,11 +17,11 @@ export async function getAllCommunautes() {
     return data;
 }
 
-export async function createCommunaute({ nom, description, referent, date_creation, lieu, status }) {
+export async function createCommunaute({ nom, description, referent, date_creation, lieu, status, image }) {
     const { data, error } = await client
         .from('communautes')
         .insert([
-            { nom, description, referent, date_creation, lieu, status }
+            { nom, description, referent, date_creation, lieu, status, image }
         ])
         .select();
     if (error) throw error;
