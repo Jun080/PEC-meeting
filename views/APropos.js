@@ -348,6 +348,13 @@ const APropos = function () {
                               {
                                 tag: "button",
                                 attributes: [["class", "bouton-primary-1"]],
+                                events: {
+                                  click: [
+                                    function() {
+                                      window.location.pathname = '/inscription';
+                                    }
+                                  ]
+                                },
                                 children: ["Je m'inscris"]
                               }
                             ]
