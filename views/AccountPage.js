@@ -260,7 +260,9 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "p",
                                                                 attributes: [
-                                                                    ["class", "profile-value h3 editable"], ["id", "profile-birthdate"]
+                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["id", "profile-birthdate"],
+                                                                    ["data-field", "birthdate"]
                                                                 ],
                                                                 events: {
                                                                     click: [makeEditable]
@@ -369,7 +371,34 @@ function makeEditable(event) {
     const fieldType = element.dataset.field;
     
     const input = document.createElement("input");
-    input.value = text;
+    
+    // Set input type based on field
+    if (fieldType === 'birthdate') {
+        input.type = "date";
+        // Convert display text back to date format if needed
+        if (text && text !== 'Date de naissance non renseignée') {
+            // Try to parse the displayed date and convert to YYYY-MM-DD format
+            try {
+                const dateParts = text.split('/'); // Assuming DD/MM/YYYY format
+                if (dateParts.length === 3) {
+                    const day = dateParts[0].padStart(2, '0');
+                    const month = dateParts[1].padStart(2, '0');
+                    const year = dateParts[2];
+                    input.value = `${year}-${month}-${day}`;
+                } else {
+                    input.value = '';
+                }
+            } catch (error) {
+                input.value = '';
+            }
+        } else {
+            input.value = '';
+        }
+    } else {
+        input.type = "text";
+        input.value = text;
+    }
+    
     input.className = "profile-edit-input";
     
     element.appendChild(input);
@@ -380,7 +409,16 @@ function makeEditable(event) {
     input.addEventListener("blur", async function onBlur(event) {
         const input = event.currentTarget;
         const newValue = input.value;
-        const textNode = document.createTextNode(newValue);
+        let displayValue = newValue;
+        
+        // Format date for display if it's a birthdate field
+        if (fieldType === 'birthdate' && newValue) {
+            displayValue = formatDate(newValue);
+        } else if (fieldType === 'birthdate' && !newValue) {
+            displayValue = 'Date de naissance non renseignée';
+        }
+        
+        const textNode = document.createTextNode(displayValue);
         const element = input.parentNode;
         
         await saveFieldValue(fieldType, newValue);
@@ -400,6 +438,8 @@ async function saveFieldValue(fieldType, value) {
     try {
         if (!userProfileData || !userProfileData.id) return;
         
+        console.log('Sauvegarde champ:', fieldType, 'Valeur:', value);
+        
         const { client } = await import('../supabase.js');
         
         const fieldMapping = {
@@ -407,7 +447,8 @@ async function saveFieldValue(fieldType, value) {
             'nom': 'nom', 
             'email': 'mail',
             'phone': 'tel',
-            'city': 'lieu'
+            'city': 'lieu',
+            'birthdate': 'date_naissance'
         };
         
         const column = fieldMapping[fieldType];
