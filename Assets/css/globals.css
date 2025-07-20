@@ -14,14 +14,6 @@ button {
     all: unset;
 }
 
-p {
-    color: var(--text-cobalt-blue);
-}
-
-p strong {
-    color: var(--text-dark-imperial-blue);
-}
-
 a, button {
     text-decoration: none;
     cursor: pointer;
@@ -246,22 +238,30 @@ a, button {
 
 .card-big.cornflower-blue {
     background-color: var(--bg-cornflower-blue);
+}
+
+.card-big.cornflower-blue p {
     color: var(--text-dark-imperial-blue);
 }
 
 .card-big.cornflower-blue:hover {
     background-color: var(--bg-cobalt-blue);
+}
+
+.card-big.cornflower-blue:hover p {
     color: var(--text-alice-blue);
 }
 
 .card-big.alice-blue {
     background-color: var(--bg-alice-blue);
+}
+
+.card-big.alice-blue p {
     color: var(--text-dark-imperial-blue);
 }
 
 .card-big.alice-blue:hover {
     background-color: var(--bg-cornflower-blue);
-    color: var(--text-dark-imperial-blue);
 }
 
 .card-big::after {

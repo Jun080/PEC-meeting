@@ -1,5 +1,15 @@
 .apropos-page {
-    padding: 4rem 0;
+    padding: 4rem 0 9.5rem;
+}
+
+.apropos-communautes p,
+.a-propos-header p {
+    color: var(--text-cobalt-blue);
+}
+
+.apropos-communautes p strong,
+.a-propos-header p strong {
+    color: var(--text-dark-imperial-blue);
 }
 
 .apropos-header {
@@ -189,7 +199,8 @@
     z-index: 1;
 }
 
-.apropos-mission {
+.apropos-mission,
+.apropos-pourquoi {
     width: 100vw;
     position: relative;
     left: 50%;
@@ -226,6 +237,119 @@
     color: var(--text-alice-blue);
 }
 
+.apropos-page section:not(:first-child) {
+    margin-top: 152px;
+}
+
+.simplicite-title {
+    text-align: center;
+    color: var(--text-dark-imperial-blue);
+    margin-bottom: 79px;
+}
+
+.etapes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.etape {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.etape-1,
+.etape-3 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.etape-2,
+.etape-4 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.etape-2 .etape-content,
+.etape-4 .etape-content {
+    order: 2;
+}
+
+.etape-2 .etape-image,
+.etape-4 .etape-image {
+    order: 1;
+}
+
+.etape-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.etape-content h3 {
+    color: var(--text-dark-imperial-blue);
+}
+
+.etape-content strong {
+    color: var(--text-cobalt-blue);
+}
+
+.etape-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+}
+
+.apropos-pourquoi {
+    background-color: var(--bg-cornflower-blue);
+}
+
+.apropos-pourquoi .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.apropos-pourquoi .h2-big {
+    color: var(--text-dark-imperial-blue);
+}
+
+.apropos-pourquoi p {
+    color: var(--text-dark-imperial-blue);
+}
+
+.apropos-pourquoi p:first-child {
+    margin-bottom: 0.5rem;
+}
+
+.banner-femme {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.banner-femme img {
+    max-width: 364px;
+}
+
+.banner-femme .banner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 40px 56px;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 0px 16px 16px 0px;
+    background-color: var(--bg-shadow-blue);
+    color: var(--text-alice-blue);
+    width: 100%;
+}
+
+.banner-femme .banner h2,
+.banner-femme .banner p {
+    margin: 0 !important;
+}
+
 @media (max-width: 968px) {
     .apropos-header {
         grid-template-columns: 1fr;
@@ -249,13 +373,49 @@
         grid-template-columns: 1fr;
     }
     
-    .apropos-mission {
+    .apropos-mission,
+    .apropos-pourquoi {
         padding: 3rem 0;
         margin-top: 3rem;
         margin-bottom: 3rem;
     }
     
-    .apropos-mission p {
+    .apropos-page > .container > section,
+    .apropos-image-section,
+    .apropos-mission,
+    .apropos-pourquoi,
+    .apropos-simplicite {
+        margin-bottom: 100px;
+    }
+    
+    .apropos-simplicite {
+        margin-top: 100px;
+    }
+    
+    .simplicite-title {
+        margin-bottom: 60px;
+    }
+    
+    .etape {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .etape-2 .etape-content,
+    .etape-4 .etape-content,
+    .etape-2 .etape-image,
+    .etape-4 .etape-image {
+        order: unset;
+    }
+    
+    .apropos-pourquoi {
+        padding: 3rem 0;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .apropos-pourquoi p {
         max-width: 90%;
     }
 }
@@ -316,7 +476,40 @@
         gap: 24px;
     }
     
-    .apropos-mission p {
+    .apropos-page > .container > section,
+    .apropos-image-section,
+    .apropos-mission,
+    .apropos-simplicite {
+        margin-bottom: 64px;
+    }
+    
+    .apropos-simplicite {
+        margin-top: 64px;
+    }
+    
+    .simplicite-title {
+        margin-bottom: 40px;
+    }
+    
+    .etapes-container {
+        gap: 3rem;
+    }
+    
+    .etape-content {
+        gap: 1rem;
+    }
+    
+    .apropos-pourquoi {
+        padding: 2rem 0;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .apropos-pourquoi .container {
+        gap: 24px;
+    }
+    
+    .apropos-pourquoi p {
         max-width: 95%;
     }
 }
