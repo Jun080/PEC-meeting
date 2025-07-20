@@ -1,9 +1,10 @@
 import { getCurrentUser, getUserProfile } from '../Models/userModel.js';
 import { uploadProfilePhoto, updateUserPhotoUrl } from '../Services/storageService.js';
+import { getCommunautesByReferent, createCommunaute } from '../Models/communauteModel.js';
 
 export default function AccountPage() {
     setTimeout(() => loadUserProfile(), 100);
-    
+
     return {
         tag: "div",
         attributes: [["class", "account-page"]],
@@ -34,7 +35,7 @@ export default function AccountPage() {
                                         ],
                                         events: {
                                             click: [
-                                                function(event) {
+                                                function (event) {
                                                     event.preventDefault();
                                                     switchTab('general');
                                                 }
@@ -51,7 +52,7 @@ export default function AccountPage() {
                                         ],
                                         events: {
                                             click: [
-                                                function(event) {
+                                                function (event) {
                                                     event.preventDefault();
                                                     switchTab('likes');
                                                 }
@@ -68,7 +69,7 @@ export default function AccountPage() {
                                         ],
                                         events: {
                                             click: [
-                                                function(event) {
+                                                function (event) {
                                                     event.preventDefault();
                                                     switchTab('communautes');
                                                 }
@@ -85,7 +86,7 @@ export default function AccountPage() {
                                         ],
                                         events: {
                                             click: [
-                                                function(event) {
+                                                function (event) {
                                                     event.preventDefault();
                                                     switchTab('calendrier');
                                                 }
@@ -180,7 +181,7 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "h2",
                                                                 attributes: [
-                                                                    ["class", "profile-value h1 editable"], 
+                                                                    ["class", "profile-value h1 editable"],
                                                                     ["id", "profile-prenom"],
                                                                     ["data-field", "prenom"]
                                                                 ],
@@ -197,7 +198,7 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "h2",
                                                                 attributes: [
-                                                                    ["class", "profile-value h1 editable"], 
+                                                                    ["class", "profile-value h1 editable"],
                                                                     ["id", "profile-nom"],
                                                                     ["data-field", "nom"]
                                                                 ],
@@ -220,7 +221,7 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "p",
                                                                 attributes: [
-                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["class", "profile-value h3 editable"],
                                                                     ["id", "profile-email"],
                                                                     ["data-field", "email"]
                                                                 ],
@@ -237,7 +238,7 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "p",
                                                                 attributes: [
-                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["class", "profile-value h3 editable"],
                                                                     ["id", "profile-phone"],
                                                                     ["data-field", "phone"]
                                                                 ],
@@ -275,7 +276,7 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "p",
                                                                 attributes: [
-                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["class", "profile-value h3 editable"],
                                                                     ["id", "profile-city"],
                                                                     ["data-field", "city"]
                                                                 ],
@@ -300,7 +301,7 @@ export default function AccountPage() {
                                         attributes: [["class", "bouton-primary-1"]],
                                         events: {
                                             click: [
-                                                async function() {
+                                                async function () {
                                                     const { authService } = await import('../Services/authService.js');
                                                     await authService.logout();
                                                 }
@@ -335,9 +336,42 @@ export default function AccountPage() {
                                 children: ["Mes communautés"]
                             },
                             {
-                                tag: "p",
-                                children: ["Contenu de l'onglet Communautés"]
-                            }
+                                tag: "form",
+                                attributes: [["id", "create-communaute-form"]],
+                                events: {
+                                    submit: [async function (event) {
+                                        event.preventDefault();
+                                        const nom = document.getElementById('comm-nom').value;
+                                        const description = document.getElementById('comm-description').value;
+                                        const lieu = document.getElementById('comm-lieu').value;
+                                        const status = document.getElementById('comm-status').value;
+                                        const date_creation = new Date().toISOString();
+                                        try {
+                                            const newComm = await createCommunaute({
+                                                nom,
+                                                description,
+                                                referent: userProfileData.id,
+                                                date_creation,
+                                                lieu,
+                                                status
+                                            });
+                                            alert('Communauté créée !');
+                                            document.getElementById('create-communaute-form').reset();
+                                            await afficherCommunautesUtilisateur();
+                                        } catch (e) {
+                                            alert('Erreur lors de la création : ' + e.message);
+                                        }
+                                    }]
+                                },
+                                children: [
+                                    { tag: "input", attributes: [["type", "text"], ["id", "comm-nom"], ["placeholder", "Nom de la communauté"], ["required", true]] },
+                                    { tag: "textarea", attributes: [["id", "comm-description"], ["placeholder", "Description"], ["required", true]] },
+                                    { tag: "input", attributes: [["type", "text"], ["id", "comm-lieu"], ["placeholder", "Lieu"], ["required", true]] },
+                                    { tag: "input", attributes: [["type", "text"], ["id", "comm-status"], ["placeholder", "Statut (ex: public/privé)"], ["required", true]] },
+                                    { tag: "button", attributes: [["type", "submit"]], children: ["Créer ma communauté"] }
+                                ]
+                            },
+                            { tag: "div", attributes: [["id", "mes-communautes-list"]], children: [] }
                         ]
                     },
                     {
@@ -367,29 +401,29 @@ function makeEditable(event) {
     const textNode = element.childNodes[0];
     const text = textNode.textContent;
     const fieldType = element.dataset.field;
-    
+
     const input = document.createElement("input");
     input.value = text;
     input.className = "profile-edit-input";
-    
+
     element.appendChild(input);
     input.focus();
     element.removeChild(textNode);
     element.removeEventListener("click", makeEditable);
-    
+
     input.addEventListener("blur", async function onBlur(event) {
         const input = event.currentTarget;
         const newValue = input.value;
         const textNode = document.createTextNode(newValue);
         const element = input.parentNode;
-        
+
         await saveFieldValue(fieldType, newValue);
-        
+
         element.replaceChild(textNode, input);
         element.addEventListener("click", makeEditable);
     });
-    
-    input.addEventListener("keydown", function(event) {
+
+    input.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             input.blur();
         }
@@ -399,25 +433,25 @@ function makeEditable(event) {
 async function saveFieldValue(fieldType, value) {
     try {
         if (!userProfileData || !userProfileData.id) return;
-        
+
         const { client } = await import('../supabase.js');
-        
+
         const fieldMapping = {
             'prenom': 'prenom',
-            'nom': 'nom', 
+            'nom': 'nom',
             'email': 'mail',
             'phone': 'tel',
             'city': 'lieu'
         };
-        
+
         const column = fieldMapping[fieldType];
         if (!column) return;
-        
+
         const { error } = await client
             .from('utilisateurs')
             .update({ [column]: value })
             .eq('id', userProfileData.id);
-            
+
         if (error) {
             alert('Erreur lors de la sauvegarde');
         } else {
@@ -470,15 +504,15 @@ async function handlePhotoUpload(event) {
 function switchTab(tabName) {
     const navLinks = document.querySelectorAll('.account-nav-link');
     navLinks.forEach(link => link.classList.remove('active'));
-    
+
     const activeLink = document.querySelector(`[data-tab="${tabName}"]`);
     if (activeLink) {
         activeLink.classList.add('active');
     }
-    
+
     const tabContents = document.querySelectorAll('.account-tab');
     tabContents.forEach(tab => tab.classList.remove('active'));
-    
+
     const activeTab = document.querySelector(`[data-tab-content="${tabName}"]`);
     if (activeTab) {
         activeTab.classList.add('active');
@@ -488,22 +522,23 @@ function switchTab(tabName) {
 async function loadUserProfile() {
     try {
         const currentUser = await getCurrentUser();
-        
+
         if (!currentUser || !currentUser.id) {
             throw new Error('Utilisateur non connecté');
         }
 
         userProfileData = await getUserProfile(currentUser.id);
-        
+
         updateProfileDisplay();
-        
-    } catch (error) {        
-        if (error.message.includes('connecté') || error.message.includes('Session')) {  
+        await afficherCommunautesUtilisateur(); // <-- ajout ici
+
+    } catch (error) {
+        if (error.message.includes('connecté') || error.message.includes('Session')) {
             alert('Vous devez être connecté pour accéder à cette page');
             window.location.hash = '#/connexion';
             return;
         }
-        
+
         alert('Erreur lors du chargement du profil: ' + error.message);
     }
 }
@@ -558,13 +593,31 @@ function formatDate(dateString) {
         if (isNaN(date.getTime())) {
             return 'Date invalide';
         }
-        
+
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
-        
+
         return `${day}/${month}/${year}`;
     } catch (error) {
         return 'Date invalide';
+    }
+}
+
+async function afficherCommunautesUtilisateur() {
+    const container = document.getElementById('mes-communautes-list');
+    if (!container || !userProfileData) return;
+    container.innerHTML = 'Chargement...';
+    try {
+        const communautes = await getCommunautesByReferent(userProfileData.id);
+        if (!communautes.length) {
+            container.innerHTML = '<p>Aucune communauté créée.</p>';
+            return;
+        }
+        container.innerHTML = communautes.map(c =>
+            `<div class='comm-card'><h3>${c.nom}</h3><p>${c.description}</p><p><b>Lieu :</b> ${c.lieu}</p><p><b>Status :</b> ${c.status}</p><p><b>Date :</b> ${c.date_creation ? new Date(c.date_creation).toLocaleDateString() : ''}</p></div>`
+        ).join('');
+    } catch (e) {
+        container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
     }
 }
