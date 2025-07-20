@@ -12,6 +12,7 @@ const Dashboard = function () {
 
   const user = authService.getUser();
   const userEmail = user?.mail || user?.email || "Utilisateur";
+  const userName = user?.prenom || "Utilisateur";
 
   return {
     tag: "div",
@@ -23,7 +24,7 @@ const Dashboard = function () {
         children: [
           {
             tag: "h1",
-            children: [`Bonjour ${userEmail}`],
+            children: [`Bonjour ${userName}`],
           },
           {
             tag: "button",
