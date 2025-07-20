@@ -53,7 +53,7 @@ h2, .h2 {
     font-style: normal;
     font-weight: 800;
     line-height: 25px;
-    letter-spacing: 0.75px;
+    letter-spacing: -0.5px;
     margin: 0;
 }
 
@@ -63,7 +63,7 @@ h2, .h2 {
     font-style: normal;
     font-weight: 400;
     line-height: 25px;
-    letter-spacing: 0.75px;
+    letter-spacing: -0.5px;
     margin: 0;
 }
 
@@ -98,7 +98,7 @@ p, .p, input, input::placeholder, .account-nav a {
     font-family: "Noto Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 17px;
     margin: 0;
 }
@@ -126,4 +126,11 @@ button, .btn, .card-big p, .bouton-primary-1, .bouton-primary-2, .bouton-seconda
 
 .m-auto {
     margin: 0 auto;
+}
+
+.gradient-fonce {
+    background: linear-gradient(90deg, #7897FF 0%, #0043B1 33%, #00126D 66.35%, #0043B1 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
