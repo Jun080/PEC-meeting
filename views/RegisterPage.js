@@ -408,8 +408,11 @@ async function submitRegistration(skipOptional = false) {
         
         await createUser(userData);
         
+        const { authService } = await import('../Services/authService.js');
+        await authService.login(mail, mot_de_passe);
+
         window.location.pathname = '/compte';
-        
+
     } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
         alert('Erreur lors de l\'inscription: ' + error.message);
