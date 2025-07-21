@@ -41,7 +41,6 @@
 
 .event-card-image {
     height: 243px;
-    position: relative;
     overflow: hidden;
     border-radius: 1rem;
 }
@@ -52,11 +51,23 @@
     object-fit: cover;
 }
 
+.event-card-content .event-category-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    z-index: 10;
+}
+
 .event-card-content {
     padding: 1.5rem;
     flex: 1;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .event-card-info {
@@ -167,6 +178,13 @@ button#clear-filters {
     
     .event-card-image {
         height: 160px;
+    }
+    
+    .event-card-image .event-category-badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
     }
     
     .event-title {
