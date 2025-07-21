@@ -3,11 +3,14 @@ import ShowUsers from "../views/ShowUsers.js";
 import ShowUser from "../views/ShowUser.js";
 import Layout from "../views/Layout.js";
 import RegisterPage from "../views/RegisterPage.js";
+import LoginPage from "../views/LoginPage.js";
 import Bienvenue from "../views/Bienvenue.js";
 import APropos from "../views/APropos.js";
 import Evenements from "../views/Evenements.js";
 import Communautes from "../views/Communautes.js";
 import Dashboard from "../views/Dashboard.js";
+import AccountPage from "../views/AccountPage.js";
+import OAuthCallback from "../views/OAuthCallback.js";
 
 export default {
   "/": {
@@ -23,8 +26,10 @@ export default {
     attributes: [["content", { tag: ShowUser }]],
   },
   "/inscription": {
-    tag: Layout,
-    attributes: [["content", { tag: RegisterPage }]],
+    tag: RegisterPage,
+  },
+  "/connexion": {
+    tag: LoginPage,
   },
   "/bienvenue": {
     tag: Layout,
@@ -45,6 +50,13 @@ export default {
   "/dashboard": {
     tag: Layout,
     attributes: [["content", { tag: Dashboard }]],
+  },
+  "/compte": {
+    tag: Layout,
+    attributes: [["content", { tag: AccountPage }]],
+  },
+  "/auth-callback": {
+    tag: OAuthCallback,
   },
   "*": {
     tag: Layout,

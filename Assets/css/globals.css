@@ -1,7 +1,32 @@
 @import url("./variables.css");
 
 body {
+    /* all: unset; */
+    background-color: var(--bg-alice-blue);
+    overflow-x: hidden;
+}
+
+* {
+    transition: all 0.4s ease !important;
+}
+
+button {
     all: unset;
+}
+
+a, button {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@font-face {
+    font-family: 'ClimateCrisis';
+    src: url("../fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf");
+}
+
+@font-face {
+  font-family: NotoSans;
+  src: url(./fonts/NotoSans-VariableFont_wdth\,wght.ttf);
 }
 
 /* Cartes d'événements - style vertical */
@@ -87,18 +112,12 @@ body {
     padding: 0;
 }
 
-/* Boutons */
-
-button {
-    all: unset;
-}
-
 .bouton-primary-1 {
     display: inline-flex;
+    width: max-content;
     padding: 12px 38px;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     border-radius: 30px;
     background: var(--bg-cobalt-blue);
     color: var(--text-alice-blue);
@@ -110,10 +129,10 @@ button {
 
 .bouton-primary-2 {
     display: inline-flex;
+    width: max-content;
     padding: 12px 38px;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     border-radius: 30px;
     background: var(--bg-shadow-blue);
     color: var(--text-alice-blue);
@@ -124,13 +143,30 @@ button {
     color: var(--text-shadow-blue);
 }
 
+.bouton-primary-3 {
+    display: inline-flex;
+    width: max-content;
+    padding: 12px 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background: var(--bg-cobalt-blue);
+    color: var(--text-alice-blue);
+    border: 2px solid var(--bg-cobalt-blue);
+}
+
+.bouton-primary-3:hover {
+    background: var(--bg-cornflower-blue);
+    color: var(--text-dark-imperial-blue);
+}
+
 .bouton-secondary-1 {
     display: inline-flex;
+    width: max-content;
     padding: 12px 38px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     flex-shrink: 0;
     border-radius: 30px;
     border: 2px solid var(--bg-cornflower-blue);
@@ -144,11 +180,11 @@ button {
 
 .bouton-secondary-2 {
     display: inline-flex;
+    width: max-content;
     padding: 12px 38px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     flex-shrink: 0;
     border-radius: 30px;
     border: 2px solid var(--bg-shadow-blue);
@@ -162,6 +198,7 @@ button {
 
 .bouton-tertiary-1 {
     color: var(--text-cornflower-blue);
+    width: max-content;
     padding-bottom: 5px;
     box-shadow: 0 1px 0 0 transparent;
     transition: box-shadow 0.3s ease;
@@ -173,6 +210,7 @@ button {
 
 .bouton-tertiary-2 {
     color: var(--text-shadow-blue);
+    width: max-content;
     padding-bottom: 5px;
     box-shadow: 0 1px 0 0 transparent;
     transition: box-shadow 0.3s ease;
@@ -180,4 +218,137 @@ button {
 
 .bouton-tertiary-2:hover {
     box-shadow: 0 1px 0 0 var(--bg-shadow-blue);
+}
+
+.card-big {
+    border-radius: 6px;
+    padding: 1.5rem;
+    position: relative;
+    width: 100%;
+    max-width: 270px;
+    min-height: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+.card-big p {
+    margin: 0;
+}
+
+.card-big.cornflower-blue {
+    background-color: var(--bg-cornflower-blue);
+}
+
+.card-big.cornflower-blue p {
+    color: var(--text-dark-imperial-blue);
+}
+
+.card-big.cornflower-blue:hover {
+    background-color: var(--bg-cobalt-blue);
+}
+
+.card-big.cornflower-blue:hover p {
+    color: var(--text-alice-blue);
+}
+
+.card-big.alice-blue {
+    background-color: var(--bg-alice-blue);
+}
+
+.card-big.alice-blue p {
+    color: var(--text-dark-imperial-blue);
+}
+
+.card-big.alice-blue:hover {
+    background-color: var(--bg-cornflower-blue);
+}
+
+.card-big::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
+}
+
+.card-big.cornflower-blue::after {
+    background-image: url('../images/icons/icon-arrow-alice-blue.svg');
+}
+
+.card-big.alice-blue::after {
+    background-image: url('../images/icons/icon-arrow-dark-imperial-blue.svg');
+}
+
+.card-big.alice-blue:hover::after {
+    background-image: url('../images/icons/icon-arrow-alice-blue.svg');
+}
+
+
+
+
+.form-group input {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--bg-dark-imperial-blue);
+    background-color: var(--bg-dark-imperial-blue);
+    color: var(--text-alice-blue);
+}
+
+.form-group input:focus {
+    background-color: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+    box-shadow: none;
+    outline: none;
+}
+
+.form-group input:focus::placeholder {
+    color: var(--text-dark-imperial-blue);
+}
+
+.form-group input::placeholder {
+    color: var(--text-alice-blue);
+}
+
+
+.container {
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container-small {
+    max-width: 946px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 1199px) {
+    .container,
+    .container-small {
+        max-width: 960px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 991px) {
+    .container,
+    .container-small {
+        max-width: 720px;
+        width: calc(100% - 72px);
+        margin: 0 36px;
+    }
+}
+
+@media (max-width: 767px) {
+    .container,
+    .container-small {
+        max-width: 100%;
+    }
 }

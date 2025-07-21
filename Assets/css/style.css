@@ -1,7 +1,13 @@
 @import url("./footer.css");
 @import url("./navbar.css");
-@import url(globals.css);
-@import url(bienvenue.css);
+@import url("./globals.css");
+@import url("./bienvenue.css");
+@import url("./login.css");
+@import url("./register.css");
+@import url("./dashboard.css");
+@import url("./account.css");
+@import url("./apropos.css");
+@import url("./oauth-callback.css");
 
 html, body {
     height: 100%;
@@ -23,4 +29,3 @@ html, body {
 .page-content {
     flex: 1;
 }
-
