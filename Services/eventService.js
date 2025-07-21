@@ -9,7 +9,6 @@ export async function getAllPopularEvents() {
                 (event.nombre_places || 0) -
                 (event.nombre_places_disponibles || 0),
         }))
-        .sort((a, b) => b.placesAchetees - a.placesAchetees)
-        .slice(0, 4);
+        .sort((a, b) => b.placesAchetees - a.placesAchetees);
     return eventsWithPlacesAchetees;
 }
