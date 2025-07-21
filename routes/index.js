@@ -7,7 +7,7 @@ import LoginPage from "../views/LoginPage.js";
 import Bienvenue from "../views/Bienvenue.js";
 import APropos from "../views/APropos.js";
 import EvenementsListing from "../views/EvenementsListing.js";
-import Communautes from "../views/Communautes.js";
+import CommunautesListing from "../views/CommunautesListing.js";
 import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
 import OAuthCallback from "../views/OAuthCallback.js";
@@ -50,7 +50,7 @@ export default {
   },
   "/communautes": {
     tag: Layout,
-    attributes: [["content", { tag: Communautes }]],
+    attributes: [["content", { tag: CommunautesListing }]],
   },
   "/dashboard": {
     tag: Layout,
