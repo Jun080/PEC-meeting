@@ -26,6 +26,7 @@ export default function Navbar(props = {}) {
                         event.preventDefault();
                         window.history.pushState({}, undefined, "/bienvenue");
                         window.dispatchEvent(new Event("pushstate"));
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                       },
                     ],
                   },
@@ -116,7 +117,7 @@ export default function Navbar(props = {}) {
                   isLoggedIn ? {
                     tag: Link,
                     attributes: [
-                      ["link", "/dashboard"],
+                      ["link", "/compte"],
                       ["title", "Compte"],
                       ["class", "btn-auth"],
                     ],

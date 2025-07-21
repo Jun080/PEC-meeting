@@ -154,7 +154,19 @@ export default function LoginPage() {
                                                         children: [
                                                             {
                                                                 tag: "button",
-                                                                attributes: [["class", "bouton-secondary-2"], ["type", "button"]],
+                                                                attributes: [["class", "bouton-secondary-2"], ["type", "button"], ["id", "google-login-btn"]],
+                                                                events: {
+                                                                    click: [
+                                                                        async function() {
+                                                                            try {
+                                                                                await authService.signInWithGoogle();
+                                                                            } catch (error) {
+                                                                                console.error('Erreur Google OAuth:', error);
+                                                                                    alert('Erreur lors de la connexion avec Google');
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
                                                                 children: [
                                                                     {
                                                                         tag: "span",
@@ -165,7 +177,19 @@ export default function LoginPage() {
                                                             },
                                                             {
                                                                 tag: "button",
-                                                                attributes: [["class", "bouton-secondary-2"], ["type", "button"]],
+                                                                attributes: [["class", "bouton-secondary-2"], ["type", "button"], ["id", "facebook-login-btn"]],
+                                                                events: {
+                                                                    click: [
+                                                                        async function() {
+                                                                            try {
+                                                                                await authService.signInWithFacebook();
+                                                                            } catch (error) {
+                                                                                console.error('Erreur Facebook OAuth:', error);
+                                                                                alert('Erreur lors de la connexion avec Facebook');
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
                                                                 children: [
                                                                     {
                                                                         tag: "span",

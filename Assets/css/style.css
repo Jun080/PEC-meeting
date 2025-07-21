@@ -8,6 +8,7 @@
 @import url("./account.css");
 @import url("./apropos.css");
 @import url("./evenements.css");
+@import url("./oauth-callback.css");
 
 html, body {
     height: 100%;

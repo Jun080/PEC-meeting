@@ -19,7 +19,8 @@ button {
     all: unset;
 }
 
-a, button {
+a,
+button {
     text-decoration: none;
     cursor: pointer;
 }
@@ -30,8 +31,8 @@ a, button {
 }
 
 @font-face {
-  font-family: NotoSans;
-  src: url(./fonts/NotoSans-VariableFont_wdth\,wght.ttf);
+    font-family: NotoSans;
+    src: url(./fonts/NotoSans-VariableFont_wdth\,wght.ttf);
 }
 
 /* Cartes d'événements - style vertical */
@@ -58,8 +59,8 @@ a, button {
     padding: 0;
 }
 
-.vertical-card .card-content > p:last-child,
-.vertical-card .card-text > p:first-child {
+.vertical-card .card-content>p:last-child,
+.vertical-card .card-text>p:first-child {
     font-family: "Noto Sans";
     font-size: 25px;
     font-style: normal;
@@ -334,6 +335,7 @@ a, button {
 }
 
 @media (max-width: 1199px) {
+
     .container,
     .container-small {
         max-width: 960px;
@@ -343,6 +345,7 @@ a, button {
 }
 
 @media (max-width: 991px) {
+
     .container,
     .container-small {
         max-width: 720px;
@@ -352,8 +355,64 @@ a, button {
 }
 
 @media (max-width: 767px) {
+
     .container,
     .container-small {
         max-width: 100%;
     }
+}
+
+/* Carte communauté personnalisée */
+.custom-comm-card {
+    background: #0a2a5c;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(10, 42, 92, 0.08);
+    overflow: hidden;
+    width: 260px;
+    margin: 16px auto;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #3a7bfc;
+}
+
+.comm-card-img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    display: block;
+}
+
+.comm-card-content {
+    padding: 16px 16px 12px 16px;
+    background: #0a2a5c;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.comm-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0 0 2px 0;
+    color: #fff;
+}
+
+.comm-card-place {
+    font-size: 0.95rem;
+    color: #b3c6e0;
+    margin: 0 0 2px 0;
+}
+
+.comm-card-desc {
+    font-size: 0.95rem;
+    color: #e0e6f6;
+    margin: 0 0 8px 0;
+}
+
+.comm-card-events {
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-top: 8px;
 }
