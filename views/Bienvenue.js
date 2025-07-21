@@ -1,7 +1,17 @@
 import VerticalCard from "../components/VerticalCard.js";
 import HorizontalCard from "../components/HorizontalCard.js";
+import { getAllPopularEvents } from "../Services/eventService.js";
 
-const Bienvenue = function () {
+export default async function Bienvenue() {
+    // Récupérer les 4 premiers événements populaires triés par places achetées
+    let topEvents = [];
+    try {
+        const events = await getAllPopularEvents();
+        topEvents = events.slice(0, 4);
+    } catch (e) {
+        topEvents = [];
+    }
+
     return {
         tag: "div",
         attributes: [["class", "welcome"]],
@@ -33,36 +43,25 @@ const Bienvenue = function () {
                     {
                         tag: "div",
                         attributes: [["class", "cards-row"]],
-                        children: [
+                        children: topEvents.map((event) =>
                             VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "Night Tapes",
-                                date: "18 novembre 2025 - 19:30",
-                                place: "Point Ephémère - Paris",
-                                price: "18,13€",
-                            }),
-                            VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "Concert d'Ilian",
-                                date: "12 avril 2025 - 19h",
-                                place: "Paris",
-                                price: "7€",
-                            }),
-                            VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "Jeux de Société",
-                                date: "13 juin 2025",
-                                place: "Paris",
-                                price: "5€",
-                            }),
-                            VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "DAY TRIP",
-                                date: "10 septembre 2025",
-                                place: "Etretat",
-                                price: "18,13€",
-                            }),
-                        ],
+                                imageUrl:
+                                    event.imageUrl ||
+                                    "../Assets/images/eventImage.png",
+                                title: event.title || event.nom || "Événement",
+                                date:
+                                    event.date ||
+                                    event.date_event ||
+                                    "Date inconnue",
+                                place:
+                                    event.place || event.lieu || "Lieu inconnu",
+                                price:
+                                    event.price ||
+                                    (event.prix
+                                        ? event.prix + "€"
+                                        : "Prix inconnu"),
+                            })
+                        ),
                     },
                 ],
             },
@@ -212,6 +211,4 @@ const Bienvenue = function () {
             },
         ],
     };
-};
-
-export default Bienvenue;
+}
