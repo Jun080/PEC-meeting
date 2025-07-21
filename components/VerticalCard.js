@@ -1,40 +1,51 @@
-const VerticalCard = ({ imageUrl, title, place, description, eventsCount }) => {
+const VerticalCard = ({ imageUrl, title, date, place, price }) => {
     return {
         tag: "div",
-        attributes: [["class", "vertical-card custom-comm-card"]],
+        attributes: [["class", "vertical-card"]],
         children: [
             {
                 tag: "img",
                 attributes: [
                     ["src", imageUrl || "../Assets/images/eventImage.png"],
-                    ["class", "comm-card-img"]
                 ],
             },
             {
                 tag: "div",
-                attributes: [["class", "comm-card-content"]],
+                attributes: [["class", "card-content"]],
                 children: [
                     {
-                        tag: "p",
-                        attributes: [["class", "comm-card-title"]],
-                        children: [title || "Nom de la communauté"],
+                        tag: "div",
+                        attributes: [["class", "card-text"]],
+                        children: [
+                            {
+                                tag: "p",
+                                attributes: [["class", "h2"]],
+                                children: [title || "Titre de l'événement"],
+                            },
+                            {
+                                tag: "div",
+                                attributes: [["class", "card-date"]],
+                                children: [
+                                    {
+                                        tag: "p",
+                                        attributes: [["class", "p-highlight"]],
+                                        children: [date || "Date non définie"],
+                                    },
+                                    {
+                                        tag: "p",
+                                        attributes: [["class", "p-highlight"]],
+                                        children: [place || "Lieu non défini"],
+                                    },
+                                ],
+                            },
+                        ],
                     },
                     {
                         tag: "p",
-                        attributes: [["class", "comm-card-place"]],
-                        children: [place || "Lieu non défini"],
+                        attributes: [["class", "h2"]],
+                        children: [price || "Prix non défini"],
                     },
-                    {
-                        tag: "p",
-                        attributes: [["class", "comm-card-desc"]],
-                        children: [description || "Description non renseignée"],
-                    },
-                    eventsCount !== undefined ? {
-                        tag: "p",
-                        attributes: [["class", "comm-card-events"]],
-                        children: [eventsCount + " événements"]
-                    } : null
-                ].filter(Boolean)
+                ],
             },
         ],
     };
