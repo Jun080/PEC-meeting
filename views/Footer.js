@@ -22,10 +22,6 @@ export default function Footer() {
                     attributes: [["class", "footer-section"]],
                     children: [
                       {
-                        tag: "h4",
-                        children: ["Accueil"]
-                      },
-                      {
                         tag: "ul",
                         attributes: [["class", "footer-section"]],
                         children: [
@@ -35,9 +31,21 @@ export default function Footer() {
                               {
                                 tag: Link,
                                 attributes: [
+                                  ["link", "/"],
+                                  ["title", "Accueil"],
+                                  ["class", "h2-footer footer-link"],
+                                ],
+                              }
+                            ] 
+                          },{ 
+                            tag: "li", 
+                            children: [
+                              {
+                                tag: Link,
+                                attributes: [
                                   ["link", "/a-propos"],
                                   ["title", "À propos"],
-                                  ["class", "footer-link"],
+                                  ["class", "h2-footer footer-link"],
                                 ],
                               }
                             ] 
@@ -50,7 +58,7 @@ export default function Footer() {
                                 attributes: [
                                   ["link", "/evenements"],
                                   ["title", "Événements"],
-                                  ["class", "footer-link"],
+                                  ["class", "h2-footer footer-link"],
                                 ],
                               }
                             ] 
@@ -63,7 +71,7 @@ export default function Footer() {
                                 attributes: [
                                   ["link", "/communautes"],
                                   ["title", "Communautés"],
-                                  ["class", "footer-link"],
+                                  ["class", "h2-footer footer-link"],
                                 ],
                               }
                             ] 
@@ -76,7 +84,7 @@ export default function Footer() {
                                 attributes: [
                                   ["link", "/a-propos"],
                                   ["title", "Contact"],
-                                  ["class", "footer-link"],
+                                  ["class", "h2-footer footer-link"],
                                 ],
                               }
                             ] 
@@ -90,11 +98,13 @@ export default function Footer() {
                     attributes: [["class", "footer-section"]],
                     children: [
                       {
-                        tag: "h4",
+                        tag: "p",
+												attributes: [["class", "h2-footer"]],
                         children: ["Mon compte"]
                       },
                       {
                         tag: "ul",
+												attributes: [["class", "footer-section-compte"]],
                         children: [
                           { 
                             tag: "li", 
@@ -104,7 +114,7 @@ export default function Footer() {
                                 attributes: [
                                   ["link", "/users"],
                                   ["title", "Profil"],
-                                  ["class", "footer-link"],
+                                  ["class", "footer-link h2"],
                                 ],
                               }
                             ] 
@@ -117,7 +127,7 @@ export default function Footer() {
                                 attributes: [
                                   ["link", "/dashboard"],
                                   ["title", "Dashboard"],
-                                  ["class", "footer-link"],
+                                  ["class", "footer-link h2"],
                                 ],
                               }
                             ] 
@@ -130,7 +140,7 @@ export default function Footer() {
                                 attributes: [
                                   ["link", "/dashboard"],
                                   ["title", "Notifications"],
-                                  ["class", "footer-link"],
+                                  ["class", "footer-link h2"],
                                 ],
                               }
                             ] 
@@ -143,7 +153,7 @@ export default function Footer() {
                                 attributes: [
                                   ["link", "/evenements"],
                                   ["title", "Calendrier"],
-                                  ["class", "footer-link"],
+                                  ["class", "footer-link h2"],
                                 ],
                               }
                             ] 
@@ -163,15 +173,10 @@ export default function Footer() {
                     attributes: [
                       ["link", "/evenements"],
                       ["title", ""],
-                      ["class", "action-box blue"],
+                      ["class", "card-big cornflower-blue"],
                     ],
                     children: [
-                      { tag: "p", children: ["Organiser un événement"] },
-                      {
-                        tag: "span",
-                        attributes: [["class", "arrow-button"]],
-                        children: ["→"],
-                      },
+                      { tag: "p", children: ["Organiser un événement"] }
                     ],
                   },
                   {
@@ -179,15 +184,10 @@ export default function Footer() {
                     attributes: [
                       ["link", "/dashboard"],
                       ["title", ""],
-                      ["class", "action-box white"],
+                      ["class", "card-big alice-blue"],
                     ],
                     children: [
-                      { tag: "p", children: ["Mon espace perso"] },
-                      {
-                        tag: "span",
-                        attributes: [["class", "arrow-button"]],
-                        children: ["→"],
-                      },
+                      { tag: "p", children: ["Mon espace perso"] }
                     ],
                   },
                 ],
@@ -203,8 +203,12 @@ export default function Footer() {
                 attributes: [["class", "footer-logo"]],
                 children: [
                   {
-                    tag: "div",
-                    attributes: [["class", "logo-icon"]],
+                    tag: "img",
+                    attributes: [
+                      ["src", "/Assets/images/logo-meetup-connect.webp"],
+                      ["alt", "Meetup Connect Logo"],
+                      ["class", "logo-icon"]
+                    ],
                   },
                 ],
               },
