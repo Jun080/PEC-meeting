@@ -47,19 +47,19 @@ export default function AccountPage() {
                                     {
                                         tag: "a",
                                         attributes: [
-                                            ["href", "/compte/likes"],
+                                            ["href", "/compte/evenements"],
                                             ["class", "account-nav-link"],
-                                            ["data-tab", "likes"]
+                                            ["data-tab", "evenements"]
                                         ],
                                         events: {
                                             click: [
                                                 function (event) {
                                                     event.preventDefault();
-                                                    switchTab('likes');
+                                                    switchTab('evenements');
                                                 }
                                             ]
                                         },
-                                        children: ["Likes"]
+                                        children: ["Évènements"]
                                     },
                                     {
                                         tag: "a",
@@ -318,15 +318,21 @@ export default function AccountPage() {
                     },
                     {
                         tag: "div",
-                        attributes: [["class", "account-tab"], ["data-tab-content", "likes"]],
+                        attributes: [["class", "account-tab"], ["data-tab-content", "evenements"]],
                         children: [
                             {
                                 tag: "h2",
-                                children: ["Mes likes"]
+                                children: ["Mes évènements"]
                             },
                             {
-                                tag: "p",
-                                children: ["Contenu de l'onglet Likes"]
+                                tag: "div",
+                                attributes: [["id", "user-events-list"], ["class", "user-events-container"]],
+                                children: [
+                                    {
+                                        tag: "p",
+                                        children: ["Chargement de vos évènements..."]
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -564,6 +570,11 @@ function switchTab(tabName) {
     if (activeTab) {
         activeTab.classList.add('active');
     }
+
+    // Charger le contenu spécifique de l'onglet
+    if (tabName === 'evenements') {
+        setTimeout(() => chargerEvenementsUtilisateur(), 100);
+    }
 }
 
 async function loadUserProfile() {
@@ -674,6 +685,107 @@ async function afficherCommunautesUtilisateur() {
     } catch (e) {
         container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
     }
+}
+
+async function chargerEvenementsUtilisateur() {
+    const container = document.getElementById('user-events-list');
+    if (!container) return;
+
+    try {
+        // Import du service
+        const { getUserEventParticipations } = await import('../Services/eventParticipationService.js');
+        
+        const currentUser = await getCurrentUser();
+        if (!currentUser || !currentUser.id) {
+            container.innerHTML = '<div class="user-events-empty"><p>Vous devez être connecté pour voir vos évènements.</p></div>';
+            return;
+        }
+
+        const participations = await getUserEventParticipations(currentUser.id);
+        
+        if (participations.length === 0) {
+            container.innerHTML = '<div class="user-events-empty"><p>Vous n\'êtes inscrit à aucun évènement pour le moment.</p></div>';
+            return;
+        }
+
+        // Créer la grille d'événements
+        const eventsGrid = document.createElement('div');
+        eventsGrid.className = 'user-events-grid';
+        
+        participations.forEach(participation => {
+            const event = participation.evenements;
+            if (event) {
+                const eventCard = createUserEventCard(event);
+                eventsGrid.appendChild(eventCard);
+            }
+        });
+
+        container.innerHTML = '';
+        container.appendChild(eventsGrid);
+
+    } catch (error) {
+        container.innerHTML = '<div class="user-events-empty"><p>Erreur lors du chargement de vos évènements.</p></div>';
+    }
+}
+
+function createUserEventCard(event) {
+    const card = document.createElement('div');
+    card.className = 'user-event-card';
+    
+    // Formatage de la date
+    const date = new Date(event.date);
+    const formattedDate = formatEventDate(date);
+    const formattedTime = formatEventTime(date);
+    
+    // Gestion du lieu/adresse
+    let locationLine = '';
+    if (event.lieu) {
+        locationLine = event.lieu;
+    }
+    if (event.adresse) {
+        locationLine += locationLine ? ` - ${event.adresse}` : event.adresse;
+    }
+    
+    // Gestion du prix
+    const priceText = event.prix === 0 || event.prix === '0' ? 'Gratuit' : `${event.prix}€`;
+    
+    card.innerHTML = `
+        <div class="user-event-card-image">
+            <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
+        </div>
+        <div class="user-event-card-content">
+            <div class="user-event-card-info">
+                <h4 class="user-event-title">${event.nom}</h4>
+                <p class="user-event-date-time">${formattedDate} à ${formattedTime}</p>
+                ${locationLine ? `<p class="user-event-location">${locationLine}</p>` : ''}
+            </div>
+            <p class="user-event-price">${priceText}</p>
+        </div>
+    `;
+    
+    // Ajout du gestionnaire de clic
+    card.addEventListener('click', () => {
+        window.router.navigate(`/evenements/${event.id}`);
+    });
+    
+    return card;
+}
+
+function formatEventDate(date) {
+    const options = { 
+        day: 'numeric', 
+        month: 'long',
+        year: 'numeric'
+    };
+    return date.toLocaleDateString('fr-FR', options);
+}
+
+function formatEventTime(date) {
+    const options = { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    };
+    return date.toLocaleTimeString('fr-FR', options);
 }
 
 function renderElement(obj) {

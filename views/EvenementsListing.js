@@ -393,7 +393,8 @@ function createEventCard(event) {
   `;
   
   card.addEventListener('click', () => {
-    window.location.pathname = `/evenement/${event.id}`;
+    window.location.pathname = `/evenements/${event.id}`;
+
   });
   
   return card;

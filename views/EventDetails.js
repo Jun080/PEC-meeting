@@ -1,24 +1,22 @@
 import createElement from '../lib/createElement.js';
 import { getEventById, getAllEvents } from '../Models/eventModel.js';
 import { getUserById } from '../Models/userModel.js';
+import { subscribeToEvent, unsubscribeFromEvent, isUserSubscribedToEvent } from '../Services/eventParticipationService.js';
 
 export function EventDetails(props) {
     const params = props.params || {};
     const eventId = params.id;
     
-    // Déclencher le chargement automatiquement une fois le composant créé
     setTimeout(() => chargerDetailEvenement(), 100);
     
     return {
         tag: 'div',
         attributes: [['class', 'event-details-page']],
         children: [
-            // Header avec carte bleue à gauche et image à droite (design exact)
             {
                 tag: 'div',
                 attributes: [['class', 'event-hero']],
                 children: [
-                    // Carte bleue à gauche
                     {
                         tag: 'div',
                         attributes: [['class', 'event-hero-card']],
@@ -56,7 +54,6 @@ export function EventDetails(props) {
                             }
                         ]
                     },
-                    // Image à droite
                     {
                         tag: 'div',
                         attributes: [['class', 'event-hero-image'], ['id', 'event-hero-image']],
@@ -64,7 +61,6 @@ export function EventDetails(props) {
                     }
                 ]
             },
-            // Section principale avec description et détails
             {
                 tag: 'div',
                 attributes: [['class', 'event-main-content']],
@@ -188,9 +184,8 @@ export function EventDetails(props) {
                     }
                 ]
             },
-            // Section événements similaires
             {
-                tag: 'div',
+                tag: 'section',
                 attributes: [['class', 'similar-events-section']],
                 children: [
                     {
@@ -199,8 +194,47 @@ export function EventDetails(props) {
                     },
                     {
                         tag: 'div',
-                        attributes: [['class', 'similar-events-grid'], ['id', 'similar-events']],
-                        children: []
+                        attributes: [['class', 'similar-events-carousel']],
+                        children: [
+                            {
+                                tag: 'div',
+                                attributes: [['class', 'similar-events-container']],
+                                children: [
+                                    {
+                                        tag: 'div',
+                                        attributes: [['class', 'similar-events-grid'], ['id', 'similar-events']],
+                                        children: []
+                                    }
+                                ]
+                            },
+                            {
+                                tag: 'div',
+                                attributes: [['class', 'carousel-controls']],
+                                children: [
+                                    {
+                                        tag: 'div',
+                                        attributes: [['class', 'carousel-indicators'], ['id', 'carousel-indicators']],
+                                        children: []
+                                    },
+                                    {
+                                        tag: 'div',
+                                        attributes: [['class', 'carousel-nav-buttons']],
+                                        children: [
+                                            {
+                                                tag: 'button',
+                                                attributes: [['class', 'carousel-nav-btn carousel-prev'], ['id', 'carousel-prev']],
+                                                children: ['‹']
+                                            },
+                                            {
+                                                tag: 'button',
+                                                attributes: [['class', 'carousel-nav-btn carousel-next'], ['id', 'carousel-next']],
+                                                children: ['›']
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
@@ -208,22 +242,15 @@ export function EventDetails(props) {
     };
 
     async function chargerDetailEvenement() {
-        console.log('EventDetails - eventId:', eventId);
-        
         if (!eventId) {
-            console.error('Aucun ID d\'événement fourni');
             showError('ID d\'événement manquant');
             return;
         }
 
         try {
-            console.log('Chargement de l\'événement avec ID:', eventId);
             const event = await getEventById(eventId);
-            console.log('Événement récupéré:', event);
-            console.log('Champs disponibles:', Object.keys(event));
             updateEventDisplay(event);
         } catch (error) {
-            console.error('Erreur lors du chargement de l\'événement:', error);
             showError('Événement non trouvé');
         }
     }
@@ -255,18 +282,15 @@ export function EventDetails(props) {
         const joinButton = document.getElementById('join-event-btn');
         const eventHeroImage = document.getElementById('event-hero-image');
 
-        // Utiliser les VRAIS champs de la BDD selon les logs
         if (eventTitle) eventTitle.textContent = event.nom || 'Événement';
         if (eventDate) eventDate.textContent = formatDateWithTime(event.date);
         if (eventLocation) eventLocation.textContent = event.adresse || 'Lieu non précisé';
         
-        // Utiliser description_courte ou description_longue
         if (eventDescription) {
             const description = event.description_longue || event.description_courte || 'Description non disponible';
             eventDescription.textContent = description;
         }
         
-        // Mise à jour des statistiques avec les vrais champs
         if (eventParticipants) {
             const totalPlaces = event.nombre_places || 50;
             const placesDisponibles = event.nombre_places_disponibles || 0;
@@ -280,7 +304,6 @@ export function EventDetails(props) {
         }
         
         if (eventOrganizer) {
-            // Récupérer le nom de l'organisateur à partir de son ID
             if (event.organisateur_id) {
                 loadOrganizerName(event.organisateur_id);
             } else {
@@ -288,45 +311,77 @@ export function EventDetails(props) {
             }
         }
         
-        // Conditions basées sur le type_evenement de la BDD
         if (eventConditions) {
             const defaultConditions = getDefaultConditions(event.type_evenement);
             eventConditions.innerHTML = defaultConditions.map(condition => `<li>${condition}</li>`).join('');
         }
 
-        // Image à droite - utiliser le bon champ
         if (eventHeroImage) {
             const imageUrl = event.image || '/Assets/images/eventImage.png';
             eventHeroImage.style.backgroundImage = `url(${imageUrl})`;
         }
 
-        // Bouton d'inscription
         if (joinButton) {
-            // Pour l'instant pas d'info sur l'inscription dans les logs, on garde la logique par défaut
-            joinButton.onclick = () => {
-                handleEventRegistration(event.id, true);
-            };
+            checkUserSubscriptionStatus(event.id);
         }
 
         // Charger les événements similaires
         loadSimilarEvents();
     }
 
-    // Fonction pour charger le nom de l'organisateur
+    async function checkUserSubscriptionStatus(eventId) {
+        try {
+            const userStorage = localStorage.getItem('user');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const currentUser = userStorage && isLoggedIn ? JSON.parse(userStorage) : null;
+            
+            if (!currentUser?.id || !isLoggedIn) {
+                return setupJoinButton(eventId, false, false);
+            }
+
+            const isSubscribed = await isUserSubscribedToEvent(currentUser.id, eventId);
+            setupJoinButton(eventId, isSubscribed, true);
+        } catch (error) {
+            setupJoinButton(eventId, false, false);
+        }
+    }
+
+    function setupJoinButton(eventId, isSubscribed, isLoggedIn) {
+        const joinButton = document.getElementById('join-event-btn');
+        if (!joinButton) return;
+
+        if (!isLoggedIn) {
+            joinButton.textContent = 'Se connecter pour s\'inscrire';
+            joinButton.classList.remove('joined');
+            joinButton.onclick = () => {
+                window.router.navigate('/connexion');
+            };
+            return;
+        }
+
+        if (isSubscribed) {
+            joinButton.textContent = 'Se désinscrire';
+            joinButton.classList.add('joined');
+        } else {
+            joinButton.textContent = 'S\'inscrire à l\'événement';
+            joinButton.classList.remove('joined');
+        }
+
+        joinButton.onclick = () => {
+            handleEventRegistration(eventId, !isSubscribed);
+        };
+    }
+
     async function loadOrganizerName(organizerId) {
         try {
-            console.log('Chargement de l\'organisateur avec ID:', organizerId);
             const organizer = await getUserById(organizerId);
-            console.log('Organisateur récupéré:', organizer);
             
             const eventOrganizer = document.getElementById('event-organizer');
             if (eventOrganizer && organizer) {
-                // Utiliser prénom + nom ou pseudo ou nom complet selon ce qui est disponible
                 const organizerName = getOrganizerDisplayName(organizer);
                 eventOrganizer.textContent = organizerName;
             }
         } catch (error) {
-            console.error('Erreur lors du chargement de l\'organisateur:', error);
             const eventOrganizer = document.getElementById('event-organizer');
             if (eventOrganizer) {
                 eventOrganizer.textContent = 'Organisateur inconnu';
@@ -334,145 +389,197 @@ export function EventDetails(props) {
         }
     }
 
-    // Fonction pour déterminer le nom d'affichage de l'organisateur
     function getOrganizerDisplayName(organizer) {
-        // Vérifier les champs possibles (selon la structure de la table utilisateurs)
-        if (organizer.prenom && organizer.nom) {
-            return `${organizer.prenom} ${organizer.nom}`;
-        } else if (organizer.pseudo || organizer.username) {
-            return organizer.pseudo || organizer.username;
-        } else if (organizer.nom_complet || organizer.full_name) {
-            return organizer.nom_complet || organizer.full_name;
-        } else if (organizer.nom) {
-            return organizer.nom;
-        } else if (organizer.prenom) {
-            return organizer.prenom;
-        } else {
-            return 'Organisateur';
-        }
+        return organizer.prenom && organizer.nom ? `${organizer.prenom} ${organizer.nom}` :
+               organizer.pseudo || organizer.username || organizer.nom_complet || organizer.full_name || 
+               organizer.nom || organizer.prenom || 'Organisateur';
     }
 
-    // Fonction pour obtenir des conditions par défaut selon le type d'événement
     function getDefaultConditions(eventType) {
-        const conditionsByType = {
+        const conditions = {
             'concert': ['+18 ans requis', 'Pièce d\'identité obligatoire', 'Alcool interdit à l\'entrée'],
             'conference': ['Inscription préalable requise', 'Arrivée 15 min avant le début', 'Silence pendant la présentation'],
             'sport': ['Équipement personnel requis', 'Assurance responsabilité civile', 'Condition physique appropriée'],
-            'social': ['Respect des autres participants', 'Ponctualité appréciée', 'Bonne humeur obligatoire'],
-            'default': ['Inscription requise', 'Annulation 24h avant', 'Respect du lieu et des participants']
+            'social': ['Respect des autres participants', 'Ponctualité appréciée', 'Bonne humeur obligatoire']
         };
-        
-        return conditionsByType[eventType] || conditionsByType['default'];
+        return conditions[eventType] || ['Inscription requise', 'Annulation 24h avant', 'Respect du lieu et des participants'];
     }
 
-    // Fonction pour gérer l'inscription/désinscription
     async function handleEventRegistration(eventId, subscribe) {
         try {
-            console.log(`${subscribe ? 'Inscription' : 'Désinscription'} à l'événement ${eventId}`);
-            // TODO: Implémenter l'API d'inscription
-            // await subscribeToEvent(eventId, subscribe);
+            const userStorage = localStorage.getItem('user');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const currentUser = userStorage && isLoggedIn ? JSON.parse(userStorage) : null;
             
-            // Pour l'instant, on simule juste le changement d'état
+            if (!currentUser?.id || !isLoggedIn) {
+                alert('Vous devez être connecté pour vous inscrire à un événement');
+                return window.router.navigate('/connexion');
+            }
+
             const joinButton = document.getElementById('join-event-btn');
             if (joinButton) {
-                if (subscribe) {
-                    joinButton.textContent = 'Se désinscrire';
-                    joinButton.classList.add('joined');
-                } else {
-                    joinButton.textContent = 'S\'inscrire à l\'événement';
-                    joinButton.classList.remove('joined');
-                }
+                joinButton.disabled = true;
+                joinButton.textContent = subscribe ? 'Inscription...' : 'Désinscription...';
             }
+
+            const result = subscribe ? 
+                await subscribeToEvent(currentUser.id, eventId) : 
+                await unsubscribeFromEvent(currentUser.id, eventId);
+
+            setupJoinButton(eventId, subscribe, true);
+            updateEventParticipantsDisplay(await getEventById(eventId));
+            showNotification(result.message, 'success');
+
         } catch (error) {
-            console.error('Erreur lors de l\'inscription:', error);
+            showNotification(error.message || 'Une erreur est survenue', 'error');
+            setupJoinButton(eventId, !subscribe, true);
+        } finally {
+            const joinButton = document.getElementById('join-event-btn');
+            if (joinButton) joinButton.disabled = false;
         }
+    }
+
+    function updateEventParticipantsDisplay(event) {
+        const eventParticipants = document.getElementById('event-participants');
+        if (eventParticipants) {
+            const totalPlaces = event.nombre_places || 50;
+            const placesDisponibles = event.nombre_places_disponibles || 0;
+            const inscrits = totalPlaces - placesDisponibles;
+            eventParticipants.textContent = `${inscrits}/${totalPlaces}`;
+        }
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        const colors = {success: '#4CAF50', error: '#f44336', info: '#2196F3'};
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `position:fixed;top:20px;right:20px;padding:1rem 2rem;background:${colors[type]||colors.info};color:white;border-radius:8px;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);opacity:0;transform:translateX(100%);transition:all 0.3s ease`;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => { notification.style.opacity='1'; notification.style.transform='translateX(0)'; }, 10);
+        setTimeout(() => {
+            notification.style.opacity='0';
+            notification.style.transform='translateX(100%)';
+            setTimeout(() => notification.parentNode?.removeChild(notification), 300);
+        }, 3000);
     }
 
     function formatDateWithTime(dateString) {
         if (!dateString) return 'Date non précisée';
         const date = new Date(dateString);
-        const dateFormatted = date.toLocaleDateString('fr-FR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-        const timeFormatted = date.toLocaleTimeString('fr-FR', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        return `${dateFormatted} - ${timeFormatted}`;
+        return `${date.toLocaleDateString('fr-FR', {day:'2-digit',month:'2-digit',year:'numeric'})} - ${date.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})}`;
+    }
+
+    function formatSimpleDate(dateString) {
+        return dateString ? new Date(dateString).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'}) : 'Date à définir';
+    }
+
+    function truncateText(text, maxLength) {
+        return text && text.length > maxLength ? text.substring(0, maxLength) + '...' : text || '';
     }
 
     async function loadSimilarEvents() {
         const similarEventsContainer = document.getElementById('similar-events');
-        if (similarEventsContainer) {
-            try {
-                const allEvents = await getAllEvents();
-                const otherEvents = allEvents.filter(e => e.id != eventId).slice(0, 2);
-                
-                similarEventsContainer.innerHTML = '';
-                otherEvents.forEach(event => {
-                    const eventCard = document.createElement('div');
-                    eventCard.className = 'similar-event-card';
-                    
-                    // Utiliser les VRAIS champs de la BDD
-                    const eventName = event.nom || 'Événement sans nom';
-                    const eventDate = formatSimpleDate(event.date) || 'Date à définir';
-                    const eventLocation = event.adresse || 'Lieu à définir';
-                    const eventDescription = truncateText(event.description_courte || event.description_longue || 'Description à venir', 80);
-                    const eventPrice = event.prix || 0;
-                    const eventImage = event.image || '/Assets/images/eventImage.png';
-                    
-                    eventCard.innerHTML = `
-                        <div class="similar-event-image" style="background-image: url(${eventImage})"></div>
-                        <div class="similar-event-content">
-                            <h4>${eventName}</h4>
-                            <div class="similar-event-date">${eventDate}</div>
-                            <div class="similar-event-location">${eventLocation}</div>
-                            <div class="similar-event-description">${eventDescription}</div>
-                            <div class="similar-event-price">${eventPrice > 0 ? eventPrice + '€' : 'Gratuit'}</div>
-                        </div>
-                    `;
-                    eventCard.onclick = () => window.router.navigate(`/evenements/${event.id}`);
-                    similarEventsContainer.appendChild(eventCard);
-                });
-                
-                if (otherEvents.length === 0) {
-                    similarEventsContainer.innerHTML = '<p style="color: white; text-align: center; padding: 2rem;">Aucun autre événement disponible pour le moment.</p>';
-                }
-            } catch (error) {
-                console.error('Erreur lors du chargement des événements similaires:', error);
-                if (similarEventsContainer) {
-                    similarEventsContainer.innerHTML = '<p style="color: white; text-align: center; padding: 2rem;">Erreur lors du chargement des événements similaires.</p>';
-                }
+        if (!similarEventsContainer) return;
+        
+        try {
+            const allEvents = await getAllEvents();
+            const otherEvents = allEvents.filter(e => e.id != eventId);
+            
+            if (otherEvents.length === 0) {
+                similarEventsContainer.innerHTML = '<p style="color:white;text-align:center;padding:2rem;">Aucun autre événement disponible pour le moment.</p>';
+                return;
             }
+            
+            similarEventsContainer.innerHTML = '';
+            otherEvents.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'similar-event-card';
+                eventCard.innerHTML = `
+                    <div class="similar-event-image" style="background-image: url(${event.image || '/Assets/images/eventImage.png'})"></div>
+                    <div class="similar-event-content">
+                        <h4>${event.nom || 'Événement sans nom'}</h4>
+                        <div class="similar-event-date">${formatSimpleDate(event.date)}</div>
+                        <div class="similar-event-location">${event.adresse || 'Lieu à définir'}</div>
+                        <div class="similar-event-description">${truncateText(event.description_courte || event.description_longue || 'Description à venir', 80)}</div>
+                        <div class="similar-event-price">${event.prix > 0 ? event.prix + '€' : 'Gratuit'}</div>
+                    </div>
+                `;
+                eventCard.onclick = () => window.router.navigate(`/evenements/${event.id}`);
+                similarEventsContainer.appendChild(eventCard);
+            });
+            
+            initializeCarousel();
+        } catch (error) {
+            similarEventsContainer.innerHTML = '<p style="color:white;text-align:center;padding:2rem;">Erreur lors du chargement des événements similaires.</p>';
         }
     }
 
-    function formatSimpleDate(dateString) {
-        if (!dateString) return '';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-    }
-
-    function truncateText(text, maxLength) {
-        if (!text) return '';
-        if (text.length <= maxLength) return text;
-        return text.substring(0, maxLength) + '...';
-    }
-
-    function formatDate(dateString) {
-        if (!dateString) return 'Date non précisée';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('fr-FR', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+    function initializeCarousel() {
+        const container = document.getElementById('similar-events');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        const indicatorsContainer = document.getElementById('carousel-indicators');
+        
+        if (!container || !prevBtn || !nextBtn) return;
+        
+        const cards = container.children;
+        const cardsPerView = window.innerWidth <= 768 ? 1 : 2; // 2 cartes par vue sur desktop, 1 sur mobile
+        const totalCards = cards.length;
+        const totalSlides = Math.ceil(totalCards / cardsPerView);
+        let currentSlide = 0;
+        
+        const cardGroups = [];
+        for (let i = 0; i < totalCards; i += cardsPerView) {
+            cardGroups.push(Array.from(cards).slice(i, i + cardsPerView));
+        }
+        
+        indicatorsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('button');
+            indicator.className = `carousel-indicator ${i === 0 ? 'active' : ''}`;
+            indicator.addEventListener('click', () => goToSlide(i));
+            indicatorsContainer.appendChild(indicator);
+        }
+        
+        function updateCarousel() {
+            const containerWidth = container.parentElement.offsetWidth;
+            const translateX = -(currentSlide * containerWidth);
+            container.style.transform = `translateX(${translateX}px)`;
+            
+            const indicators = indicatorsContainer.children;
+            Array.from(indicators).forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+            
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function goToSlide(slideIndex) {
+            currentSlide = Math.max(0, Math.min(slideIndex, totalSlides - 1));
+            updateCarousel();
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateCarousel();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+            }
+        }
+        
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        updateCarousel();
+        
+        window.addEventListener('resize', () => setTimeout(initializeCarousel, 100));
     }
 }
