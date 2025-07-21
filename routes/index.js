@@ -6,7 +6,7 @@ import RegisterPage from "../views/RegisterPage.js";
 import LoginPage from "../views/LoginPage.js";
 import Bienvenue from "../views/Bienvenue.js";
 import APropos from "../views/APropos.js";
-import Evenements from "../views/Evenements.js";
+import EvenementsListing from "../views/EvenementsListing.js";
 import Communautes from "../views/Communautes.js";
 import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
@@ -40,7 +40,7 @@ export default {
   },
   "/evenements": {
     tag: Layout,
-    attributes: [["content", { tag: Evenements }]],
+    attributes: [["content", { tag: EvenementsListing }]],
   },
   "/communautes": {
     tag: Layout,
