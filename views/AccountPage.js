@@ -342,7 +342,21 @@ export default function AccountPage() {
                         children: [
                             {
                                 tag: "h2",
-                                children: ["Mes communautés"]
+                                attributes: [["class", "h1"]],
+                                children: ["Toutes mes ", {
+                                tag: "span",
+                                attributes: [["class", "gradient-fonce"]],
+                                children: ["communautés"]
+                                }],
+                            },
+                            { 
+                                tag: "div", 
+                                    attributes: [["id", "mes-communautes-list"]]
+                            },
+                            {
+                                tag: "h2",
+                                attributes: [["class", "h1"]],
+                                children: ["Envie de créer votre communauté ? "],
                             },
                             {
                                 tag: "form",
@@ -353,7 +367,7 @@ export default function AccountPage() {
                                         const nom = document.getElementById('comm-nom').value;
                                         const description = document.getElementById('comm-description').value;
                                         const lieu = document.getElementById('comm-lieu').value;
-                                        const status = document.getElementById('comm-status').value;
+                                        // const status = document.getElementById('comm-status').value;
                                         const imageInput = document.getElementById('comm-image');
                                         let imageUrl = '';
                                         if (imageInput && imageInput.files && imageInput.files[0]) {
@@ -372,12 +386,12 @@ export default function AccountPage() {
                                                 referent: userProfileData.id,
                                                 date_creation,
                                                 lieu,
-                                                status,
+                                                status: 'public',
                                                 image: imageUrl
                                             });
-                                            alert('Communauté créée !');
-                                            document.getElementById('create-communaute-form').reset();
-                                            await afficherCommunautesUtilisateur();
+                                            
+                                            window.location.pathname = `/communautes/${newComm.id}`;
+                                            
                                         } catch (e) {
                                             alert('Erreur lors de la création : ' + e.message);
                                         }
@@ -387,12 +401,11 @@ export default function AccountPage() {
                                     { tag: "input", attributes: [["type", "text"], ["id", "comm-nom"], ["placeholder", "Nom de la communauté"], ["required", true]] },
                                     { tag: "textarea", attributes: [["id", "comm-description"], ["placeholder", "Description"], ["required", true]] },
                                     { tag: "input", attributes: [["type", "text"], ["id", "comm-lieu"], ["placeholder", "Lieu"], ["required", true]] },
-                                    { tag: "input", attributes: [["type", "text"], ["id", "comm-status"], ["placeholder", "Statut (ex: public/privé)"], ["required", true]] },
+                                    // { tag: "input", attributes: [["type", "text"], ["id", "comm-status"], ["placeholder", "Statut (ex: public/privé)"], ["required", true]] },
                                     { tag: "input", attributes: [["type", "file"], ["id", "comm-image"], ["accept", "image/*"]] },
-                                    { tag: "button", attributes: [["type", "submit"]], children: ["Créer ma communauté"] }
+                                    { tag: "button", attributes: [["type", "submit"], ["class", "bouton-primary-1"]], children: ["Créer ma communauté"] }
                                 ]
-                            },
-                            { tag: "div", attributes: [["id", "mes-communautes-list"]], children: [] }
+                            }
                         ]
                     },
                     {
@@ -571,7 +584,6 @@ function switchTab(tabName) {
         activeTab.classList.add('active');
     }
 
-    // Charger le contenu spécifique de l'onglet
     if (tabName === 'evenements') {
         setTimeout(() => chargerEvenementsUtilisateur(), 100);
     }
@@ -673,15 +685,16 @@ async function afficherCommunautesUtilisateur() {
             return;
         }
         container.innerHTML = '';
-        communautes.forEach(c => {
-            const card = VerticalCard({
-                imageUrl: c.image || '../Assets/images/eventImage.png',
-                title: c.nom,
-                place: c.lieu,
-                description: c.description
-            });
-            container.appendChild(renderElement(card));
-        });
+        
+        const communautesGrid = document.createElement('div');
+        communautesGrid.className = 'user-communautes-grid';
+        
+        for (const communaute of communautes) {
+            const card = await createUserCommunauteCard(communaute);
+            communautesGrid.appendChild(card);
+        }
+        
+        container.appendChild(communautesGrid);
     } catch (e) {
         container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
     }
@@ -692,7 +705,6 @@ async function chargerEvenementsUtilisateur() {
     if (!container) return;
 
     try {
-        // Import du service
         const { getUserEventParticipations } = await import('../Services/eventParticipationService.js');
         
         const currentUser = await getCurrentUser();
@@ -708,7 +720,6 @@ async function chargerEvenementsUtilisateur() {
             return;
         }
 
-        // Créer la grille d'événements
         const eventsGrid = document.createElement('div');
         eventsGrid.className = 'user-events-grid';
         
@@ -732,12 +743,10 @@ function createUserEventCard(event) {
     const card = document.createElement('div');
     card.className = 'user-event-card';
     
-    // Formatage de la date
     const date = new Date(event.date);
     const formattedDate = formatEventDate(date);
     const formattedTime = formatEventTime(date);
     
-    // Gestion du lieu/adresse
     let locationLine = '';
     if (event.lieu) {
         locationLine = event.lieu;
@@ -746,7 +755,6 @@ function createUserEventCard(event) {
         locationLine += locationLine ? ` - ${event.adresse}` : event.adresse;
     }
     
-    // Gestion du prix
     const priceText = event.prix === 0 || event.prix === '0' ? 'Gratuit' : `${event.prix}€`;
     
     card.innerHTML = `
@@ -763,12 +771,66 @@ function createUserEventCard(event) {
         </div>
     `;
     
-    // Ajout du gestionnaire de clic
     card.addEventListener('click', () => {
         window.router.navigate(`/evenements/${event.id}`);
     });
     
     return card;
+}
+
+async function createUserCommunauteCard(communaute) {
+    const card = document.createElement('div');
+    card.className = 'event-card';
+    
+    // Récupérer le nombre de membres
+    let memberCount = 0;
+    try {
+        const { getCommunauteMemberCount } = await import('../Models/communauteModel.js');
+        memberCount = await getCommunauteMemberCount(communaute.id);
+    } catch (error) {
+        console.error('Erreur lors du chargement du nombre de membres:', error);
+    }
+    
+    const date = communaute.date_creation ? new Date(communaute.date_creation) : null;
+    const formattedDate = date ? formatCommunauteDate(date) : '';
+    
+    const locationLine = communaute.lieu || '';
+    
+    const description = communaute.description || 'Aucune description disponible';
+    
+    const memberText = memberCount === 0 ? 'Aucun membre' : 
+                      memberCount === 1 ? '1 membre' : 
+                      `${memberCount} membres`;
+    
+    card.innerHTML = `
+        <div class="event-card-image">
+            <img src="${communaute.image || '/Assets/images/banner-femme.webp'}" alt="${communaute.nom}" />
+        </div>
+        <div class="event-card-content">
+            <div class="event-card-info">
+                <h3 class="event-title">${communaute.nom || 'Communauté sans nom'}</h3>
+                ${formattedDate ? `<p class="event-date-time highlight">Créée le ${formattedDate}</p>` : ''}
+                ${locationLine ? `<p class="event-location highlight">${locationLine}</p>` : ''}
+                <p class="event-description">${description}</p>
+            </div>
+            <p class="event-price h2">${memberText}</p>
+        </div>
+    `;
+    
+    card.addEventListener('click', () => {
+        window.location.pathname = `/communaute/${communaute.id}`;
+    });
+    
+    return card;
+}
+
+function formatCommunauteDate(date) {
+    const options = { 
+        day: 'numeric', 
+        month: 'long',
+        year: 'numeric'
+    };
+    return date.toLocaleDateString('fr-FR', options);
 }
 
 function formatEventDate(date) {

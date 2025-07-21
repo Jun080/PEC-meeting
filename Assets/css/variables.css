@@ -94,7 +94,7 @@ h3, .h3 {
     margin: 0;
 }
 
-p, .p, input, input::placeholder, .account-nav a, label, select, select option {
+p, .p, input, input::placeholder, textarea::placeholder, .account-nav a, label, textarea, select, select option {
     font-family: "Noto Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
