@@ -2,6 +2,16 @@ import VerticalCard from "../components/VerticalCard.js";
 import HorizontalCard from "../components/HorizontalCard.js";
 import { getAllPopularEvents } from "../Services/eventService.js";
 
+function formatEventDate(dateString) {
+    if (!dateString) return "Date inconnue";
+    const date = new Date(dateString);
+    const optionsDate = { day: "2-digit", month: "long", year: "numeric" };
+    const optionsTime = { hour: "2-digit", minute: "2-digit", hour12: false };
+    const datePart = date.toLocaleDateString("fr-FR", optionsDate);
+    const timePart = date.toLocaleTimeString("fr-FR", optionsTime);
+    return `${datePart} - ${timePart}`;
+}
+
 export default async function Bienvenue() {
     // Récupérer les 4 premiers événements populaires triés par places achetées
     let topEvents = [];
@@ -50,9 +60,11 @@ export default async function Bienvenue() {
                                     "../Assets/images/eventImage.png",
                                 title: event.title || event.nom || "Événement",
                                 date:
-                                    event.date ||
-                                    event.date_event ||
-                                    "Date inconnue",
+                                    event.date || event.date_event
+                                        ? formatEventDate(
+                                              event.date || event.date_event
+                                          )
+                                        : "Date inconnue",
                                 place:
                                     event.place || event.lieu || "Lieu inconnu",
                                 price:
