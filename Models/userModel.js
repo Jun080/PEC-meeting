@@ -16,10 +16,39 @@ export async function getUserById(id) {
     return data;
 }
 
+export async function getUserByEmail(email) {
+    const { data, error } = await client
+        .from('utilisateurs')
+        .select('*')
+        .eq('mail', email)
+        .maybeSingle(); 
+    
+    if (error) {
+        throw error;
+    }
+    
+    if (!data) {
+        throw new Error('Utilisateur non trouvé');
+    }
+    
+    return data;
+}
+
 export async function createUser(user) {
   const { data, error } = await client
     .from('utilisateurs')
     .insert([user])
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
+}
+
+export async function updateUser(id, userData) {
+  const { data, error } = await client
+    .from('utilisateurs')
+    .update(userData)
+    .eq('id', id)
     .select()
     .single();
   if (error) throw error;

@@ -99,6 +99,7 @@ export function BrowserLink(props) {
   const link = props.link;
   const title = props.title;
   const className = props.class;
+  const children = props.children;
 
   const attributes = [["href", browserRouterOptions.baseUrl + link]];
   
@@ -119,9 +120,10 @@ export function BrowserLink(props) {
             event.currentTarget.getAttribute("href")
           );
           window.dispatchEvent(new Event("pushstate"));
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         },
       ],
     },
-    children: [title],
+    children: children && children.length > 0 ? children : [title],
   };
 }

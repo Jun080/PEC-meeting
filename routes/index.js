@@ -10,6 +10,7 @@ import Evenements from "../views/Evenements.js";
 import Communautes from "../views/Communautes.js";
 import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
+import OAuthCallback from "../views/OAuthCallback.js";
 
 export default {
   "/": {
@@ -53,6 +54,9 @@ export default {
   "/compte": {
     tag: Layout,
     attributes: [["content", { tag: AccountPage }]],
+  },
+  "/auth-callback": {
+    tag: OAuthCallback,
   },
   "*": {
     tag: Layout,
