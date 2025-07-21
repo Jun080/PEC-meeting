@@ -419,14 +419,11 @@ function makeEditable(event) {
 
     const input = document.createElement("input");
     
-    // Set input type based on field
     if (fieldType === 'birthdate') {
         input.type = "date";
-        // Convert display text back to date format if needed
         if (text && text !== 'Date de naissance non renseignée') {
-            // Try to parse the displayed date and convert to YYYY-MM-DD format
             try {
-                const dateParts = text.split('/'); // Assuming DD/MM/YYYY format
+                const dateParts = text.split('/'); 
                 if (dateParts.length === 3) {
                     const day = dateParts[0].padStart(2, '0');
                     const month = dateParts[1].padStart(2, '0');
@@ -458,7 +455,7 @@ function makeEditable(event) {
         const newValue = input.value;
         let displayValue = newValue;
         
-        // Format date for display if it's a birthdate field
+        
         if (fieldType === 'birthdate' && newValue) {
             displayValue = formatDate(newValue);
         } else if (fieldType === 'birthdate' && !newValue) {
@@ -525,7 +522,6 @@ async function handlePhotoUpload(event) {
     if (!file) return;
 
     try {
-        // Afficher un indicateur de chargement
         const profileImg = document.getElementById('profile-img');
         const photoContainer = profileImg.parentElement;
 
@@ -581,7 +577,7 @@ async function loadUserProfile() {
         userProfileData = await getUserProfile(currentUser.id);
 
         updateProfileDisplay();
-        await afficherCommunautesUtilisateur(); // <-- ajout ici
+        await afficherCommunautesUtilisateur(); 
 
     } catch (error) {
         if (error.message.includes('connecté') || error.message.includes('Session')) {
@@ -680,7 +676,6 @@ async function afficherCommunautesUtilisateur() {
     }
 }
 
-// Fonction utilitaire pour rendre un objet virtuel en DOM réel (si pas déjà présente)
 function renderElement(obj) {
     if (typeof obj === 'string') return document.createTextNode(obj);
     const el = document.createElement(obj.tag);
