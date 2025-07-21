@@ -11,6 +11,7 @@ import Communautes from "../views/Communautes.js";
 import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
 import OAuthCallback from "../views/OAuthCallback.js";
+import { EventDetails } from "../views/EventDetails.js";
 
 export default {
   "/": {
@@ -42,6 +43,10 @@ export default {
   "/evenements": {
     tag: Layout,
     attributes: [["content", { tag: Evenements }]],
+  },
+  "/evenements/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: EventDetails }]],
   },
   "/communautes": {
     tag: Layout,
