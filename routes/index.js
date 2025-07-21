@@ -6,8 +6,8 @@ import RegisterPage from "../views/RegisterPage.js";
 import LoginPage from "../views/LoginPage.js";
 import Bienvenue from "../views/Bienvenue.js";
 import APropos from "../views/APropos.js";
-import Evenements from "../views/Evenements.js";
-import Communautes from "../views/Communautes.js";
+import EvenementsListing from "../views/EvenementsListing.js";
+import CommunautesListing from "../views/CommunautesListing.js";
 import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
 import OAuthCallback from "../views/OAuthCallback.js";
@@ -42,7 +42,7 @@ export default {
   },
   "/evenements": {
     tag: Layout,
-    attributes: [["content", { tag: Evenements }]],
+    attributes: [["content", { tag: EvenementsListing }]],
   },
   "/evenements/:id": {
     tag: Layout,
@@ -50,7 +50,7 @@ export default {
   },
   "/communautes": {
     tag: Layout,
-    attributes: [["content", { tag: Communautes }]],
+    attributes: [["content", { tag: CommunautesListing }]],
   },
   "/dashboard": {
     tag: Layout,

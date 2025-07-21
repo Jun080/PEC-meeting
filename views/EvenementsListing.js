@@ -394,6 +394,7 @@ function createEventCard(event) {
   
   card.addEventListener('click', () => {
     window.location.pathname = `/evenements/${event.id}`;
+
   });
   
   return card;
