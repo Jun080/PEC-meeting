@@ -19,15 +19,17 @@ function formatEventDate(dateString) {
 async function geocodeCity(cityName) {
   try {
     const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cityName)}&limit=1&countrycodes=fr`
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+        cityName
+      )}&limit=1&countrycodes=fr`
     );
     const data = await response.json();
-    
+
     if (data && data.length > 0) {
       return {
         lat: parseFloat(data[0].lat),
         lng: parseFloat(data[0].lon),
-        displayName: data[0].display_name
+        displayName: data[0].display_name,
       };
     }
     return null;
@@ -54,7 +56,10 @@ async function initializeMapWithUser() {
       }
     }
   } catch (error) {
-    console.error("Erreur lors de la récupération des données utilisateur:", error);
+    console.error(
+      "Erreur lors de la récupération des données utilisateur:",
+      error
+    );
   }
 
   const checkMap = () => {
@@ -65,17 +70,12 @@ async function initializeMapWithUser() {
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: "&copy; OpenStreetMap contributors",
         }).addTo(map);
-        
+
         if (userLocation) {
-          const userMarker = L.marker([userLocation.lat, userLocation.lng], {
-            icon: L.divIcon({
-              className: 'user-location-marker',
-              html: '🏠',
-              iconSize: [30, 30],
-              iconAnchor: [15, 15]
-            })
-          }).addTo(map);
-          
+          const userMarker = L.marker([
+            userLocation.lat,
+            userLocation.lng,
+          ]).addTo(map);
           userMarker.bindPopup(`
             <div style="text-align: center;">
               <strong>Votre ville</strong><br>
@@ -83,23 +83,20 @@ async function initializeMapWithUser() {
             </div>
           `);
         }
-        
+
         const eventMarkers = [
-          { lat: 48.85837, lng: 2.294481, title: "Point Ephémère - Night Tapes", price: "18,13€" },
+          {
+            lat: 48.85837,
+            lng: 2.294481,
+            title: "Point Ephémère - Night Tapes",
+            price: "18,13€",
+          },
           { lat: 48.8566, lng: 2.3522, title: "Autre événement", price: "25€" },
-          { lat: 48.8534, lng: 2.3488, title: "Concert jazz", price: "30€" }
+          { lat: 48.8534, lng: 2.3488, title: "Concert jazz", price: "30€" },
         ];
 
-        eventMarkers.forEach(event => {
-          const eventMarker = L.marker([event.lat, event.lng], {
-            icon: L.divIcon({
-              className: 'event-marker',
-              html: '🎵',
-              iconSize: [25, 25],
-              iconAnchor: [12, 12]
-            })
-          }).addTo(map);
-          
+        eventMarkers.forEach((event) => {
+          const eventMarker = L.marker([event.lat, event.lng]).addTo(map);
           eventMarker.bindPopup(`
             <div style="text-align: center;">
               <strong>${event.title}</strong><br>
@@ -107,17 +104,16 @@ async function initializeMapWithUser() {
             </div>
           `);
         });
-          
+
         console.log("Carte initialisée avec succès");
-        
+
         if (userLocation) {
           const group = new L.featureGroup([
             L.marker([userLocation.lat, userLocation.lng]),
-            ...eventMarkers.map(e => L.marker([e.lat, e.lng]))
+            ...eventMarkers.map((e) => L.marker([e.lat, e.lng])),
           ]);
           map.fitBounds(group.getBounds().pad(0.1));
         }
-        
       } catch (error) {
         console.error("Erreur lors de l'initialisation de la carte:", error);
       }
@@ -128,7 +124,7 @@ async function initializeMapWithUser() {
 
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      if (mutation.type === 'childList') {
+      if (mutation.type === "childList") {
         checkMap();
       }
     });
@@ -136,7 +132,7 @@ async function initializeMapWithUser() {
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
   });
 
   setTimeout(() => observer.disconnect(), 10000);
@@ -145,14 +141,14 @@ async function initializeMapWithUser() {
 export default async function Bienvenue() {
   let topEvents = [];
   let matchingEvents = [];
-  
+
   try {
     const events = await getAllPopularEvents();
     topEvents = events.slice(0, 4);
   } catch (e) {
     topEvents = [];
   }
-  
+
   try {
     const events = await getMatchingEvents();
     matchingEvents = events.slice(0, 4);
