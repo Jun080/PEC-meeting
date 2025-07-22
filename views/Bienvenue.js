@@ -1,6 +1,7 @@
 import VerticalCard from "../components/VerticalCard.js";
 import HorizontalCard from "../components/HorizontalCard.js";
 import { getAllPopularEvents } from "../Services/eventService.js";
+import { getMatchingEvents } from "../Services/eventService.js";
 
 function formatEventDate(dateString) {
     if (!dateString) return "Date inconnue";
