@@ -608,6 +608,9 @@ function switchTab(tabName) {
     if (tabName === 'evenements') {
         setTimeout(() => chargerEvenementsUtilisateur(), 100);
     }
+    if (tabName === 'communautes') {
+        setTimeout(() => afficherCommunautesUtilisateur(), 100);
+    }
 }
 
 async function loadUserProfile() {
@@ -700,14 +703,13 @@ async function afficherCommunautesUtilisateur() {
     if (!container || !userProfileData) return;
     container.innerHTML = 'Chargement...';
     try {
-        // Récupérer les communautés créées (référent)
         const communautesCreees = await getCommunautesByReferent(userProfileData.id);
-        // Récupérer les IDs des communautés suivies
+        
         const abonneesIds = await getCommunautesAbonnees(userProfileData.id);
-        // Récupérer les infos des communautés suivies (hors celles créées déjà listées)
+        console.log('IDs des communautés suivies:', abonneesIds);
+        
         let communautesAbonnees = [];
         if (abonneesIds.length > 0) {
-            // On évite de dupliquer les communautés créées par l'utilisateur
             const idsCreees = communautesCreees.map(c => c.id);
             const idsARecuperer = abonneesIds.filter(id => !idsCreees.includes(id));
             if (idsARecuperer.length > 0) {
@@ -717,56 +719,49 @@ async function afficherCommunautesUtilisateur() {
                     .select('*')
                     .in('id', idsARecuperer);
                 if (error) throw error;
+                console.log('Communautés suivies récupérées:', data);
                 communautesAbonnees = data;
             }
         }
+        
         if (!communautesCreees.length && !communautesAbonnees.length) {
             container.innerHTML = '<p>Aucune communauté créée ou suivie.</p>';
             return;
         }
+        
         container.innerHTML = '';
-
-        if (communautesCreees.length) {
-            const titre = document.createElement('h3');
-            titre.textContent = 'Communautés créées';
-            container.appendChild(titre);
-            communautesCreees.forEach(c => {
-                const card = VerticalCard({
-                    imageUrl: c.image || '../Assets/images/eventImage.png',
-                    title: c.nom,
-                    place: c.lieu,
-                    description: c.description
-                });
-                container.appendChild(renderElement(card));
-            });
+        
+        if (communautesCreees.length) {            
+            const creeesGrid = document.createElement('div');
+            creeesGrid.className = 'user-communautes-grid';
+            
+            for (const communaute of communautesCreees) {
+                const card = await createUserCommunauteCard(communaute);
+                creeesGrid.appendChild(card);
+            }
+            
+            container.appendChild(creeesGrid);
         }
+        
         if (communautesAbonnees.length) {
-            const titre2 = document.createElement('h3');
-            titre2.textContent = 'Communautés suivies';
+            const titre2 = document.createElement('h2');
+            titre2.className = 'h1';
+            titre2.textContent = 'Communautés que je suis';
             container.appendChild(titre2);
-            communautesAbonnees.forEach(c => {
-                const card = VerticalCard({
-                    imageUrl: c.image || '../Assets/images/eventImage.png',
-                    title: c.nom,
-                    place: c.lieu,
-                    description: c.description
-                });
-                container.appendChild(renderElement(card));
-            });
+            
+            const abonneesGrid = document.createElement('div');
+            abonneesGrid.className = 'user-communautes-grid';
+            
+            for (const communaute of communautesAbonnees) {
+                const card = await createUserCommunauteCard(communaute);
+                abonneesGrid.appendChild(card);
+            }
+            
+            container.appendChild(abonneesGrid);
         }
-
-        
-        const communautesGrid = document.createElement('div');
-        communautesGrid.className = 'user-communautes-grid';
-        
-        for (const communaute of communautes) {
-            const card = await createUserCommunauteCard(communaute);
-            communautesGrid.appendChild(card);
-        }
-        
-        container.appendChild(communautesGrid);
 
     } catch (e) {
+        console.error('Erreur lors du chargement des communautés:', e);
         container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
     }
 }
@@ -785,14 +780,11 @@ async function chargerEvenementsUtilisateur() {
             return;
         }
 
-        // Charger les événements organisés par l'utilisateur
         const userEvents = await getUserEvents(currentUser.id);
         
-        // Charger les événements auxquels l'utilisateur participe
         const participations = await getUserEventParticipations(currentUser.id);
         const participationEvents = participations.map(p => p.evenements).filter(e => e);
 
-        // Combiner et éviter les doublons
         const allEvents = [...userEvents];
         participationEvents.forEach(event => {
             if (!allEvents.find(e => e.id === event.id)) {
@@ -805,7 +797,6 @@ async function chargerEvenementsUtilisateur() {
             return;
         }
 
-        // Séparer les événements organisés des événements auxquels on participe
         const organizedEvents = userEvents;
         const participatingEvents = participationEvents.filter(event => 
             !organizedEvents.find(e => e.id === event.id)
@@ -824,7 +815,6 @@ async function chargerEvenementsUtilisateur() {
 
         container.innerHTML = '';
 
-        // Section événements organisés
         if (organizedEvents.length > 0) {
             const organizedSection = document.createElement('div');
             organizedSection.className = 'user-events-section';
@@ -842,7 +832,6 @@ async function chargerEvenementsUtilisateur() {
             container.appendChild(organizedSection);
         }
 
-        // Section événements auxquels on participe
         if (participatingEvents.length > 0) {
             const participatingSection = document.createElement('div');
             participatingSection.className = 'user-events-section';
@@ -983,39 +972,4 @@ function formatEventTime(date) {
         minute: '2-digit' 
     };
     return date.toLocaleTimeString('fr-FR', options);
-}
-
-function renderElement(obj) {
-    if (typeof obj === 'string') return document.createTextNode(obj);
-    const el = document.createElement(obj.tag);
-    if (obj.attributes) {
-        obj.attributes.forEach(([key, value]) => {
-            if (typeof value === 'object' && key === 'style') {
-                Object.assign(el.style, value);
-            } else {
-                el.setAttribute(key, value);
-            }
-        });
-    }
-    if (obj.events) {
-        Object.entries(obj.events).forEach(([event, handlers]) => {
-            handlers.forEach(handler => el.addEventListener(event, handler));
-        });
-    }
-    if (obj.children) {
-        obj.children.forEach(child => el.appendChild(renderElement(child)));
-    }
-    return el;
-}
-
-async function creerEvenement(form) {
-    // Cette fonction a été déplacée vers CreateEvent.js
-    // Redirection vers la page de création
-    window.location.hash = '#/creer-evenement';
-}
-
-function showNotification(message, type = 'info') {
-    // Cette fonction a été déplacée vers CreateEvent.js  
-    // Notification simple pour AccountPage
-    alert(message);
 }

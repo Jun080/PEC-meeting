@@ -1,4 +1,6 @@
 import { getAllCommunautesWithMemberCount } from '../Models/communauteModel.js';
+import { ajouterMembreCommunaute, retirerMembreCommunaute, estMembreCommunaute } from '../Models/communauteMembresModel.js';
+import { getCurrentUser } from '../Models/userModel.js';
 
 let communautesData = [];
 
@@ -101,6 +103,7 @@ async function loadCommunautes() {
   }
 }
 
+
 function populateLocationFilter(communautes) {
   const locationFilter = document.getElementById('filter-location');
   if (!locationFilter) return;
@@ -136,7 +139,7 @@ function setupFilterEvents() {
   }
 }
 
-function applyFilters() {
+async function applyFilters() {
   const locationFilter = document.getElementById('filter-location')?.value;
   
   let filteredCommunautes = [...communautesData];
@@ -148,10 +151,10 @@ function applyFilters() {
   }
   
   const gridElement = document.getElementById('communautes-grid');
-  displayCommunautes(filteredCommunautes, gridElement);
+  await displayCommunautes(filteredCommunautes, gridElement);
 }
 
-function clearFilters() {
+async function clearFilters() {
   const filterElements = [
     'filter-location'
   ];
@@ -164,10 +167,10 @@ function clearFilters() {
   });
   
   const gridElement = document.getElementById('communautes-grid');
-  displayCommunautes(communautesData, gridElement);
+  await displayCommunautes(communautesData, gridElement);
 }
 
-function displayCommunautes(communautes, container) {
+async function displayCommunautes(communautes, container) {
   if (!container) return;
   
   container.innerHTML = '';
@@ -177,13 +180,13 @@ function displayCommunautes(communautes, container) {
     return;
   }
   
-  communautes.forEach(communaute => {
-    const communauteCard = createCommunauteCard(communaute);
+  for (const communaute of communautes) {
+    const communauteCard = await createCommunauteCard(communaute);
     container.appendChild(communauteCard);
-  });
+  }
 }
 
-function createCommunauteCard(communaute) {
+async function createCommunauteCard(communaute) {
   const card = document.createElement('div');
   card.className = 'event-card';
   
@@ -210,13 +213,55 @@ function createCommunauteCard(communaute) {
         ${locationLine ? `<p class="event-location highlight">${locationLine}</p>` : ''}
         <p class="event-description">${description}</p>
       </div>
-      <p class="event-price h2">${memberText}</p>
+      <div class="event-card-actions">
+        <p class="event-price h2">${memberText}</p>
+        <button class="btn-comm-action bouton-primary-2" data-communaute-id="${communaute.id}">
+          <span class="btn-text">...</span>
+        </button>
+      </div>
     </div>
   `;
   
-  card.addEventListener('click', () => {
+  const cardContent = card.querySelector('.event-card-info');
+  cardContent.addEventListener('click', () => {
     window.location.pathname = `/communaute/${communaute.id}`;
   });
+  
+  const button = card.querySelector('.btn-comm-action');
+  const buttonText = button.querySelector('.btn-text');
+  
+  try {
+    const user = await getCurrentUser();
+    if (user && user.id !== communaute.referent) {
+      button.disabled = true;
+      const isMember = await estMembreCommunaute(user.id, communaute.id);
+      buttonText.textContent = isMember ? 'Quitter' : 'Rejoindre';
+      button.disabled = false;
+      
+      button.onclick = async (e) => {
+        e.stopPropagation();
+        button.disabled = true;
+        try {
+          if (isMember) {
+            await retirerMembreCommunaute(user.id, communaute.id);
+            buttonText.textContent = 'Rejoindre';
+          } else {
+            await ajouterMembreCommunaute(user.id, communaute.id);
+            buttonText.textContent = 'Quitter';
+          }
+          setTimeout(() => loadCommunautes());
+        } catch (error) {
+          alert('Erreur : ' + error.message);
+        } finally {
+          button.disabled = false;
+        }
+      };
+    } else {
+      button.style.display = 'none';
+    }
+  } catch (error) {
+    button.style.display = 'none';
+  }
   
   return card;
 }
