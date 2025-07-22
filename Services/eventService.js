@@ -23,3 +23,13 @@ export async function getMatchingEvents(searchTerm) {
   });
   return matchingEvents;
 }
+
+export async function getEventsNearUser() {
+  const events = await getAllEvents();
+  const user = await getCurrentUser();
+  if (!user || !user.lieu) return [];
+  const userCity = user.lieu.trim().toLowerCase();
+  return events.filter(
+    (event) => event.adresse && event.adresse.toLowerCase().includes(userCity)
+  );
+}
