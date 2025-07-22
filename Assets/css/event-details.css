@@ -198,16 +198,14 @@
     flex-wrap: nowrap;
 }
 
-.similar-event-card {
+.similar-events-grid .event-card {
     background: var(--bg-dark-imperial-blue);
     border-radius: 15px;
     overflow: hidden;
     cursor: pointer;
-    flex: 1 1 calc(50% - 1rem);
-    min-width: 300px;
+    min-width: calc(50% - 4rem);
     height: 400px;
     color: var(--text-alice-blue);
-    max-width: 50%;
 }
 
 .similar-event-image {
