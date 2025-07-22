@@ -4,6 +4,7 @@ import {
   getAllPopularEvents,
   getMatchingEvents,
 } from "../Services/eventService.js";
+import { getCurrentUser } from "../Models/userModel.js";
 
 function formatEventDate(dateString) {
   if (!dateString) return "Date inconnue";
@@ -15,17 +16,108 @@ function formatEventDate(dateString) {
   return `${datePart} - ${timePart}`;
 }
 
-function initializeMap() {
+async function geocodeCity(cityName) {
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cityName)}&limit=1&countrycodes=fr`
+    );
+    const data = await response.json();
+    
+    if (data && data.length > 0) {
+      return {
+        lat: parseFloat(data[0].lat),
+        lng: parseFloat(data[0].lon),
+        displayName: data[0].display_name
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error("Erreur lors du géocodage:", error);
+    return null;
+  }
+}
+
+async function initializeMapWithUser() {
+  let userLocation = null;
+  let mapCenter = [48.85837, 2.294481];
+  let mapZoom = 12;
+
+  try {
+    const user = await getCurrentUser();
+    if (user && user.lieu) {
+      console.log("Ville de l'utilisateur:", user.lieu);
+      userLocation = await geocodeCity(user.lieu);
+      if (userLocation) {
+        mapCenter = [userLocation.lat, userLocation.lng];
+        mapZoom = 13;
+        console.log("Coordonnées trouvées:", userLocation);
+      }
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données utilisateur:", error);
+  }
+
   const checkMap = () => {
     const mapElement = document.getElementById("map");
     if (window.L && mapElement && !mapElement._leaflet_id) {
       try {
-        const map = L.map("map").setView([48.85837, 2.294481], 12);
+        const map = L.map("map").setView(mapCenter, mapZoom);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: "&copy; OpenStreetMap contributors",
         }).addTo(map);
+        
+        if (userLocation) {
+          const userMarker = L.marker([userLocation.lat, userLocation.lng], {
+            icon: L.divIcon({
+              className: 'user-location-marker',
+              html: '🏠',
+              iconSize: [30, 30],
+              iconAnchor: [15, 15]
+            })
+          }).addTo(map);
+          
+          userMarker.bindPopup(`
+            <div style="text-align: center;">
+              <strong>Votre ville</strong><br>
+              ${userLocation.displayName}
+            </div>
+          `);
+        }
+        
+        const eventMarkers = [
+          { lat: 48.85837, lng: 2.294481, title: "Point Ephémère - Night Tapes", price: "18,13€" },
+          { lat: 48.8566, lng: 2.3522, title: "Autre événement", price: "25€" },
+          { lat: 48.8534, lng: 2.3488, title: "Concert jazz", price: "30€" }
+        ];
+
+        eventMarkers.forEach(event => {
+          const eventMarker = L.marker([event.lat, event.lng], {
+            icon: L.divIcon({
+              className: 'event-marker',
+              html: '🎵',
+              iconSize: [25, 25],
+              iconAnchor: [12, 12]
+            })
+          }).addTo(map);
+          
+          eventMarker.bindPopup(`
+            <div style="text-align: center;">
+              <strong>${event.title}</strong><br>
+              Prix: ${event.price}
+            </div>
+          `);
+        });
           
         console.log("Carte initialisée avec succès");
+        
+        if (userLocation) {
+          const group = new L.featureGroup([
+            L.marker([userLocation.lat, userLocation.lng]),
+            ...eventMarkers.map(e => L.marker([e.lat, e.lng]))
+          ]);
+          map.fitBounds(group.getBounds().pad(0.1));
+        }
+        
       } catch (error) {
         console.error("Erreur lors de l'initialisation de la carte:", error);
       }
@@ -53,12 +145,14 @@ function initializeMap() {
 export default async function Bienvenue() {
   let topEvents = [];
   let matchingEvents = [];
+  
   try {
     const events = await getAllPopularEvents();
     topEvents = events.slice(0, 4);
   } catch (e) {
     topEvents = [];
   }
+  
   try {
     const events = await getMatchingEvents();
     matchingEvents = events.slice(0, 4);
@@ -66,7 +160,7 @@ export default async function Bienvenue() {
     matchingEvents = [];
   }
 
-  setTimeout(initializeMap, 100);
+  setTimeout(initializeMapWithUser, 100);
 
   return {
     tag: "div",
