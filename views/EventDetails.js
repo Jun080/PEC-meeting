@@ -504,15 +504,23 @@ export function EventDetails(props) {
             similarEventsContainer.innerHTML = '';
             otherEvents.forEach(event => {
                 const eventCard = document.createElement('div');
-                eventCard.className = 'similar-event-card';
+                eventCard.className = 'event-card';
+                
+                const description = event.description_courte || event.description_longue || 'Description à venir';
+                const priceText = event.prix > 0 ? `${event.prix}€` : 'Gratuit';
+                
                 eventCard.innerHTML = `
-                    <div class="similar-event-image" style="background-image: url(${event.image || '/Assets/images/eventImage.png'})"></div>
-                    <div class="similar-event-content">
-                        <h4>${event.nom || 'Événement sans nom'}</h4>
-                        <div class="similar-event-date">${formatSimpleDate(event.date)}</div>
-                        <div class="similar-event-location">${event.adresse || 'Lieu à définir'}</div>
-                        <div class="similar-event-description">${truncateText(event.description_courte || event.description_longue || 'Description à venir', 80)}</div>
-                        <div class="similar-event-price">${event.prix > 0 ? event.prix + '€' : 'Gratuit'}</div>
+                    <div class="event-card-image">
+                        <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
+                    </div>
+                    <div class="event-card-content">
+                        <div class="event-card-info">
+                            <h3 class="event-title">${event.nom || 'Événement sans nom'}</h3>
+                            <p class="event-date-time highlight">${formatSimpleDate(event.date)}</p>
+                            <p class="event-location highlight">${event.adresse || 'Lieu à définir'}</p>
+                            <p class="event-description">${truncateText(description, 80)}</p>
+                        </div>
+                        <p class="event-price h2">${priceText}</p>
                     </div>
                 `;
                 eventCard.onclick = () => window.router.navigate(`/evenements/${event.id}`);
