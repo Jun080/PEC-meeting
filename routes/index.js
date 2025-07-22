@@ -12,6 +12,7 @@ import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
 import OAuthCallback from "../views/OAuthCallback.js";
 import { EventDetails } from "../views/EventDetails.js";
+import CreateEvent from "../views/CreateEvent.js";
 
 export default {
   "/": {
@@ -59,6 +60,10 @@ export default {
   "/compte": {
     tag: Layout,
     attributes: [["content", { tag: AccountPage }]],
+  },
+  "/evenement/creer-evenement": {
+    tag: Layout,
+    attributes: [["content", { tag: CreateEvent }]],
   },
   "/auth-callback": {
     tag: OAuthCallback,
