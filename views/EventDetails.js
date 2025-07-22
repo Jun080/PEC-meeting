@@ -22,19 +22,26 @@ export function EventDetails(props) {
                         attributes: [['class', 'event-hero-card']],
                         children: [
                             {
-                                tag: 'h1',
-                                attributes: [['class', 'event-hero-title'], ['id', 'event-title']],
-                                children: ['Chargement...']
+                                tag: 'p',
+                                attributes: [['class', 'event-category-badge h3'], ['id', 'event-category-badge']],
                             },
                             {
                                 tag: 'div',
-                                attributes: [['class', 'event-hero-date'], ['id', 'event-date']],
-                                children: ['Chargement...']
-                            },
-                            {
-                                tag: 'div',
-                                attributes: [['class', 'event-hero-location'], ['id', 'event-location']],
-                                children: ['Chargement...']
+                                attributes: [['class', 'event-hero-card-container']],
+                                children: [
+                                    {
+                                        tag: 'h1',
+                                        attributes: [['class', 'event-hero-title'], ['id', 'event-title']],
+                                    },
+                                    {
+                                        tag: 'p',
+                                        attributes: [['class', 'event-hero-date h3'], ['id', 'event-date']],
+                                    },
+                                    {
+                                        tag: 'p',
+                                        attributes: [['class', 'event-hero-location'], ['id', 'event-location']],
+                                    }
+                                ]
                             },
                             {
                                 tag: 'div',
@@ -42,14 +49,14 @@ export function EventDetails(props) {
                                 children: [
                                     {
                                         tag: 'button',
-                                        attributes: [['class', 'event-subscribe-btn'], ['id', 'join-event-btn']],
+                                        attributes: [['class', 'event-subscribe-btn bouton-primary-2'], ['id', 'join-event-btn']],
                                         children: ['S\'inscrire à l\'événement']
                                     },
-                                    {
-                                        tag: 'button',
-                                        attributes: [['class', 'event-share-btn']],
-                                        children: ['🔗']
-                                    }
+                                    // {
+                                    //     tag: 'button',
+                                    //     attributes: [['class', 'event-share-btn']],
+                                    //     children: ['🔗']
+                                    // }
                                 ]
                             }
                         ]
@@ -75,6 +82,7 @@ export function EventDetails(props) {
                                 children: [
                                     {
                                         tag: 'h2',
+                                        attributes: [['class', 'h1']],
                                         children: ['À propos']
                                     },
                                     {
@@ -93,14 +101,14 @@ export function EventDetails(props) {
                                         attributes: [['class', 'event-stat']],
                                         children: [
                                             {
-                                                tag: 'div',
-                                                attributes: [['class', 'event-stat-number'], ['id', 'event-participants']],
-                                                children: ['00/00']
-                                            },
-                                            {
-                                                tag: 'div',
+                                                tag: 'p',
                                                 attributes: [['class', 'event-stat-label']],
                                                 children: ['Inscrits']
+                                            },
+                                            {
+                                                tag: 'p',
+                                                attributes: [['class', 'event-stat-number h2-chiffres-bento'], ['id', 'event-participants']],
+                                                children: ['00/00']
                                             }
                                         ]
                                     },
@@ -109,13 +117,13 @@ export function EventDetails(props) {
                                         attributes: [['class', 'event-stat']],
                                         children: [
                                             {
-                                                tag: 'div',
+                                                tag: 'p',
                                                 attributes: [['class', 'event-stat-label']],
                                                 children: ['Prix :']
                                             },
                                             {
-                                                tag: 'div',
-                                                attributes: [['class', 'event-stat-number'], ['id', 'event-price']],
+                                                tag: 'p',
+                                                attributes: [['class', 'event-stat-number h2-chiffres-bento'], ['id', 'event-price']],
                                                 children: ['0€']
                                             }
                                         ]
@@ -125,13 +133,13 @@ export function EventDetails(props) {
                                         attributes: [['class', 'event-stat']],
                                         children: [
                                             {
-                                                tag: 'div',
+                                                tag: 'p',
                                                 attributes: [['class', 'event-stat-label']],
                                                 children: ['Organisé par:']
                                             },
                                             {
-                                                tag: 'div',
-                                                attributes: [['class', 'event-stat-number'], ['id', 'event-organizer']],
+                                                tag: 'p',
+                                                attributes: [['class', 'event-stat-number h2-chiffres-bento'], ['id', 'event-organizer']],
                                                 children: ['---']
                                             }
                                         ]
@@ -157,7 +165,7 @@ export function EventDetails(props) {
                                         attributes: [['class', 'event-details-list']],
                                         children: [
                                             {
-                                                tag: 'div',
+                                                tag: 'p',
                                                 attributes: [['class', 'event-detail-item']],
                                                 children: [
                                                     {
@@ -170,7 +178,6 @@ export function EventDetails(props) {
                                                         children: [
                                                             {
                                                                 tag: 'li',
-                                                                children: ['Chargement...']
                                                             }
                                                         ]
                                                     }
@@ -222,13 +229,11 @@ export function EventDetails(props) {
                                         children: [
                                             {
                                                 tag: 'button',
-                                                attributes: [['class', 'carousel-nav-btn carousel-prev'], ['id', 'carousel-prev']],
-                                                children: ['‹']
+                                                attributes: [['class', 'carousel-nav-btn carousel-prev'], ['id', 'carousel-prev'], ['aria-label', 'Image précédente']],
                                             },
                                             {
                                                 tag: 'button',
-                                                attributes: [['class', 'carousel-nav-btn carousel-next'], ['id', 'carousel-next']],
-                                                children: ['›']
+                                                attributes: [['class', 'carousel-nav-btn carousel-next'], ['id', 'carousel-next'], ['aria-label', 'Image suivante']],
                                             }
                                         ]
                                     }
@@ -281,10 +286,15 @@ export function EventDetails(props) {
         const eventConditions = document.getElementById('event-conditions');
         const joinButton = document.getElementById('join-event-btn');
         const eventHeroImage = document.getElementById('event-hero-image');
+        const eventCategoryBadge = document.getElementById('event-category-badge');
 
         if (eventTitle) eventTitle.textContent = event.nom || 'Événement';
         if (eventDate) eventDate.textContent = formatDateWithTime(event.date);
         if (eventLocation) eventLocation.textContent = event.adresse || 'Lieu non précisé';
+        
+        if (eventCategoryBadge) {
+            eventCategoryBadge.textContent = event.categorie || 'Général';
+        }
         
         if (eventDescription) {
             const description = event.description_longue || event.description_courte || 'Description non disponible';
@@ -325,7 +335,6 @@ export function EventDetails(props) {
             checkUserSubscriptionStatus(event.id);
         }
 
-        // Charger les événements similaires
         loadSimilarEvents();
     }
 
@@ -397,10 +406,10 @@ export function EventDetails(props) {
 
     function getDefaultConditions(eventType) {
         const conditions = {
-            'concert': ['+18 ans requis', 'Pièce d\'identité obligatoire', 'Alcool interdit à l\'entrée'],
-            'conference': ['Inscription préalable requise', 'Arrivée 15 min avant le début', 'Silence pendant la présentation'],
-            'sport': ['Équipement personnel requis', 'Assurance responsabilité civile', 'Condition physique appropriée'],
-            'social': ['Respect des autres participants', 'Ponctualité appréciée', 'Bonne humeur obligatoire']
+            'Tech': ['Ordinateur portable recommandé', 'Connaissances de base requises', 'Participation active encouragée'],
+            'Créatif': ['Matériel fourni sur place', 'Aucune expérience requise', 'Esprit ouvert et créativité'],
+            'Concert': ['+18 ans requis', 'Pièce d\'identité obligatoire', 'Alcool interdit à l\'entrée'],
+            'Sport': ['Équipement personnel requis', 'Assurance responsabilité civile', 'Condition physique appropriée']
         };
         return conditions[eventType] || ['Inscription requise', 'Annulation 24h avant', 'Respect du lieu et des participants'];
     }
