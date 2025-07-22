@@ -327,22 +327,20 @@ export default function AccountPage() {
                                 children: [
                                     {
                                         tag: "h2",
-                                        children: ["Mes évènements"]
+                                        attributes: [["class", "h1"]],
+                                        children: ["Mes ", {
+                                            tag: "span",
+                                            attributes: [["class", "gradient-fonce"]],
+                                            children: ["prochains"]
+                                        }, " évènements"]
                                     },
                                     {
                                         tag: "a",
                                         attributes: [
                                             ["href", "/evenement/creer-evenement"],
-                                            ["class", "btn-create-event"]
+                                            ["class", "bouton-primary-1"]
                                         ],
-                                        children: [
-                                            {
-                                                tag: "span",
-                                                attributes: [["class", "btn-icon"]],
-                                                children: ["+"]
-                                            },
-                                            "Créer un événement"
-                                        ]
+                                        children: ["Créer un événement"]
                                     }
                                 ]
                             },
@@ -779,10 +777,10 @@ async function chargerEvenementsUtilisateur() {
         if (organizedEvents.length > 0) {
             const organizedSection = document.createElement('div');
             organizedSection.className = 'user-events-section';
-            organizedSection.innerHTML = '<h3 class="user-events-section-title">Événements que j\'organise</h3>';
+            organizedSection.innerHTML = '<h2 class="h1">Événements que j\'ai créés</h2>';
             
             const organizedGrid = document.createElement('div');
-            organizedGrid.className = 'user-events-grid';
+            organizedGrid.className = 'user-communautes-grid';
             
             organizedEvents.forEach(event => {
                 const eventCard = createUserEventCard(event, true);
@@ -797,10 +795,10 @@ async function chargerEvenementsUtilisateur() {
         if (participatingEvents.length > 0) {
             const participatingSection = document.createElement('div');
             participatingSection.className = 'user-events-section';
-            participatingSection.innerHTML = '<h3 class="user-events-section-title">Événements auxquels je participe</h3>';
+            participatingSection.innerHTML = '<h2 class="h1">Événements auxquels je participe</h2>';
             
             const participatingGrid = document.createElement('div');
-            participatingGrid.className = 'user-events-grid';
+            participatingGrid.className = 'user-communautes-grid';
             
             participatingEvents.forEach(event => {
                 const eventCard = createUserEventCard(event, false);
@@ -818,7 +816,7 @@ async function chargerEvenementsUtilisateur() {
 
 function createUserEventCard(event, isOrganizer = false) {
     const card = document.createElement('div');
-    card.className = `user-event-card${isOrganizer ? ' user-event-card-organizer' : ''}`;
+    card.className = 'event-card';
     
     const date = new Date(event.date);
     const formattedDate = formatEventDate(date);
@@ -832,21 +830,28 @@ function createUserEventCard(event, isOrganizer = false) {
         locationLine += locationLine ? ` - ${event.adresse}` : event.adresse;
     }
     
-    const priceText = event.prix === 0 || event.prix === '0' ? 'Gratuit' : `${event.prix}€`;
+    const description = event.description || 'Aucune description disponible';
+    
+    let priceOrParticipantsText;
+    if (isOrganizer) {
+        const participantsCount = event.nombre_places - (event.nombre_places_disponibles || 0);
+        priceOrParticipantsText = `${participantsCount} / ${event.nombre_places} participants`;
+    } else {
+        priceOrParticipantsText = event.prix === 0 || event.prix === '0' ? 'Gratuit' : `${event.prix}€`;
+    }
     
     card.innerHTML = `
-        <div class="user-event-card-image">
+        <div class="event-card-image">
             <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
-            ${isOrganizer ? '<div class="organizer-badge">Organisateur</div>' : ''}
         </div>
-        <div class="user-event-card-content">
-            <div class="user-event-card-info">
-                <h4 class="user-event-title">${event.nom}</h4>
-                <p class="user-event-date-time">${formattedDate} à ${formattedTime}</p>
-                ${locationLine ? `<p class="user-event-location">${locationLine}</p>` : ''}
-                ${isOrganizer ? `<p class="user-event-participants">${(event.nombre_places - (event.nombre_places_disponibles || 0))} / ${event.nombre_places} participants</p>` : ''}
+        <div class="event-card-content">
+            <div class="event-card-info">
+                <h3 class="event-title">${event.nom}</h3>
+                <p class="event-date-time highlight">${formattedDate} à ${formattedTime}</p>
+                ${locationLine ? `<p class="event-location highlight">${locationLine}</p>` : ''}
+                <p class="event-description">${description}</p>
             </div>
-            <p class="user-event-price">${priceText}</p>
+            <p class="event-price h2">${priceOrParticipantsText}</p>
         </div>
     `;
     
