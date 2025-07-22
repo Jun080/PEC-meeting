@@ -1,6 +1,7 @@
 import { getCurrentUser, getUserProfile } from '../Models/userModel.js';
 import { uploadProfilePhoto, updateUserPhotoUrl, uploadCommunauteImage } from '../Services/storageService.js';
 import { getCommunautesByReferent, createCommunaute } from '../Models/communauteModel.js';
+import { getCommunautesAbonnees } from '../Models/communauteMembresModel.js';
 import VerticalCard from '../components/VerticalCard.js';
 
 export default function AccountPage() {
@@ -262,7 +263,7 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "p",
                                                                 attributes: [
-                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["class", "profile-value h3 editable"],
                                                                     ["id", "profile-birthdate"],
                                                                     ["data-field", "birthdate"]
                                                                 ],
@@ -418,7 +419,7 @@ function makeEditable(event) {
     const fieldType = element.dataset.field;
 
     const input = document.createElement("input");
-    
+
     // Set input type based on field
     if (fieldType === 'birthdate') {
         input.type = "date";
@@ -445,7 +446,7 @@ function makeEditable(event) {
         input.type = "text";
         input.value = text;
     }
-    
+
     input.className = "profile-edit-input";
 
     element.appendChild(input);
@@ -457,14 +458,14 @@ function makeEditable(event) {
         const input = event.currentTarget;
         const newValue = input.value;
         let displayValue = newValue;
-        
+
         // Format date for display if it's a birthdate field
         if (fieldType === 'birthdate' && newValue) {
             displayValue = formatDate(newValue);
         } else if (fieldType === 'birthdate' && !newValue) {
             displayValue = 'Date de naissance non renseignée';
         }
-        
+
         const textNode = document.createTextNode(displayValue);
         const element = input.parentNode;
 
@@ -660,21 +661,59 @@ async function afficherCommunautesUtilisateur() {
     if (!container || !userProfileData) return;
     container.innerHTML = 'Chargement...';
     try {
-        const communautes = await getCommunautesByReferent(userProfileData.id);
-        if (!communautes.length) {
-            container.innerHTML = '<p>Aucune communauté créée.</p>';
+        // Récupérer les communautés créées (référent)
+        const communautesCreees = await getCommunautesByReferent(userProfileData.id);
+        // Récupérer les IDs des communautés suivies
+        const abonneesIds = await getCommunautesAbonnees(userProfileData.id);
+        // Récupérer les infos des communautés suivies (hors celles créées déjà listées)
+        let communautesAbonnees = [];
+        if (abonneesIds.length > 0) {
+            // On évite de dupliquer les communautés créées par l'utilisateur
+            const idsCreees = communautesCreees.map(c => c.id);
+            const idsARecuperer = abonneesIds.filter(id => !idsCreees.includes(id));
+            if (idsARecuperer.length > 0) {
+                const { client } = await import('../supabase.js');
+                const { data, error } = await client
+                    .from('communautes')
+                    .select('*')
+                    .in('id', idsARecuperer);
+                if (error) throw error;
+                communautesAbonnees = data;
+            }
+        }
+        if (!communautesCreees.length && !communautesAbonnees.length) {
+            container.innerHTML = '<p>Aucune communauté créée ou suivie.</p>';
             return;
         }
         container.innerHTML = '';
-        communautes.forEach(c => {
-            const card = VerticalCard({
-                imageUrl: c.image || '../Assets/images/eventImage.png',
-                title: c.nom,
-                place: c.lieu,
-                description: c.description
+        if (communautesCreees.length) {
+            const titre = document.createElement('h3');
+            titre.textContent = 'Communautés créées';
+            container.appendChild(titre);
+            communautesCreees.forEach(c => {
+                const card = VerticalCard({
+                    imageUrl: c.image || '../Assets/images/eventImage.png',
+                    title: c.nom,
+                    place: c.lieu,
+                    description: c.description
+                });
+                container.appendChild(renderElement(card));
             });
-            container.appendChild(renderElement(card));
-        });
+        }
+        if (communautesAbonnees.length) {
+            const titre2 = document.createElement('h3');
+            titre2.textContent = 'Communautés suivies';
+            container.appendChild(titre2);
+            communautesAbonnees.forEach(c => {
+                const card = VerticalCard({
+                    imageUrl: c.image || '../Assets/images/eventImage.png',
+                    title: c.nom,
+                    place: c.lieu,
+                    description: c.description
+                });
+                container.appendChild(renderElement(card));
+            });
+        }
     } catch (e) {
         container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
     }

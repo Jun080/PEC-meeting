@@ -1,5 +1,7 @@
 import { getAllCommunautes } from '../Models/communauteModel.js';
 import VerticalCard from '../components/VerticalCard.js';
+import { ajouterMembreCommunaute, retirerMembreCommunaute, estMembreCommunaute } from '../Models/communauteMembresModel.js';
+import { getCurrentUser } from '../Models/userModel.js';
 
 const Communautes = function () {
   setTimeout(() => afficherToutesCommunautes(), 100);
@@ -32,20 +34,53 @@ async function afficherToutesCommunautes() {
   container.innerHTML = 'Chargement...';
   try {
     const communautes = await getAllCommunautes();
+    const user = await getCurrentUser();
     if (!communautes.length) {
       container.innerHTML = '<p>Aucune communauté trouvée.</p>';
       return;
     }
     container.innerHTML = '';
-    communautes.forEach(c => {
+    for (const c of communautes) {
       const card = VerticalCard({
         imageUrl: c.image || '../Assets/images/eventImage.png',
         title: c.nom,
         place: c.lieu,
         description: c.description
       });
-      container.appendChild(renderElement(card));
-    });
+      const cardElement = renderElement(card);
+      // Ajout du bouton rejoindre/quitter
+      if (user && user.id !== c.referent) {
+        const btn = document.createElement('button');
+        btn.className = 'btn-comm-action';
+        btn.textContent = '...'; // placeholder
+        btn.disabled = true;
+        cardElement.appendChild(btn);
+        // Vérifier l'état d'abonnement
+        estMembreCommunaute(user.id, c.id).then(isMember => {
+          btn.textContent = isMember ? 'Quitter' : 'Rejoindre';
+          btn.disabled = false;
+          btn.onclick = async () => {
+            btn.disabled = true;
+            try {
+              if (isMember) {
+                await retirerMembreCommunaute(user.id, c.id);
+                btn.textContent = 'Rejoindre';
+              } else {
+                await ajouterMembreCommunaute(user.id, c.id);
+                btn.textContent = 'Quitter';
+              }
+              // Rafraîchir l'état
+              afficherToutesCommunautes();
+            } catch (e) {
+              alert('Erreur : ' + e.message);
+            } finally {
+              btn.disabled = false;
+            }
+          };
+        });
+      }
+      container.appendChild(cardElement);
+    }
   } catch (e) {
     container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
   }
