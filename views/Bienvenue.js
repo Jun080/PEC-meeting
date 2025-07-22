@@ -3,6 +3,7 @@ import HorizontalCard from "../components/HorizontalCard.js";
 import {
   getAllPopularEvents,
   getMatchingEvents,
+  getEventsNearUser,
 } from "../Services/eventService.js";
 import { getCurrentUser } from "../Models/userModel.js";
 
@@ -141,6 +142,7 @@ async function initializeMapWithUser() {
 export default async function Bienvenue() {
   let topEvents = [];
   let matchingEvents = [];
+  let nearUserEvents = [];
 
   try {
     const events = await getAllPopularEvents();
@@ -154,6 +156,13 @@ export default async function Bienvenue() {
     matchingEvents = events.slice(0, 4);
   } catch (e) {
     matchingEvents = [];
+  }
+
+  try {
+    const events = await getEventsNearUser();
+    nearUserEvents = events.slice(0, 3);
+  } catch (e) {
+    nearUserEvents = [];
   }
 
   setTimeout(initializeMapWithUser, 100);
@@ -291,29 +300,25 @@ export default async function Bienvenue() {
               {
                 tag: "div",
                 attributes: [["class", "map-cards"]],
-                children: [
+                children: nearUserEvents.map((event) =>
                   HorizontalCard({
-                    imageUrl: "../Assets/images/eventImage.png",
-                    title: "Night Tapes",
-                    date: "18 novembre 2025 - 19:30",
-                    place: "Point Ephémère - Paris",
-                    price: "18,13€",
-                  }),
-                  HorizontalCard({
-                    imageUrl: "../Assets/images/eventImage.png",
-                    title: "Night Tapes",
-                    date: "18 novembre 2025 - 19:30",
-                    place: "Point Ephémère - Paris",
-                    price: "18,13€",
-                  }),
-                  HorizontalCard({
-                    imageUrl: "../Assets/images/eventImage.png",
-                    title: "Night Tapes",
-                    date: "18 novembre 2025 - 19:30",
-                    place: "Point Ephémère - Paris",
-                    price: "18,13€",
-                  }),
-                ],
+                    imageUrl:
+                      event.imageUrl || "../Assets/images/eventImage.png",
+                    title: event.title || event.nom || "Événement",
+                    date:
+                      event.date || event.date_event
+                        ? formatEventDate(event.date || event.date_event)
+                        : "Date inconnue",
+                    place:
+                      event.place ||
+                      event.lieu ||
+                      event.adresse ||
+                      "Lieu inconnu",
+                    price:
+                      event.price ||
+                      (event.prix ? event.prix + "€" : "Prix inconnu"),
+                  })
+                ),
               },
             ],
           },
