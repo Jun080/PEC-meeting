@@ -34,7 +34,7 @@ export default function Navbar(props = {}) {
                     {
                       tag: "img",
                       attributes: [
-                        ["src", "./Assets/images/favicon4x.png"],
+                        ["src", "/Assets/images/favicon4x.png"],
                         ["alt", "Meetup Connect Logo"],
                         ["class", "navbar-logo"],
                       ],
