@@ -148,3 +148,83 @@ export async function getUserEventParticipations(userId) {
         throw error;
     }
 }
+
+export async function getPopularEvents(limit = 8) {
+    try {
+        const { data, error } = await client
+            .from('evenement_participants')
+            .select(`
+                evenement_id,
+                evenements (
+                    id,
+                    nom,
+                    date,
+                    adresse,
+                    prix,
+                    image,
+                    description_courte,
+                    description_longue,
+                    nombre_places
+                )
+            `);
+
+        if (error) throw error;
+
+        const eventCounts = {};
+        data.forEach(participation => {
+            const eventId = participation.evenement_id;
+            if (!eventCounts[eventId]) {
+                eventCounts[eventId] = {
+                    event: participation.evenements,
+                    participantCount: 0
+                };
+            }
+            eventCounts[eventId].participantCount++;
+        });
+
+        const popularEvents = Object.values(eventCounts)
+            .sort((a, b) => b.participantCount - a.participantCount)
+            .slice(0, limit)
+            .map(item => ({
+                ...item.event,
+                participants_count: item.participantCount
+            }));
+
+        return popularEvents;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getRecentEventsWithParticipants(limit = 8) {
+    try {
+        // Récupérer tous les événements triés par ID décroissant (les plus récents en premier)
+        const { data: allEvents, error: eventsError } = await client
+            .from('evenements')
+            .select('*')
+            .order('id', { ascending: false })
+            .limit(limit);
+
+        if (eventsError) throw eventsError;
+
+        const eventsWithParticipants = await Promise.all(
+            allEvents.map(async (event) => {
+                const { data: participants, error: participantsError } = await client
+                    .from('evenement_participants')
+                    .select('evenement_id')
+                    .eq('evenement_id', event.id);
+
+                if (participantsError) throw participantsError;
+
+                return {
+                    ...event,
+                    participants_count: participants.length
+                };
+            })
+        );
+
+        return eventsWithParticipants;
+    } catch (error) {
+        throw error;
+    }
+}

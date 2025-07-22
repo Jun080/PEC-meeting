@@ -1,0 +1,87 @@
+.homepage-page {
+    padding: 4rem 0 4rem;
+}
+
+.homepage-page .text-container .h2-big,
+.homepage-page .text-container .p-text-latest-events,
+.homepage-page .text-container .similar-events-carousel {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.homepage-page h1 {
+  color: var(--text-dark-imperial-blue);
+  text-align: center;
+}
+
+.homepage-page .apropos-image-section {
+    margin-top: 64px;
+}
+
+.homepage-page .latest-events-section h2 {
+    color: var(--text-dark-imperial-blue);
+}
+
+.homepage-page .latest-events-section .p-text-latest-events{
+    margin: 1.5rem auto 2rem;
+    color: var(--text-dark-imperial-blue);
+}
+
+.homepage-page .latest-events-section.bottom-events h2 {
+    color: var(--text-bright-gray);
+}
+
+
+.homepage-page .latest-events-section.bottom-events h2 {
+    color: var(--text-bright-gray);
+}
+
+.homepage-page .latest-events-section.bottom-events .p-text-latest-events{
+    color: var(--text-alice-blue);
+}
+
+.view-all-events-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.homepage-page section:not(:first-child) {
+    margin-top: 152px;
+}
+
+.homepage-page .latest-events-section.bottom-events {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding-top: 136px;
+    padding-bottom: 136px;
+    background-image: url(../images/svg/shape-bg-triangle.svg);
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-color: var(--bg-dark-imperial-blue);
+    border-radius: 2rem;
+    border-radius: 1.5rem;
+}
+
+.similar-events-grid .event-card .event-price {
+    margin-top: 4rem;
+}
+
+.similar-events-grid .event-card .event-price:last-child {
+    margin-top: 2rem;
+}
+
+.similar-events-grid .event-card.event-card-bright-gray{
+    background: var(--bg-bright-gray);
+}
+
+.similar-events-grid .event-card.event-card-bright-gray * {
+    color: var(--text-dark-imperial-blue);
+}
+
+.similar-events-grid .event-card.event-card-bright-gray .event-date-time {
+    color: var(--text-shadow-blue);
+}
