@@ -1,7 +1,6 @@
 import VerticalCard from "../components/VerticalCard.js";
 import HorizontalCard from "../components/HorizontalCard.js";
-import { getAllPopularEvents } from "../Services/eventService.js";
-import { getMatchingEvents } from "../Services/eventService.js";
+import { getAllPopularEvents, getMatchingEvents } from "../Services/eventService.js";
 
 function formatEventDate(dateString) {
     if (!dateString) return "Date inconnue";
@@ -16,11 +15,18 @@ function formatEventDate(dateString) {
 export default async function Bienvenue() {
     // Récupérer les 4 premiers événements populaires triés par places achetées
     let topEvents = [];
+    let matchingEvents = [];
     try {
         const events = await getAllPopularEvents();
         topEvents = events.slice(0, 4);
     } catch (e) {
         topEvents = [];
+    }
+    try {
+        const events = await getMatchingEvents();
+        matchingEvents = events.slice(0, 4);
+    } catch (e) {
+        matchingEvents = [];
     }
 
     return {
@@ -62,9 +68,7 @@ export default async function Bienvenue() {
                                 title: event.title || event.nom || "Événement",
                                 date:
                                     event.date || event.date_event
-                                        ? formatEventDate(
-                                              event.date || event.date_event
-                                          )
+                                        ? formatEventDate(event.date || event.date_event)
                                         : "Date inconnue",
                                 place:
                                     event.place || event.lieu || "Lieu inconnu",
@@ -123,36 +127,25 @@ export default async function Bienvenue() {
                     {
                         tag: "div",
                         attributes: [["class", "cards-row"]],
-                        children: [
+                        children: matchingEvents.map((event) =>
                             VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "Night Tapes",
-                                date: "18 novembre 2025 - 19:30",
-                                place: "Point Ephémère - Paris",
-                                price: "18,13€",
-                            }),
-                            VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "Comedy Pigalle",
-                                date: "À partir de 1,50€",
-                                place: "Paris",
-                                price: "",
-                            }),
-                            VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "Jeux de Société",
-                                date: "13 juin 2025",
-                                place: "Paris",
-                                price: "5€",
-                            }),
-                            VerticalCard({
-                                imageUrl: "../Assets/images/eventImage.png",
-                                title: "DAY TRIP",
-                                date: "10 septembre 2025",
-                                place: "Etretat",
-                                price: "18,13€",
-                            }),
-                        ],
+                                imageUrl:
+                                    event.imageUrl ||
+                                    "../Assets/images/eventImage.png",
+                                title: event.title || event.nom || "Événement",
+                                date:
+                                    event.date || event.date_event
+                                        ? formatEventDate(event.date || event.date_event)
+                                        : "Date inconnue",
+                                place:
+                                    event.place || event.lieu || "Lieu inconnu",
+                                price:
+                                    event.price ||
+                                    (event.prix
+                                        ? event.prix + "€"
+                                        : "Prix inconnu"),
+                            })
+                        ),
                     },
                 ],
             },
