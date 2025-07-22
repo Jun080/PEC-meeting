@@ -740,7 +740,6 @@ async function chargerEvenementsUtilisateur() {
         const userEvents = await getUserEvents(currentUser.id);
         
         // Charger les événements auxquels l'utilisateur participe
-        const { getUserEventParticipations } = await import('../Services/eventParticipationService.js');
         const participations = await getUserEventParticipations(currentUser.id);
         const participationEvents = participations.map(p => p.evenements).filter(e => e);
 
@@ -762,7 +761,7 @@ async function chargerEvenementsUtilisateur() {
         const participatingEvents = participationEvents.filter(event => 
             !organizedEvents.find(e => e.id === event.id)
         );
-
+      
         const eventsGrid = document.createElement('div');
         eventsGrid.className = 'user-events-grid';
         
