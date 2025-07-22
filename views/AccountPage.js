@@ -1,6 +1,7 @@
 import { getCurrentUser, getUserProfile } from '../Models/userModel.js';
 import { uploadProfilePhoto, updateUserPhotoUrl, uploadCommunauteImage } from '../Services/storageService.js';
 import { getCommunautesByReferent, createCommunaute } from '../Models/communauteModel.js';
+import { createEvent, getUserEvents } from '../Services/eventCreationService.js';
 import VerticalCard from '../components/VerticalCard.js';
 
 export default function AccountPage() {
@@ -321,8 +322,29 @@ export default function AccountPage() {
                         attributes: [["class", "account-tab"], ["data-tab-content", "evenements"]],
                         children: [
                             {
-                                tag: "h2",
-                                children: ["Mes évènements"]
+                                tag: "div",
+                                attributes: [["class", "events-header"]],
+                                children: [
+                                    {
+                                        tag: "h2",
+                                        children: ["Mes évènements"]
+                                    },
+                                    {
+                                        tag: "a",
+                                        attributes: [
+                                            ["href", "/evenement/creer-evenement"],
+                                            ["class", "btn-create-event"]
+                                        ],
+                                        children: [
+                                            {
+                                                tag: "span",
+                                                attributes: [["class", "btn-icon"]],
+                                                children: ["+"]
+                                            },
+                                            "Créer un événement"
+                                        ]
+                                    }
+                                ]
                             },
                             {
                                 tag: "div",
@@ -692,45 +714,85 @@ async function chargerEvenementsUtilisateur() {
     if (!container) return;
 
     try {
-        // Import du service
-        const { getUserEventParticipations } = await import('../Services/eventParticipationService.js');
-        
         const currentUser = await getCurrentUser();
         if (!currentUser || !currentUser.id) {
             container.innerHTML = '<div class="user-events-empty"><p>Vous devez être connecté pour voir vos évènements.</p></div>';
             return;
         }
 
-        const participations = await getUserEventParticipations(currentUser.id);
+        // Charger les événements organisés par l'utilisateur
+        const userEvents = await getUserEvents(currentUser.id);
         
-        if (participations.length === 0) {
-            container.innerHTML = '<div class="user-events-empty"><p>Vous n\'êtes inscrit à aucun évènement pour le moment.</p></div>';
+        // Charger les événements auxquels l'utilisateur participe
+        const { getUserEventParticipations } = await import('../Services/eventParticipationService.js');
+        const participations = await getUserEventParticipations(currentUser.id);
+        const participationEvents = participations.map(p => p.evenements).filter(e => e);
+
+        // Combiner et éviter les doublons
+        const allEvents = [...userEvents];
+        participationEvents.forEach(event => {
+            if (!allEvents.find(e => e.id === event.id)) {
+                allEvents.push(event);
+            }
+        });
+        
+        if (allEvents.length === 0) {
+            container.innerHTML = '<div class="user-events-empty"><p>Aucun événement trouvé. Créez votre premier événement !</p></div>';
             return;
         }
 
-        // Créer la grille d'événements
-        const eventsGrid = document.createElement('div');
-        eventsGrid.className = 'user-events-grid';
-        
-        participations.forEach(participation => {
-            const event = participation.evenements;
-            if (event) {
-                const eventCard = createUserEventCard(event);
-                eventsGrid.appendChild(eventCard);
-            }
-        });
+        // Séparer les événements organisés des événements auxquels on participe
+        const organizedEvents = userEvents;
+        const participatingEvents = participationEvents.filter(event => 
+            !organizedEvents.find(e => e.id === event.id)
+        );
 
         container.innerHTML = '';
-        container.appendChild(eventsGrid);
+
+        // Section événements organisés
+        if (organizedEvents.length > 0) {
+            const organizedSection = document.createElement('div');
+            organizedSection.className = 'user-events-section';
+            organizedSection.innerHTML = '<h3 class="user-events-section-title">Événements que j\'organise</h3>';
+            
+            const organizedGrid = document.createElement('div');
+            organizedGrid.className = 'user-events-grid';
+            
+            organizedEvents.forEach(event => {
+                const eventCard = createUserEventCard(event, true);
+                organizedGrid.appendChild(eventCard);
+            });
+
+            organizedSection.appendChild(organizedGrid);
+            container.appendChild(organizedSection);
+        }
+
+        // Section événements auxquels on participe
+        if (participatingEvents.length > 0) {
+            const participatingSection = document.createElement('div');
+            participatingSection.className = 'user-events-section';
+            participatingSection.innerHTML = '<h3 class="user-events-section-title">Événements auxquels je participe</h3>';
+            
+            const participatingGrid = document.createElement('div');
+            participatingGrid.className = 'user-events-grid';
+            
+            participatingEvents.forEach(event => {
+                const eventCard = createUserEventCard(event, false);
+                participatingGrid.appendChild(eventCard);
+            });
+
+            participatingSection.appendChild(participatingGrid);
+            container.appendChild(participatingSection);
+        }
 
     } catch (error) {
         container.innerHTML = '<div class="user-events-empty"><p>Erreur lors du chargement de vos évènements.</p></div>';
     }
 }
 
-function createUserEventCard(event) {
+function createUserEventCard(event, isOrganizer = false) {
     const card = document.createElement('div');
-    card.className = 'user-event-card';
+    card.className = `user-event-card${isOrganizer ? ' user-event-card-organizer' : ''}`;
     
     // Formatage de la date
     const date = new Date(event.date);
@@ -752,12 +814,14 @@ function createUserEventCard(event) {
     card.innerHTML = `
         <div class="user-event-card-image">
             <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
+            ${isOrganizer ? '<div class="organizer-badge">Organisateur</div>' : ''}
         </div>
         <div class="user-event-card-content">
             <div class="user-event-card-info">
                 <h4 class="user-event-title">${event.nom}</h4>
                 <p class="user-event-date-time">${formattedDate} à ${formattedTime}</p>
                 ${locationLine ? `<p class="user-event-location">${locationLine}</p>` : ''}
+                ${isOrganizer ? `<p class="user-event-participants">${(event.nombre_places - (event.nombre_places_disponibles || 0))} / ${event.nombre_places} participants</p>` : ''}
             </div>
             <p class="user-event-price">${priceText}</p>
         </div>
@@ -809,4 +873,16 @@ function renderElement(obj) {
         obj.children.forEach(child => el.appendChild(renderElement(child)));
     }
     return el;
+}
+
+async function creerEvenement(form) {
+    // Cette fonction a été déplacée vers CreateEvent.js
+    // Redirection vers la page de création
+    window.location.hash = '#/creer-evenement';
+}
+
+function showNotification(message, type = 'info') {
+    // Cette fonction a été déplacée vers CreateEvent.js  
+    // Notification simple pour AccountPage
+    alert(message);
 }

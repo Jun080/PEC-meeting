@@ -312,7 +312,7 @@ export function EventDetails(props) {
         }
         
         if (eventConditions) {
-            const defaultConditions = getDefaultConditions(event.type_evenement);
+            const defaultConditions = getDefaultConditions(event.categorie);
             eventConditions.innerHTML = defaultConditions.map(condition => `<li>${condition}</li>`).join('');
         }
 
