@@ -382,6 +382,7 @@ function createEventCard(event) {
       <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
     </div>
     <div class="event-card-content">
+      ${event.categorie ? `<p class="event-category-badge">${event.categorie}</p>` : ''}
       <div class="event-card-info">
         <h3 class="event-title">${event.nom || 'Événement sans titre'}</h3>
         <p class="event-date-time highlight">${formattedDate} ${formattedTime}</p>

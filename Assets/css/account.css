@@ -78,10 +78,6 @@
     margin-bottom: 1rem;
 }
 
-.account-tab p {
-    color: var(--text-dark-imperial-blue);
-}
-
 .profile-section {
     display: flex;
     gap: 3rem;
@@ -464,6 +460,7 @@
     }
 }
 
+
 .user-events-section {
     margin-bottom: 2rem;
 }
@@ -499,4 +496,93 @@
     color: var(--text-dark-imperial-blue);
     margin-top: 0.3rem;
     font-weight: 500;
+
+#create-communaute-form {
+    background: var(--bg-dark-imperial-blue);
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+#create-communaute-form > * {
+    position: relative;
+    z-index: 2;
+}
+
+#create-communaute-form input,
+#create-communaute-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--bg-alice-blue);
+    background-color: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+#create-communaute-form input:focus,
+#create-communaute-form textarea:focus {
+    background-color: var(--bg-dark-imperial-blue);
+    color: var(--text-alice-blue);
+    box-shadow: none;
+    outline: none;
+}
+
+#create-communaute-form input:focus::placeholder,
+#create-communaute-form textarea:focus::placeholder {
+    color: var(--text-alice-blue);
+}
+
+#create-communaute-form input::placeholder,
+#create-communaute-form textarea::placeholder {
+    color: var(--text-dark-imperial-blue);
+}
+
+#create-communaute-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#create-communaute-form button[type="submit"] {
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+#create-communaute-form input[type="file"] {
+    background: transparent;
+    border: 2px dashed var(--text-alice-blue);
+    color: var(--text-alice-blue);
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+}
+
+#create-communaute-form input[type="file"]:hover {
+    border-color: var(--bg-cornflower-blue);
+}
+
+@media (max-width: 768px) {
+    #create-communaute-form {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.user-communautes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0 6rem;
+}
+
+
+@media (max-width: 768px) {
+    .user-communautes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
 }
