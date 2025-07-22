@@ -727,6 +727,7 @@ async function chargerEvenementsUtilisateur() {
     if (!container) return;
 
     try {
+
         const { getUserEventParticipations } = await import('../Services/eventParticipationService.js');
 
         const currentUser = await getCurrentUser();
@@ -760,6 +761,17 @@ async function chargerEvenementsUtilisateur() {
         const participatingEvents = participationEvents.filter(event => 
             !organizedEvents.find(e => e.id === event.id)
         );
+      
+        const eventsGrid = document.createElement('div');
+        eventsGrid.className = 'user-events-grid';
+        
+        participations.forEach(participation => {
+            const event = participation.evenements;
+            if (event) {
+                const eventCard = createUserEventCard(event);
+                eventsGrid.appendChild(eventCard);
+            }
+        });
 
         container.innerHTML = '';
 
