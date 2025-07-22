@@ -1,0 +1,402 @@
+.event-details-page {
+    background: var(--bg-alice-blue);
+}
+
+.event-hero {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.event-hero-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.event-hero-card {
+    background: var(--bg-cobalt-blue);
+    border-radius: 20px;
+    padding: 2rem;
+    flex: 2;
+    color: var(--text-alice-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(300px - 4rem);
+    position: relative;
+}
+
+.event-category-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.event-hero-image {
+    flex: 1;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+}
+
+.event-hero-title {
+    margin: 0 7rem 1rem 0;
+    color: var(--text-alice-blue);
+}
+
+.event-hero-date,
+.event-hero-location {
+    color: var(--text-bright-gray);
+}
+
+.event-hero-location {
+    margin-top: 2rem;
+}
+
+.event-hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+.event-subscribe-btn.joined {
+    background: var(--bg-cornflower-blue);
+    border-color: var(--bg-cornflower-blue);
+}
+
+.event-main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: flex;
+    gap: 3rem;
+    align-items: stretch;
+}
+
+.event-content-left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+.event-content-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-about h2 {
+    color: var(--text-dark-imperial-blue);
+    margin: 0 0 1rem 0;
+}
+
+.event-description {
+    color: var(--text-dark-imperial-blue);
+    margin: 0;
+}
+
+.event-stats {
+    display: flex;
+    gap: 0.5rem;
+    height: 100%;
+}
+
+.event-stat {
+    border-radius: 12px;
+    border: 2px solid var(--bg-cornflower-blue);
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-dark-imperial-blue);
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.event-stat-label {
+    margin-bottom: 0.5rem;
+}
+
+.event-details-card {
+    background: var(--bg-cornflower-blue);
+    border-radius: 20px;
+    padding: 2rem;
+    color: var(--text-alice-blue);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.event-details-card h3 {
+    margin: 0 0 1.5rem 0;
+}
+
+.event-detail-item {
+    margin-bottom: 1rem;
+}
+
+.event-detail-item strong {
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.event-detail-item ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.event-detail-item li {
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+}
+
+
+.similar-events-section {
+    padding: 3rem 0;
+    margin-top: 2rem;
+}
+
+.similar-events-section h2 {
+    color: var(--text-dark-imperial-blue);
+    text-align: center;
+    margin: 0 0 2rem 0;
+}
+
+.similar-events-carousel {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.similar-events-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.similar-events-grid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: nowrap;
+}
+
+.similar-events-grid .event-card {
+    background: var(--bg-dark-imperial-blue);
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    min-width: calc(50% - 4rem);
+    height: 400px;
+    color: var(--text-alice-blue);
+}
+
+.similar-event-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.similar-event-content {
+    padding: 1.5rem;
+    position: relative;
+    height: 200px;
+}
+
+.similar-event-content h4 {
+    color: var(--text-alice-blue);
+    margin: 0 0 0.5rem 0;
+}
+
+.similar-event-date {
+    color: var(--text-bright-gray);
+    margin-bottom: 0.3rem;
+}
+
+.similar-event-location {
+    color: var(--text-shadow-blue);
+    margin-bottom: 0.8rem;
+}
+
+.similar-event-description {
+    color: var(--text-bright-gray);
+    margin-bottom: 1rem;
+}
+
+.similar-event-price {
+    color: var(--text-alice-blue);
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+}
+
+
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.carousel-indicators {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.carousel-nav-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.carousel-nav-btn {
+    position: relative;
+    background: var(--bg-cornflower-blue);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-alice-blue);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.carousel-nav-btn.carousel-prev {
+    background-image: url('../images/icons/icon-carousel-cornflower-blue-left.svg');
+}
+
+.carousel-nav-btn.carousel-next {
+    background-image: url('../images/icons/icon-carousel-cornflower-blue-right.svg');
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--bg-cornflower-blue);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.carousel-indicator.active,
+.carousel-indicator:hover {
+    background-color: var(--bg-cornflower-blue);
+}
+
+
+@media (max-width: 768px) {
+    .event-hero {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .event-hero-card {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+    
+    .event-hero-image {
+        min-height: 200px;
+    }
+    
+    .event-hero-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .event-subscribe-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .event-main-content {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+    
+    .event-content-left,
+    .event-content-right {
+        flex: none;
+    }
+    
+    .event-stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .event-stat {
+        flex: 1 1 calc(33.333% - 1rem);
+        min-width: 100px;
+        padding: 1rem;
+    }
+    
+    .similar-event-card {
+        flex: 1 1 100%;
+        min-width: 280px;
+    }
+    
+    .similar-events-carousel {
+        padding: 0 1rem;
+    }
+
+    .similar-events-grid {
+        gap: 1rem;
+    }
+
+    .carousel-controls {
+        padding: 0 1rem;
+    }
+    
+    .carousel-nav-btn {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .event-hero {
+        padding: 0.5rem;
+    }
+    
+    .event-hero-card {
+        padding: 1rem;
+    }
+    
+    .event-category-badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+    
+    .event-hero-image {
+        min-height: 150px;
+    }
+    
+    .event-subscribe-btn {
+        padding: 0.6rem 1.5rem;
+    }
+}
