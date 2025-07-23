@@ -6,6 +6,7 @@ import { createEvent, getUserEvents } from '../Services/eventCreationService.js'
 import { NotificationManager } from '../lib/EditableField.js';
 
 import VerticalCard from '../components/VerticalCard.js';
+import Calendar from '../components/Calendar.js';
 
 let accountState = {
     user: null,
@@ -617,11 +618,17 @@ export default function AccountPage() {
                         children: [
                             {
                                 tag: "h2",
-                                children: ["Mon calendrier"]
+                                attributes: [["class", "h1"]],
+                                children: ["Mon ", {
+                                    tag: "span",
+                                    attributes: [["class", "gradient-fonce"]],
+                                    children: ["calendrier"]
+                                }, " d'événements"]
                             },
                             {
-                                tag: "p",
-                                children: ["Contenu de l'onglet Calendrier"]
+                                tag: "div",
+                                attributes: [["id", "calendar-content"]],
+                                children: [Calendar()]
                             }
                         ]
                     }
@@ -837,6 +844,10 @@ function switchTab(tabName) {
     }
     if (tabName === 'communautes') {
         setTimeout(() => afficherCommunautesUtilisateur(), 100);
+    }
+    if (tabName === 'calendrier') {
+        // Le calendrier se charge automatiquement via son composant
+        console.log('Onglet calendrier activé');
     }
 }
 
