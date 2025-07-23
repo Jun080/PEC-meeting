@@ -85,33 +85,11 @@ async function initializeMapWithUser() {
           `);
         }
 
-        const eventMarkers = [
-          {
-            lat: 48.85837,
-            lng: 2.294481,
-            title: "Point Ephémère - Night Tapes",
-            price: "18,13€",
-          },
-          { lat: 48.8566, lng: 2.3522, title: "Autre événement", price: "25€" },
-          { lat: 48.8534, lng: 2.3488, title: "Concert jazz", price: "30€" },
-        ];
-
-        eventMarkers.forEach((event) => {
-          const eventMarker = L.marker([event.lat, event.lng]).addTo(map);
-          eventMarker.bindPopup(`
-            <div style="text-align: center;">
-              <strong>${event.title}</strong><br>
-              Prix: ${event.price}
-            </div>
-          `);
-        });
-
         console.log("Carte initialisée avec succès");
 
         if (userLocation) {
           const group = new L.featureGroup([
             L.marker([userLocation.lat, userLocation.lng]),
-            ...eventMarkers.map((e) => L.marker([e.lat, e.lng])),
           ]);
           map.fitBounds(group.getBounds().pad(0.1));
         }
