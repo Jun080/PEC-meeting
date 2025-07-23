@@ -1,4 +1,3 @@
-import { getAllEvents } from "../Models/eventModel.js";
 import { getCurrentUser } from "../Models/userModel.js";
 import { getAllEvents as getEventsFromModel, getEventById as getEventByIdFromModel } from '../Models/eventModel.js';
 
