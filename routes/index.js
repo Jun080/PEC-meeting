@@ -6,11 +6,13 @@ import RegisterPage from "../views/RegisterPage.js";
 import LoginPage from "../views/LoginPage.js";
 import Bienvenue from "../views/Bienvenue.js";
 import APropos from "../views/APropos.js";
-import Evenements from "../views/Evenements.js";
-import Communautes from "../views/Communautes.js";
+import EvenementsListing from "../views/EvenementsListing.js";
+import CommunautesListing from "../views/CommunautesListing.js";
 import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
 import OAuthCallback from "../views/OAuthCallback.js";
+import { EventDetails } from "../views/EventDetails.js";
+import CreateEvent from "../views/CreateEvent.js";
 
 export default {
   "/": {
@@ -41,11 +43,15 @@ export default {
   },
   "/evenements": {
     tag: Layout,
-    attributes: [["content", { tag: Evenements }]],
+    attributes: [["content", { tag: EvenementsListing }]],
+  },
+  "/evenements/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: EventDetails }]],
   },
   "/communautes": {
     tag: Layout,
-    attributes: [["content", { tag: Communautes }]],
+    attributes: [["content", { tag: CommunautesListing }]],
   },
   "/dashboard": {
     tag: Layout,
@@ -54,6 +60,10 @@ export default {
   "/compte": {
     tag: Layout,
     attributes: [["content", { tag: AccountPage }]],
+  },
+  "/evenement/creer-evenement": {
+    tag: Layout,
+    attributes: [["content", { tag: CreateEvent }]],
   },
   "/auth-callback": {
     tag: OAuthCallback,

@@ -7,7 +7,11 @@
 @import url("./dashboard.css");
 @import url("./account.css");
 @import url("./apropos.css");
+@import url("./evenements.css");
 @import url("./oauth-callback.css");
+@import url("./event-details.css");
+@import url("./create-event.css");
+@import url("./evenements.css");
 
 html, body {
     height: 100%;

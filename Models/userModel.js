@@ -1,78 +1,86 @@
 import { client } from '../supabase.js';
 
 export async function getAllUsers() {
-  const { data, error } = await client.from('utilisateurs').select('*');
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await client.functions.invoke('userModel');
+    if (error) throw error;
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getUserById(id) {
-    const { data, error } = await client
-        .from('utilisateurs')
-        .select('*')
-        .eq('id', id)
-        .single();
+  try {
+    const { data, error } = await client.functions.invoke('userModel', {
+      body: { action: 'getById', id: id }
+    });
     if (error) throw error;
-    return data;
+    if (!data.data) throw new Error('Utilisateur non trouvé');
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getUserByEmail(email) {
-    const { data, error } = await client
-        .from('utilisateurs')
-        .select('*')
-        .eq('mail', email)
-        .maybeSingle(); 
-    
-    if (error) {
-        throw error;
-    }
-    
-    if (!data) {
-        throw new Error('Utilisateur non trouvé');
-    }
-    
-    return data;
+  try {
+    const { data, error } = await client.functions.invoke('userModel', {
+      body: { action: 'getByEmail', email: email }
+    });
+    if (error) throw error;
+    if (!data.data) throw new Error('Utilisateur non trouvé');
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function createUser(user) {
-  const { data, error } = await client
-    .from('utilisateurs')
-    .insert([user])
-    .select()
-    .single();
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await client.functions.invoke('userModel', {
+      body: { action: 'create', userData: user }
+    });
+    if (error) throw error;
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function updateUser(id, userData) {
-  const { data, error } = await client
-    .from('utilisateurs')
-    .update(userData)
-    .eq('id', id)
-    .select()
-    .single();
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await client.functions.invoke('userModel', {
+      body: { action: 'update', id: id, userData: userData }
+    });
+    if (error) throw error;
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function signInUser(email, password) {
-  const { data, error } = await client
-    .from('utilisateurs')
-    .select('*')
-    .eq('mail', email)
-    .single();
-  
-  if (error || !data) {
-    throw new Error('Email ou mot de passe incorrect');
+  try {
+    const { data, error } = await client.functions.invoke('userModel', {
+      body: { action: 'signIn', email: email }
+    });
+    if (error) throw error;
+    
+    if (!data.data) {
+      throw new Error('Email ou mot de passe incorrect');
+    }
+    
+    const isPasswordValid = await window.dcodeIO.bcrypt.compare(password, data.data.mot_de_passe);
+    
+    if (!isPasswordValid) {
+      throw new Error('Email ou mot de passe incorrect');
+    }
+    
+    return { user: data.data };
+  } catch (error) {
+    throw error;
   }
-  
-  const isPasswordValid = await window.dcodeIO.bcrypt.compare(password, data.mot_de_passe);
-  
-  if (!isPasswordValid) {
-    throw new Error('Email ou mot de passe incorrect');
-  }
-  
-  return { user: data };
 }
 
 export async function signOutUser() {
@@ -92,11 +100,13 @@ export async function getCurrentUser() {
 }
 
 export async function getUserProfile(userId) {
-  const { data, error } = await client
-    .from('utilisateurs')
-    .select('*')
-    .eq('id', userId)
-    .single();
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await client.functions.invoke('userModel', {
+      body: { action: 'getUserProfile', id: userId }
+    });
+    if (error) throw error;
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
 }

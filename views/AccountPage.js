@@ -1,6 +1,9 @@
 import { getCurrentUser, getUserProfile } from '../Models/userModel.js';
 import { uploadProfilePhoto, updateUserPhotoUrl, uploadCommunauteImage } from '../Services/storageService.js';
 import { getCommunautesByReferent, createCommunaute } from '../Models/communauteModel.js';
+import { getCommunautesAbonnees } from '../Models/communauteMembresModel.js';
+import { createEvent, getUserEvents } from '../Services/eventCreationService.js';
+
 import VerticalCard from '../components/VerticalCard.js';
 
 export default function AccountPage() {
@@ -47,19 +50,19 @@ export default function AccountPage() {
                                     {
                                         tag: "a",
                                         attributes: [
-                                            ["href", "/compte/likes"],
+                                            ["href", "/compte/evenements"],
                                             ["class", "account-nav-link"],
-                                            ["data-tab", "likes"]
+                                            ["data-tab", "evenements"]
                                         ],
                                         events: {
                                             click: [
                                                 function (event) {
                                                     event.preventDefault();
-                                                    switchTab('likes');
+                                                    switchTab('evenements');
                                                 }
                                             ]
                                         },
-                                        children: ["Likes"]
+                                        children: ["Évènements"]
                                     },
                                     {
                                         tag: "a",
@@ -262,7 +265,7 @@ export default function AccountPage() {
                                                             {
                                                                 tag: "p",
                                                                 attributes: [
-                                                                    ["class", "profile-value h3 editable"], 
+                                                                    ["class", "profile-value h3 editable"],
                                                                     ["id", "profile-birthdate"],
                                                                     ["data-field", "birthdate"]
                                                                 ],
@@ -318,15 +321,40 @@ export default function AccountPage() {
                     },
                     {
                         tag: "div",
-                        attributes: [["class", "account-tab"], ["data-tab-content", "likes"]],
+                        attributes: [["class", "account-tab"], ["data-tab-content", "evenements"]],
                         children: [
                             {
-                                tag: "h2",
-                                children: ["Mes likes"]
+                                tag: "div",
+                                attributes: [["class", "events-header"]],
+                                children: [
+                                    {
+                                        tag: "h2",
+                                        attributes: [["class", "h1"]],
+                                        children: ["Mes ", {
+                                            tag: "span",
+                                            attributes: [["class", "gradient-fonce"]],
+                                            children: ["prochains"]
+                                        }, " évènements"]
+                                    },
+                                    {
+                                        tag: "a",
+                                        attributes: [
+                                            ["href", "/evenement/creer-evenement"],
+                                            ["class", "bouton-primary-1"]
+                                        ],
+                                        children: ["Créer un événement"]
+                                    }
+                                ]
                             },
                             {
-                                tag: "p",
-                                children: ["Contenu de l'onglet Likes"]
+                                tag: "div",
+                                attributes: [["id", "user-events-list"], ["class", "user-events-container"]],
+                                children: [
+                                    {
+                                        tag: "p",
+                                        children: ["Chargement de vos évènements..."]
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -336,7 +364,21 @@ export default function AccountPage() {
                         children: [
                             {
                                 tag: "h2",
-                                children: ["Mes communautés"]
+                                attributes: [["class", "h1"]],
+                                children: ["Toutes mes ", {
+                                tag: "span",
+                                attributes: [["class", "gradient-fonce"]],
+                                children: ["communautés"]
+                                }],
+                            },
+                            { 
+                                tag: "div", 
+                                    attributes: [["id", "mes-communautes-list"]]
+                            },
+                            {
+                                tag: "h2",
+                                attributes: [["class", "h1"]],
+                                children: ["Envie de créer votre communauté ? "],
                             },
                             {
                                 tag: "form",
@@ -347,7 +389,7 @@ export default function AccountPage() {
                                         const nom = document.getElementById('comm-nom').value;
                                         const description = document.getElementById('comm-description').value;
                                         const lieu = document.getElementById('comm-lieu').value;
-                                        const status = document.getElementById('comm-status').value;
+                                        // const status = document.getElementById('comm-status').value;
                                         const imageInput = document.getElementById('comm-image');
                                         let imageUrl = '';
                                         if (imageInput && imageInput.files && imageInput.files[0]) {
@@ -366,12 +408,12 @@ export default function AccountPage() {
                                                 referent: userProfileData.id,
                                                 date_creation,
                                                 lieu,
-                                                status,
+                                                status: 'public',
                                                 image: imageUrl
                                             });
-                                            alert('Communauté créée !');
-                                            document.getElementById('create-communaute-form').reset();
-                                            await afficherCommunautesUtilisateur();
+                                            
+                                            window.location.pathname = `/communautes/${newComm.id}`;
+                                            
                                         } catch (e) {
                                             alert('Erreur lors de la création : ' + e.message);
                                         }
@@ -381,12 +423,11 @@ export default function AccountPage() {
                                     { tag: "input", attributes: [["type", "text"], ["id", "comm-nom"], ["placeholder", "Nom de la communauté"], ["required", true]] },
                                     { tag: "textarea", attributes: [["id", "comm-description"], ["placeholder", "Description"], ["required", true]] },
                                     { tag: "input", attributes: [["type", "text"], ["id", "comm-lieu"], ["placeholder", "Lieu"], ["required", true]] },
-                                    { tag: "input", attributes: [["type", "text"], ["id", "comm-status"], ["placeholder", "Statut (ex: public/privé)"], ["required", true]] },
+                                    // { tag: "input", attributes: [["type", "text"], ["id", "comm-status"], ["placeholder", "Statut (ex: public/privé)"], ["required", true]] },
                                     { tag: "input", attributes: [["type", "file"], ["id", "comm-image"], ["accept", "image/*"]] },
-                                    { tag: "button", attributes: [["type", "submit"]], children: ["Créer ma communauté"] }
+                                    { tag: "button", attributes: [["type", "submit"], ["class", "bouton-primary-1"]], children: ["Créer ma communauté"] }
                                 ]
-                            },
-                            { tag: "div", attributes: [["id", "mes-communautes-list"]], children: [] }
+                            }
                         ]
                     },
                     {
@@ -418,7 +459,7 @@ function makeEditable(event) {
     const fieldType = element.dataset.field;
 
     const input = document.createElement("input");
-    
+
     if (fieldType === 'birthdate') {
         input.type = "date";
         if (text && text !== 'Date de naissance non renseignée') {
@@ -442,7 +483,7 @@ function makeEditable(event) {
         input.type = "text";
         input.value = text;
     }
-    
+
     input.className = "profile-edit-input";
 
     element.appendChild(input);
@@ -454,14 +495,13 @@ function makeEditable(event) {
         const input = event.currentTarget;
         const newValue = input.value;
         let displayValue = newValue;
-        
-        
+
         if (fieldType === 'birthdate' && newValue) {
             displayValue = formatDate(newValue);
         } else if (fieldType === 'birthdate' && !newValue) {
             displayValue = 'Date de naissance non renseignée';
         }
-        
+
         const textNode = document.createTextNode(displayValue);
         const element = input.parentNode;
 
@@ -564,6 +604,13 @@ function switchTab(tabName) {
     if (activeTab) {
         activeTab.classList.add('active');
     }
+
+    if (tabName === 'evenements') {
+        setTimeout(() => chargerEvenementsUtilisateur(), 100);
+    }
+    if (tabName === 'communautes') {
+        setTimeout(() => afficherCommunautesUtilisateur(), 100);
+    }
 }
 
 async function loadUserProfile() {
@@ -656,45 +703,273 @@ async function afficherCommunautesUtilisateur() {
     if (!container || !userProfileData) return;
     container.innerHTML = 'Chargement...';
     try {
-        const communautes = await getCommunautesByReferent(userProfileData.id);
-        if (!communautes.length) {
-            container.innerHTML = '<p>Aucune communauté créée.</p>';
+        const communautesCreees = await getCommunautesByReferent(userProfileData.id);
+        
+        const abonneesIds = await getCommunautesAbonnees(userProfileData.id);
+        console.log('IDs des communautés suivies:', abonneesIds);
+        
+        let communautesAbonnees = [];
+        if (abonneesIds.length > 0) {
+            const idsCreees = communautesCreees.map(c => c.id);
+            const idsARecuperer = abonneesIds.filter(id => !idsCreees.includes(id));
+            if (idsARecuperer.length > 0) {
+                const { client } = await import('../supabase.js');
+                const { data, error } = await client
+                    .from('communautes')
+                    .select('*')
+                    .in('id', idsARecuperer);
+                if (error) throw error;
+                console.log('Communautés suivies récupérées:', data);
+                communautesAbonnees = data;
+            }
+        }
+        
+        if (!communautesCreees.length && !communautesAbonnees.length) {
+            container.innerHTML = '<p>Aucune communauté créée ou suivie.</p>';
             return;
         }
+        
         container.innerHTML = '';
-        communautes.forEach(c => {
-            const card = VerticalCard({
-                imageUrl: c.image || '../Assets/images/eventImage.png',
-                title: c.nom,
-                place: c.lieu,
-                description: c.description
-            });
-            container.appendChild(renderElement(card));
-        });
+        
+        if (communautesCreees.length) {            
+            const creeesGrid = document.createElement('div');
+            creeesGrid.className = 'user-communautes-grid';
+            
+            for (const communaute of communautesCreees) {
+                const card = await createUserCommunauteCard(communaute);
+                creeesGrid.appendChild(card);
+            }
+            
+            container.appendChild(creeesGrid);
+        }
+        
+        if (communautesAbonnees.length) {
+            const titre2 = document.createElement('h2');
+            titre2.className = 'h1';
+            titre2.textContent = 'Communautés que je suis';
+            container.appendChild(titre2);
+            
+            const abonneesGrid = document.createElement('div');
+            abonneesGrid.className = 'user-communautes-grid';
+            
+            for (const communaute of communautesAbonnees) {
+                const card = await createUserCommunauteCard(communaute);
+                abonneesGrid.appendChild(card);
+            }
+            
+            container.appendChild(abonneesGrid);
+        }
+
     } catch (e) {
+        console.error('Erreur lors du chargement des communautés:', e);
         container.innerHTML = '<p>Erreur lors du chargement des communautés.</p>';
     }
 }
 
-function renderElement(obj) {
-    if (typeof obj === 'string') return document.createTextNode(obj);
-    const el = document.createElement(obj.tag);
-    if (obj.attributes) {
-        obj.attributes.forEach(([key, value]) => {
-            if (typeof value === 'object' && key === 'style') {
-                Object.assign(el.style, value);
-            } else {
-                el.setAttribute(key, value);
+async function chargerEvenementsUtilisateur() {
+    const container = document.getElementById('user-events-list');
+    if (!container) return;
+
+    try {
+
+        const { getUserEventParticipations } = await import('../Services/eventParticipationService.js');
+
+        const currentUser = await getCurrentUser();
+        if (!currentUser || !currentUser.id) {
+            container.innerHTML = '<div class="user-events-empty"><p>Vous devez être connecté pour voir vos évènements.</p></div>';
+            return;
+        }
+
+        const userEvents = await getUserEvents(currentUser.id);
+        
+        const participations = await getUserEventParticipations(currentUser.id);
+        const participationEvents = participations.map(p => p.evenements).filter(e => e);
+
+        const allEvents = [...userEvents];
+        participationEvents.forEach(event => {
+            if (!allEvents.find(e => e.id === event.id)) {
+                allEvents.push(event);
             }
         });
-    }
-    if (obj.events) {
-        Object.entries(obj.events).forEach(([event, handlers]) => {
-            handlers.forEach(handler => el.addEventListener(event, handler));
+        
+        if (allEvents.length === 0) {
+            container.innerHTML = '<div class="user-events-empty"><p>Aucun événement trouvé. Créez votre premier événement !</p></div>';
+            return;
+        }
+
+        const organizedEvents = userEvents;
+        const participatingEvents = participationEvents.filter(event => 
+            !organizedEvents.find(e => e.id === event.id)
+        );
+      
+        const eventsGrid = document.createElement('div');
+        eventsGrid.className = 'user-events-grid';
+        
+        participations.forEach(participation => {
+            const event = participation.evenements;
+            if (event) {
+                const eventCard = createUserEventCard(event);
+                eventsGrid.appendChild(eventCard);
+            }
         });
+
+        container.innerHTML = '';
+
+        if (organizedEvents.length > 0) {
+            const organizedSection = document.createElement('div');
+            organizedSection.className = 'user-events-section';
+            organizedSection.innerHTML = '<h2 class="h1">Événements que j\'ai créés</h2>';
+            
+            const organizedGrid = document.createElement('div');
+            organizedGrid.className = 'user-communautes-grid';
+            
+            organizedEvents.forEach(event => {
+                const eventCard = createUserEventCard(event, true);
+                organizedGrid.appendChild(eventCard);
+            });
+
+            organizedSection.appendChild(organizedGrid);
+            container.appendChild(organizedSection);
+        }
+
+        if (participatingEvents.length > 0) {
+            const participatingSection = document.createElement('div');
+            participatingSection.className = 'user-events-section';
+            participatingSection.innerHTML = '<h2 class="h1">Événements auxquels je participe</h2>';
+            
+            const participatingGrid = document.createElement('div');
+            participatingGrid.className = 'user-communautes-grid';
+            
+            participatingEvents.forEach(event => {
+                const eventCard = createUserEventCard(event, false);
+                participatingGrid.appendChild(eventCard);
+            });
+
+            participatingSection.appendChild(participatingGrid);
+            container.appendChild(participatingSection);
+        }
+
+    } catch (error) {
+        container.innerHTML = '<div class="user-events-empty"><p>Erreur lors du chargement de vos évènements.</p></div>';
     }
-    if (obj.children) {
-        obj.children.forEach(child => el.appendChild(renderElement(child)));
+}
+
+function createUserEventCard(event, isOrganizer = false) {
+    const card = document.createElement('div');
+    card.className = 'event-card';
+    
+    const date = new Date(event.date);
+    const formattedDate = formatEventDate(date);
+    const formattedTime = formatEventTime(date);
+    
+    let locationLine = '';
+    if (event.lieu) {
+        locationLine = event.lieu;
     }
-    return el;
+    if (event.adresse) {
+        locationLine += locationLine ? ` - ${event.adresse}` : event.adresse;
+    }
+    
+    const description = event.description || 'Aucune description disponible';
+    
+    let priceOrParticipantsText;
+    if (isOrganizer) {
+        const participantsCount = event.nombre_places - (event.nombre_places_disponibles || 0);
+        priceOrParticipantsText = `${participantsCount} / ${event.nombre_places} participants`;
+    } else {
+        priceOrParticipantsText = event.prix === 0 || event.prix === '0' ? 'Gratuit' : `${event.prix}€`;
+    }
+    
+    card.innerHTML = `
+        <div class="event-card-image">
+            <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
+        </div>
+        <div class="event-card-content">
+            <div class="event-card-info">
+                <h3 class="event-title">${event.nom}</h3>
+                <p class="event-date-time highlight">${formattedDate} à ${formattedTime}</p>
+                ${locationLine ? `<p class="event-location highlight">${locationLine}</p>` : ''}
+                <p class="event-description">${description}</p>
+            </div>
+            <p class="event-price h2">${priceOrParticipantsText}</p>
+        </div>
+    `;
+    
+    card.addEventListener('click', () => {
+        window.router.navigate(`/evenements/${event.id}`);
+    });
+    
+    return card;
+}
+
+async function createUserCommunauteCard(communaute) {
+    const card = document.createElement('div');
+    card.className = 'event-card';
+    
+    // Récupérer le nombre de membres
+    let memberCount = 0;
+    try {
+        const { getCommunauteMemberCount } = await import('../Models/communauteModel.js');
+        memberCount = await getCommunauteMemberCount(communaute.id);
+    } catch (error) {
+        console.error('Erreur lors du chargement du nombre de membres:', error);
+    }
+    
+    const date = communaute.date_creation ? new Date(communaute.date_creation) : null;
+    const formattedDate = date ? formatCommunauteDate(date) : '';
+    
+    const locationLine = communaute.lieu || '';
+    
+    const description = communaute.description || 'Aucune description disponible';
+    
+    const memberText = memberCount === 0 ? 'Aucun membre' : 
+                      memberCount === 1 ? '1 membre' : 
+                      `${memberCount} membres`;
+    
+    card.innerHTML = `
+        <div class="event-card-image">
+            <img src="${communaute.image || '/Assets/images/banner-femme.webp'}" alt="${communaute.nom}" />
+        </div>
+        <div class="event-card-content">
+            <div class="event-card-info">
+                <h3 class="event-title">${communaute.nom || 'Communauté sans nom'}</h3>
+                ${formattedDate ? `<p class="event-date-time highlight">Créée le ${formattedDate}</p>` : ''}
+                ${locationLine ? `<p class="event-location highlight">${locationLine}</p>` : ''}
+                <p class="event-description">${description}</p>
+            </div>
+            <p class="event-price h2">${memberText}</p>
+        </div>
+    `;
+    
+    card.addEventListener('click', () => {
+        window.location.pathname = `/communaute/${communaute.id}`;
+    });
+    
+    return card;
+}
+
+function formatCommunauteDate(date) {
+    const options = { 
+        day: 'numeric', 
+        month: 'long',
+        year: 'numeric'
+    };
+    return date.toLocaleDateString('fr-FR', options);
+}
+
+function formatEventDate(date) {
+    const options = { 
+        day: 'numeric', 
+        month: 'long',
+        year: 'numeric'
+    };
+    return date.toLocaleDateString('fr-FR', options);
+}
+
+function formatEventTime(date) {
+    const options = { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    };
+    return date.toLocaleTimeString('fr-FR', options);
 }
