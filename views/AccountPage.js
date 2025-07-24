@@ -3,8 +3,22 @@ import { uploadProfilePhoto, updateUserPhotoUrl, uploadCommunauteImage } from '.
 import { getCommunautesByReferent, createCommunaute } from '../Models/communauteModel.js';
 import { getCommunautesAbonnees } from '../Models/communauteMembresModel.js';
 import { createEvent, getUserEvents } from '../Services/eventCreationService.js';
+import { NotificationManager } from '../lib/EditableField.js';
 
 import VerticalCard from '../components/VerticalCard.js';
+import Calendar from '../components/Calendar.js';
+
+let accountState = {
+    user: null,
+    prenomEdit: false,
+    nomEdit: false,
+    emailEdit: false,
+    phoneEdit: false,
+    birthdateEdit: false,
+    cityEdit: false
+};
+
+let userProfileData = null;
 
 export default function AccountPage() {
     setTimeout(() => loadUserProfile(), 100);
@@ -178,11 +192,11 @@ export default function AccountPage() {
                                                 tag: "div",
                                                 attributes: [["class", "profile-first-row"]],
                                                 children: [
-                                                    {
+                                                    {                                        
                                                         tag: "div",
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
-                                                            {
+                                                            accountState.prenomEdit === false ? {
                                                                 tag: "h2",
                                                                 attributes: [
                                                                     ["class", "profile-value h1 editable"],
@@ -190,8 +204,36 @@ export default function AccountPage() {
                                                                     ["data-field", "prenom"]
                                                                 ],
                                                                 events: {
-                                                                    click: [makeEditable]
-                                                                },
+                                                                    click: [() => toggleEdit('prenom')]
+                                                                }
+                                                            } : {
+                                                                tag: "input",
+                                                                attributes: [
+                                                                    ["type", "text"],
+                                                                    ["id", "profile-prenom"],
+                                                                    ["data-field", "prenom"],
+                                                                    ["class", "profile-edit-input"],
+                                                                    ["value", formatValueForInput('prenom')]
+                                                                ],
+                                                                events: {
+                                                                    blur: [async function (event) {
+                                                                        const input = event.currentTarget;
+                                                                        const newValue = input.value;
+                                                                        try {
+                                                                            await saveFieldValue('prenom', newValue);
+                                                                            accountState.prenomEdit = false;
+                                                                        } catch (error) {
+                                                                            console.error('Erreur sauvegarde:', error);
+                                                                        }
+                                                                    }],
+                                                                    keydown: [function (event) {
+                                                                        if (event.key === "Enter") {
+                                                                            event.currentTarget.blur();
+                                                                        } else if (event.key === "Escape") {
+                                                                            accountState.prenomEdit = false;
+                                                                        }
+                                                                    }]
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -199,7 +241,7 @@ export default function AccountPage() {
                                                         tag: "div",
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
-                                                            {
+                                                            accountState.nomEdit === false ? {
                                                                 tag: "h2",
                                                                 attributes: [
                                                                     ["class", "profile-value h1 editable"],
@@ -207,8 +249,36 @@ export default function AccountPage() {
                                                                     ["data-field", "nom"]
                                                                 ],
                                                                 events: {
-                                                                    click: [makeEditable]
-                                                                },
+                                                                    click: [() => toggleEdit('nom')]
+                                                                }
+                                                            } : {
+                                                                tag: "input",
+                                                                attributes: [
+                                                                    ["type", "text"],
+                                                                    ["id", "profile-nom"],
+                                                                    ["data-field", "nom"],
+                                                                    ["class", "profile-edit-input"],
+                                                                    ["value", formatValueForInput('nom')]
+                                                                ],
+                                                                events: {
+                                                                    blur: [async function (event) {
+                                                                        const input = event.currentTarget;
+                                                                        const newValue = input.value;
+                                                                        try {
+                                                                            await saveFieldValue('nom', newValue);
+                                                                            accountState.nomEdit = false;
+                                                                        } catch (error) {
+                                                                            console.error('Erreur sauvegarde:', error);
+                                                                        }
+                                                                    }],
+                                                                    keydown: [function (event) {
+                                                                        if (event.key === "Enter") {
+                                                                            event.currentTarget.blur();
+                                                                        } else if (event.key === "Escape") {
+                                                                            accountState.nomEdit = false;
+                                                                        }
+                                                                    }]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -218,11 +288,11 @@ export default function AccountPage() {
                                                 tag: "div",
                                                 attributes: [["class", "profile-row"]],
                                                 children: [
-                                                    {
+                                                    {                                        
                                                         tag: "div",
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
-                                                            {
+                                                            accountState.emailEdit === false ? {
                                                                 tag: "p",
                                                                 attributes: [
                                                                     ["class", "profile-value h3 editable"],
@@ -230,8 +300,36 @@ export default function AccountPage() {
                                                                     ["data-field", "email"]
                                                                 ],
                                                                 events: {
-                                                                    click: [makeEditable]
-                                                                },
+                                                                    click: [() => toggleEdit('email')]
+                                                                }
+                                                            } : {
+                                                                tag: "input",
+                                                                attributes: [
+                                                                    ["type", "email"],
+                                                                    ["id", "profile-email"],
+                                                                    ["data-field", "email"],
+                                                                    ["class", "profile-edit-input"],
+                                                                    ["value", formatValueForInput('email')]
+                                                                ],
+                                                                events: {
+                                                                    blur: [async function (event) {
+                                                                        const input = event.currentTarget;
+                                                                        const newValue = input.value;
+                                                                        try {
+                                                                            await saveFieldValue('email', newValue);
+                                                                            accountState.emailEdit = false;
+                                                                        } catch (error) {
+                                                                            console.error('Erreur sauvegarde:', error);
+                                                                        }
+                                                                    }],
+                                                                    keydown: [function (event) {
+                                                                        if (event.key === "Enter") {
+                                                                            event.currentTarget.blur();
+                                                                        } else if (event.key === "Escape") {
+                                                                            accountState.emailEdit = false;
+                                                                        }
+                                                                    }]
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -239,7 +337,7 @@ export default function AccountPage() {
                                                         tag: "div",
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
-                                                            {
+                                                            accountState.phoneEdit === false ? {
                                                                 tag: "p",
                                                                 attributes: [
                                                                     ["class", "profile-value h3 editable"],
@@ -247,8 +345,36 @@ export default function AccountPage() {
                                                                     ["data-field", "phone"]
                                                                 ],
                                                                 events: {
-                                                                    click: [makeEditable]
-                                                                },
+                                                                    click: [() => toggleEdit('phone')]
+                                                                }
+                                                            } : {
+                                                                tag: "input",
+                                                                attributes: [
+                                                                    ["type", "tel"],
+                                                                    ["id", "profile-phone"],
+                                                                    ["data-field", "phone"],
+                                                                    ["class", "profile-edit-input"],
+                                                                    ["value", formatValueForInput('phone')]
+                                                                ],
+                                                                events: {
+                                                                    blur: [async function (event) {
+                                                                        const input = event.currentTarget;
+                                                                        const newValue = input.value;
+                                                                        try {
+                                                                            await saveFieldValue('phone', newValue);
+                                                                            accountState.phoneEdit = false;
+                                                                        } catch (error) {
+                                                                            console.error('Erreur sauvegarde:', error);
+                                                                        }
+                                                                    }],
+                                                                    keydown: [function (event) {
+                                                                        if (event.key === "Enter") {
+                                                                            event.currentTarget.blur();
+                                                                        } else if (event.key === "Escape") {
+                                                                            accountState.phoneEdit = false;
+                                                                        }
+                                                                    }]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -258,11 +384,11 @@ export default function AccountPage() {
                                                 tag: "div",
                                                 attributes: [["class", "profile-row"]],
                                                 children: [
-                                                    {
+                                                    {                                       
                                                         tag: "div",
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
-                                                            {
+                                                            accountState.birthdateEdit === false ? {
                                                                 tag: "p",
                                                                 attributes: [
                                                                     ["class", "profile-value h3 editable"],
@@ -270,8 +396,36 @@ export default function AccountPage() {
                                                                     ["data-field", "birthdate"]
                                                                 ],
                                                                 events: {
-                                                                    click: [makeEditable]
-                                                                },
+                                                                    click: [() => toggleEdit('birthdate')]
+                                                                }
+                                                            } : {
+                                                                tag: "input",
+                                                                attributes: [
+                                                                    ["type", "date"],
+                                                                    ["id", "profile-birthdate"],
+                                                                    ["data-field", "birthdate"],
+                                                                    ["class", "profile-edit-input"],
+                                                                    ["value", formatValueForInput('birthdate')]
+                                                                ],
+                                                                events: {
+                                                                    blur: [async function (event) {
+                                                                        const input = event.currentTarget;
+                                                                        const newValue = input.value;
+                                                                        try {
+                                                                            await saveFieldValue('birthdate', newValue);
+                                                                            accountState.birthdateEdit = false;
+                                                                        } catch (error) {
+                                                                            console.error('Erreur sauvegarde:', error);
+                                                                        }
+                                                                    }],
+                                                                    keydown: [function (event) {
+                                                                        if (event.key === "Enter") {
+                                                                            event.currentTarget.blur();
+                                                                        } else if (event.key === "Escape") {
+                                                                            accountState.birthdateEdit = false;
+                                                                        }
+                                                                    }]
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -279,7 +433,7 @@ export default function AccountPage() {
                                                         tag: "div",
                                                         attributes: [["class", "profile-field"]],
                                                         children: [
-                                                            {
+                                                            accountState.cityEdit === false ? {
                                                                 tag: "p",
                                                                 attributes: [
                                                                     ["class", "profile-value h3 editable"],
@@ -287,8 +441,36 @@ export default function AccountPage() {
                                                                     ["data-field", "city"]
                                                                 ],
                                                                 events: {
-                                                                    click: [makeEditable]
-                                                                },
+                                                                    click: [() => toggleEdit('city')]
+                                                                }
+                                                            } : {
+                                                                tag: "input",
+                                                                attributes: [
+                                                                    ["type", "text"],
+                                                                    ["id", "profile-city"],
+                                                                    ["data-field", "city"],
+                                                                    ["class", "profile-edit-input"],
+                                                                    ["value", formatValueForInput('city')]
+                                                                ],
+                                                                events: {
+                                                                    blur: [async function (event) {
+                                                                        const input = event.currentTarget;
+                                                                        const newValue = input.value;
+                                                                        try {
+                                                                            await saveFieldValue('city', newValue);
+                                                                            accountState.cityEdit = false;
+                                                                        } catch (error) {
+                                                                            console.error('Erreur sauvegarde:', error);
+                                                                        }
+                                                                    }],
+                                                                    keydown: [function (event) {
+                                                                        if (event.key === "Enter") {
+                                                                            event.currentTarget.blur();
+                                                                        } else if (event.key === "Escape") {
+                                                                            accountState.cityEdit = false;
+                                                                        }
+                                                                    }]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -436,11 +618,17 @@ export default function AccountPage() {
                         children: [
                             {
                                 tag: "h2",
-                                children: ["Mon calendrier"]
+                                attributes: [["class", "h1"]],
+                                children: ["Mon ", {
+                                    tag: "span",
+                                    attributes: [["class", "gradient-fonce"]],
+                                    children: ["calendrier"]
+                                }, " d'événements"]
                             },
                             {
-                                tag: "p",
-                                children: ["Contenu de l'onglet Calendrier"]
+                                tag: "div",
+                                attributes: [["id", "calendar-content"]],
+                                children: [Calendar()]
                             }
                         ]
                     }
@@ -450,77 +638,40 @@ export default function AccountPage() {
     };
 }
 
-let userProfileData = null;
-
-function makeEditable(event) {
-    const element = event.currentTarget;
-    const textNode = element.childNodes[0];
-    const text = textNode.textContent;
-    const fieldType = element.dataset.field;
-
-    const input = document.createElement("input");
-
-    if (fieldType === 'birthdate') {
-        input.type = "date";
-        if (text && text !== 'Date de naissance non renseignée') {
-            try {
-                const dateParts = text.split('/'); 
-                if (dateParts.length === 3) {
-                    const day = dateParts[0].padStart(2, '0');
-                    const month = dateParts[1].padStart(2, '0');
-                    const year = dateParts[2];
-                    input.value = `${year}-${month}-${day}`;
-                } else {
-                    input.value = '';
-                }
-            } catch (error) {
-                input.value = '';
+function initializeEditableFields() {
+    accountState.prenomEdit = false;
+    accountState.nomEdit = false;
+    accountState.emailEdit = false;
+    accountState.phoneEdit = false;
+    accountState.birthdateEdit = false;
+    accountState.cityEdit = false;
+    
+    // Mettre à jour le contenu des champs avec les valeurs du profil
+    setTimeout(() => {
+        const fields = [
+            { id: 'profile-prenom', field: 'prenom', editState: 'prenomEdit' },
+            { id: 'profile-nom', field: 'nom', editState: 'nomEdit' },
+            { id: 'profile-email', field: 'email', editState: 'emailEdit' },
+            { id: 'profile-phone', field: 'phone', editState: 'phoneEdit' },
+            { id: 'profile-birthdate', field: 'birthdate', editState: 'birthdateEdit' },
+            { id: 'profile-city', field: 'city', editState: 'cityEdit' }
+        ];
+        
+        fields.forEach(({ id, field, editState }) => {
+            const element = document.getElementById(id);
+            if (element && !accountState[editState]) {
+                element.textContent = formatValueForDisplay(field);
             }
-        } else {
-            input.value = '';
-        }
-    } else {
-        input.type = "text";
-        input.value = text;
-    }
-
-    input.className = "profile-edit-input";
-
-    element.appendChild(input);
-    input.focus();
-    element.removeChild(textNode);
-    element.removeEventListener("click", makeEditable);
-
-    input.addEventListener("blur", async function onBlur(event) {
-        const input = event.currentTarget;
-        const newValue = input.value;
-        let displayValue = newValue;
-
-        if (fieldType === 'birthdate' && newValue) {
-            displayValue = formatDate(newValue);
-        } else if (fieldType === 'birthdate' && !newValue) {
-            displayValue = 'Date de naissance non renseignée';
-        }
-
-        const textNode = document.createTextNode(displayValue);
-        const element = input.parentNode;
-
-        await saveFieldValue(fieldType, newValue);
-
-        element.replaceChild(textNode, input);
-        element.addEventListener("click", makeEditable);
-    });
-
-    input.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            input.blur();
-        }
-    });
+        });
+    }, 100);
 }
 
 async function saveFieldValue(fieldType, value) {
     try {
-        if (!userProfileData || !userProfileData.id) return;
+        if (!userProfileData || !userProfileData.id) {
+            throw new Error('Utilisateur non connecté');
+        }
+        
         const { client } = await import('../supabase.js');
 
         const fieldMapping = {
@@ -533,7 +684,9 @@ async function saveFieldValue(fieldType, value) {
         };
 
         const column = fieldMapping[fieldType];
-        if (!column) return;
+        if (!column) {
+            throw new Error('Champ non reconnu');
+        }
 
         const { error } = await client
             .from('utilisateurs')
@@ -541,13 +694,94 @@ async function saveFieldValue(fieldType, value) {
             .eq('id', userProfileData.id);
 
         if (error) {
-            alert('Erreur lors de la sauvegarde');
+            throw new Error('Erreur lors de la sauvegarde: ' + error.message);
         } else {
-            userProfileData[column] = value;
+            // Mettre à jour les données locales
+            const fieldMapping = {
+                'prenom': 'prenom',
+                'nom': 'nom', 
+                'email': 'mail',
+                'phone': 'tel',
+                'city': 'lieu',
+                'birthdate': 'date_naissance'
+            };
+            userProfileData[fieldMapping[fieldType]] = value;
+            
+            const notification = new NotificationManager();
+            const fieldLabels = {
+                'prenom': 'Prénom',
+                'nom': 'Nom',
+                'email': 'Email',
+                'phone': 'Téléphone',
+                'city': 'Ville',
+                'birthdate': 'Date de naissance'
+            };
+            notification.show(`${fieldLabels[fieldType]} mis à jour`);
         }
     } catch (error) {
-        alert('Erreur lors de la sauvegarde');
+        const notification = new NotificationManager();
+        notification.show('Erreur lors de la sauvegarde', 'error');
+        throw error;
     }
+}
+
+function toggleEdit(fieldName) {
+    accountState[`${fieldName}Edit`] = !accountState[`${fieldName}Edit`];
+}
+
+function formatValueForInput(fieldName) {
+    if (!userProfileData) return '';
+    
+    const fieldMapping = {
+        'prenom': 'prenom',
+        'nom': 'nom', 
+        'email': 'mail',
+        'phone': 'tel',
+        'city': 'lieu',
+        'birthdate': 'date_naissance'
+    };
+    
+    const value = userProfileData[fieldMapping[fieldName]] || '';
+    
+    if (fieldName === 'birthdate' && value && value.includes('/')) {
+        const parts = value.split('/');
+        if (parts.length === 3) {
+            return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+        }
+    }
+    return value;
+}
+
+function formatValueForDisplay(fieldName) {
+    if (!userProfileData) return '';
+    
+    const fieldMapping = {
+        'prenom': 'prenom',
+        'nom': 'nom', 
+        'email': 'mail',
+        'phone': 'tel',
+        'city': 'lieu',
+        'birthdate': 'date_naissance'
+    };
+    
+    const value = userProfileData[fieldMapping[fieldName]] || '';
+    
+    if (fieldName === 'birthdate' && value) {
+        try {
+            return new Date(value).toLocaleDateString('fr-FR');
+        } catch {
+            return value;
+        }
+    }
+    const emptyTexts = {
+        'prenom': 'Prénom non renseigné',
+        'nom': 'Nom non renseigné',
+        'email': 'Email non renseigné',
+        'phone': 'Téléphone non renseigné',
+        'city': 'Ville non renseignée',
+        'birthdate': 'Date de naissance non renseignée'
+    };
+    return value || emptyTexts[fieldName] || 'Non renseigné';
 }
 
 function triggerPhotoUpload() {
@@ -611,6 +845,10 @@ function switchTab(tabName) {
     if (tabName === 'communautes') {
         setTimeout(() => afficherCommunautesUtilisateur(), 100);
     }
+    if (tabName === 'calendrier') {
+        // Le calendrier se charge automatiquement via son composant
+        console.log('Onglet calendrier activé');
+    }
 }
 
 async function loadUserProfile() {
@@ -623,7 +861,15 @@ async function loadUserProfile() {
 
         userProfileData = await getUserProfile(currentUser.id);
 
-        updateProfileDisplay();
+        // Mettre à jour l'affichage du profil
+        const profileImgElement = document.getElementById('profile-img');
+        if (profileImgElement && userProfileData.image) {
+            profileImgElement.src = userProfileData.image;
+            profileImgElement.alt = `Photo de profil de ${userProfileData.prenom || 'l\'utilisateur'}`;
+        }
+        
+        initializeEditableFields();
+        
         await afficherCommunautesUtilisateur(); 
 
     } catch (error) {
@@ -637,67 +883,6 @@ async function loadUserProfile() {
     }
 }
 
-function updateProfileDisplay() {
-    if (!userProfileData) return;
-
-    const prenomElement = document.getElementById('profile-prenom');
-    if (prenomElement) {
-        prenomElement.textContent = userProfileData.prenom || 'Prénom';
-    }
-
-    const nomElement = document.getElementById('profile-nom');
-    if (nomElement) {
-        nomElement.textContent = userProfileData.nom || 'Nom';
-    }
-
-    const emailElement = document.getElementById('profile-email');
-    if (emailElement) {
-        emailElement.textContent = userProfileData.mail || 'Mail non renseigné';
-    }
-
-    const phoneElement = document.getElementById('profile-phone');
-    if (phoneElement) {
-        phoneElement.textContent = userProfileData.tel || 'Téléphone non renseigné';
-    }
-
-    const birthdateElement = document.getElementById('profile-birthdate');
-    if (birthdateElement) {
-        if (userProfileData.date_naissance) {
-            birthdateElement.textContent = formatDate(userProfileData.date_naissance);
-        } else {
-            birthdateElement.textContent = 'Date de naissance non renseignée';
-        }
-    }
-
-    const cityElement = document.getElementById('profile-city');
-    if (cityElement) {
-        cityElement.textContent = userProfileData.lieu || 'Ville non renseignée';
-    }
-
-    const profileImgElement = document.getElementById('profile-img');
-    if (profileImgElement && userProfileData.image) {
-        profileImgElement.src = userProfileData.image;
-        profileImgElement.alt = `Photo de profil de ${userProfileData.prenom || 'l\'utilisateur'}`;
-    }
-}
-
-function formatDate(dateString) {
-    try {
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) {
-            return 'Date invalide';
-        }
-
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-
-        return `${day}/${month}/${year}`;
-    } catch (error) {
-        return 'Date invalide';
-    }
-}
-
 async function afficherCommunautesUtilisateur() {
     const container = document.getElementById('mes-communautes-list');
     if (!container || !userProfileData) return;
@@ -706,7 +891,6 @@ async function afficherCommunautesUtilisateur() {
         const communautesCreees = await getCommunautesByReferent(userProfileData.id);
         
         const abonneesIds = await getCommunautesAbonnees(userProfileData.id);
-        console.log('IDs des communautés suivies:', abonneesIds);
         
         let communautesAbonnees = [];
         if (abonneesIds.length > 0) {
@@ -719,7 +903,6 @@ async function afficherCommunautesUtilisateur() {
                     .select('*')
                     .in('id', idsARecuperer);
                 if (error) throw error;
-                console.log('Communautés suivies récupérées:', data);
                 communautesAbonnees = data;
             }
         }
@@ -859,7 +1042,7 @@ function createUserEventCard(event, isOrganizer = false) {
     card.className = 'event-card';
     
     const date = new Date(event.date);
-    const formattedDate = formatEventDate(date);
+    const formattedDate = formatDate(date);
     const formattedTime = formatEventTime(date);
     
     let locationLine = '';
@@ -906,7 +1089,6 @@ async function createUserCommunauteCard(communaute) {
     const card = document.createElement('div');
     card.className = 'event-card';
     
-    // Récupérer le nombre de membres
     let memberCount = 0;
     try {
         const { getCommunauteMemberCount } = await import('../Models/communauteModel.js');
@@ -916,7 +1098,7 @@ async function createUserCommunauteCard(communaute) {
     }
     
     const date = communaute.date_creation ? new Date(communaute.date_creation) : null;
-    const formattedDate = date ? formatCommunauteDate(date) : '';
+    const formattedDate = date ? formatDate(date) : '';
     
     const locationLine = communaute.lieu || '';
     
@@ -948,16 +1130,7 @@ async function createUserCommunauteCard(communaute) {
     return card;
 }
 
-function formatCommunauteDate(date) {
-    const options = { 
-        day: 'numeric', 
-        month: 'long',
-        year: 'numeric'
-    };
-    return date.toLocaleDateString('fr-FR', options);
-}
-
-function formatEventDate(date) {
+function formatDate(date) {
     const options = { 
         day: 'numeric', 
         month: 'long',

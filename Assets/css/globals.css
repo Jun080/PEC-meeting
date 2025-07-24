@@ -233,7 +233,7 @@ button {
 
 .card-big {
     border-radius: 6px;
-    padding: 1.5rem;
+    padding: 1rem;
     position: relative;
     width: 100%;
     max-width: 270px;
@@ -420,4 +420,27 @@ button {
     font-size: 1.05rem;
     color: #fff;
     margin-top: 8px;
+}
+
+
+.pastille {
+    display: inline-flex;
+    padding: 13px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+.pastille.pastille-dark-imperial-blue {
+    background: var(--bg-dark-imperial-blue);
+    color: var(--text-alice-blue);
+    border-color: var(--vodka);
+}
+
+.pastille.pastille-alice-blue {
+    background: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+    border-color: var(--text-dark-imperial-blue);
 }

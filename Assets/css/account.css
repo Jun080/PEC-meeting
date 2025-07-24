@@ -152,33 +152,6 @@
     color: var(--text-dark-imperial-blue);
 }
 
-.profile-value.editable {
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.profile-value.editable:hover {
-    color: var(--text-cornflower-blue);
-}
-
-.profile-edit-input {
-    width: 100%;
-    padding: 4px 8px;
-    border: 2px solid var(--bg-cornflower-blue);
-    border-radius: 4px;
-    color: var(--text-dark-imperial-blue);
-    outline: none;
-    box-sizing: border-box;
-}
-
-.profile-edit-input:focus {
-    border-color: var(--bg-dark-imperial-blue);
-}
-
-.profile-content {
-    padding: 2rem 0;
-}
-
 @media (max-width: 768px) {
     .profile-section {
         flex-direction: column;
@@ -296,8 +269,6 @@
 .account-tab[data-tab-content="evenements"] > h2:first-child {
     margin: 0 0 2rem 0;
     color: var(--text-dark-imperial-blue);
-    font-family: var(--font-heading);
-    font-size: 2rem;
 }
 
 .user-events-container {
@@ -356,33 +327,22 @@
 }
 
 .user-event-title {
-    font-family: var(--font-heading);
-    font-size: 1.3rem;
     color: var(--text-dark-imperial-blue);
     margin: 0 0 0.5rem 0;
-    line-height: 1.3;
 }
 
 .user-event-date-time {
-    font-family: var(--font-primary);
-    font-size: 0.95rem;
     color: var(--text-cobalt-blue);
-    font-weight: 600;
     margin-bottom: 0.3rem;
 }
 
 .user-event-location {
-    font-family: var(--font-primary);
-    font-size: 0.9rem;
     color: var(--text-dark-imperial-blue);
     margin-bottom: 0.5rem;
     opacity: 0.8;
 }
 
 .user-event-price {
-    font-family: var(--font-heading);
-    font-size: 1.2rem;
-    font-weight: bold;
     color: var(--bg-cornflower-blue);
     margin: 0;
     text-align: right;
@@ -396,7 +356,6 @@
 }
 
 .user-events-empty p {
-    font-size: 1.1rem;
     margin: 0;
 }
 
@@ -411,10 +370,6 @@
     .user-event-card-content {
         padding: 1.2rem;
     }
-    
-    .user-event-title {
-        font-size: 1.2rem;
-    }
 }
 
 @media (max-width: 576px) {
@@ -426,10 +381,6 @@
     .user-event-card-content {
         padding: 1rem;
         gap: 0.8rem;
-    }
-    
-    .user-event-title {
-        font-size: 1.1rem;
     }
     
     .user-event-card-image {
@@ -454,11 +405,8 @@
     right: 10px;
     background: var(--bg-cornflower-blue);
     color: white;
-    font-size: 0.7rem;
-    font-weight: 600;
     padding: 0.3rem 0.6rem;
     border-radius: 12px;
-    font-family: var(--font-primary);
 }
 
 .user-event-card-organizer {
@@ -466,10 +414,8 @@
 }
 
 .user-event-participants {
-    font-size: 0.8rem;
     color: var(--text-dark-imperial-blue);
     margin-top: 0.3rem;
-    font-weight: 500;
 }
 
 
@@ -558,5 +504,28 @@
         grid-template-columns: 1fr;
         gap: 1rem;
         margin-top: 1.5rem;
+    }
+}
+
+.edit-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-dark-imperial-blue);
+    border: 2px solid var(--bg-cornflower-blue);
+    color: var(--text-alice-blue);
+    padding: 12px 20px;
+    border-radius: 25px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .edit-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
     }
 }

@@ -1,4 +1,6 @@
 import { getPopularEvents, getRecentEventsWithParticipants } from '../Services/eventParticipationService.js';
+import { CarouselCard } from '../components/CarouselCard.js';
+import generateStructure from '../lib/generateStructure.js';
 
 export default async function Homepage() {
   const result = {
@@ -267,32 +269,32 @@ async function loadLatestEvents() {
         }
         
         latestEventsContainer.innerHTML = '';
-        popularEvents.forEach(event => {
-            const eventCard = document.createElement('div');
-            eventCard.className = 'event-card';
+        
+        for (let i = 0; i < popularEvents.length; i++) {
+            const event = popularEvents[i];
+            const eventData = {
+                id: event.id,
+                title: event.nom || 'Événement sans nom',
+                description: event.description_courte || event.description_longue || 'Description à venir',
+                image: event.image || '/Assets/images/eventImage.png',
+                date: event.date,
+                time: event.heure || '20:00',
+                location: event.adresse || 'Lieu à définir',
+                price: event.prix || 0,
+                showPrice: true,
+                variant: 'dark'
+            };
             
-            const description = event.description_courte || event.description_longue || 'Description à venir';
-            const participantsCount = event.participants_count || 0;
-            const participantsText = participantsCount <= 1 ? `${participantsCount} participant` : `${participantsCount} participants`;
+            const cardStructure = CarouselCard(eventData);
             
-            eventCard.innerHTML = `
-                <div class="event-card-image">
-                    <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
-                </div>
-                <div class="event-card-content">
-                    <div class="event-card-info">
-                        <h3 class="event-title">${event.nom || 'Événement sans nom'}</h3>
-                        <p class="event-date-time highlight">${formatSimpleDate(event.date)}</p>
-                        <p class="event-location highlight">${event.adresse || 'Lieu à définir'}</p>
-                        <p class="event-description">${truncateText(description, 80)}</p>
-                    </div>
-                    <p class="event-price h2">${participantsText}</p>
-                    <p class="event-price h2">${event.prix ? event.prix + '€' : 'Gratuit'}</p>
-                </div>
-            `;
-            eventCard.onclick = () => window.router.navigate(`/evenements/${event.id}`);
-            latestEventsContainer.appendChild(eventCard);
-        });
+            const cardElement = await generateStructure(cardStructure);
+            
+            cardElement.addEventListener('click', () => {
+                window.router.navigate(`/evenements/${event.id}`);
+            });
+            
+            latestEventsContainer.appendChild(cardElement);
+        }
         
         initializeHomepageCarousel();
     } catch (error) {
@@ -314,32 +316,32 @@ async function loadBottomEvents() {
         }
         
         bottomEventsContainer.innerHTML = '';
-        recentEvents.forEach(event => {
-            const eventCard = document.createElement('div');
-            eventCard.className = 'event-card event-card-bright-gray';
+        
+        for (let i = 0; i < recentEvents.length; i++) {
+            const event = recentEvents[i];
+            const eventData = {
+                id: event.id,
+                title: event.nom || 'Événement sans nom',
+                description: event.description_courte || event.description_longue || 'Description à venir',
+                image: event.image || '/Assets/images/eventImage.png',
+                date: event.date,
+                time: event.heure || '20:00',
+                location: event.adresse || 'Lieu à définir',
+                price: event.prix || 0,
+                showPrice: true,
+                variant: 'dark'
+            };
             
-            const description = event.description_courte || event.description_longue || 'Description à venir';
-            const participantsCount = event.participants_count || 0;
-            const participantsText = participantsCount <= 1 ? `${participantsCount} participant` : `${participantsCount} participants`;
+            const cardStructure = CarouselCard(eventData);
             
-            eventCard.innerHTML = `
-                <div class="event-card-image">
-                    <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
-                </div>
-                <div class="event-card-content">
-                    <div class="event-card-info">
-                        <h3 class="event-title">${event.nom || 'Événement sans nom'}</h3>
-                        <p class="event-date-time highlight">${formatSimpleDate(event.date)}</p>
-                        <p class="event-location highlight">${event.adresse || 'Lieu à définir'}</p>
-                        <p class="event-description">${truncateText(description, 80)}</p>
-                    </div>
-                    <p class="event-price h2">${participantsText}</p>
-                    <p class="event-price h2">${event.prix ? event.prix + '€' : 'Gratuit'}</p>
-                </div>
-            `;
-            eventCard.onclick = () => window.router.navigate(`/evenements/${event.id}`);
-            bottomEventsContainer.appendChild(eventCard);
-        });
+            const cardElement = await generateStructure(cardStructure);
+            
+            cardElement.addEventListener('click', () => {
+                window.router.navigate(`/evenements/${event.id}`);
+            });
+            
+            bottomEventsContainer.appendChild(cardElement);
+        }
         
         initializeBottomCarousel();
     } catch (error) {

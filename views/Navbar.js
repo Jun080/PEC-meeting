@@ -10,14 +10,15 @@ export default function Navbar(props = {}) {
       {
         tag: "div",
         attributes: [["class", "navbar-container"]],
-        children: [            {
+        children: [            
+          {
               tag: "div",
               attributes: [["class", "navbar-left"]],
               children: [
                 {
                   tag: "a",
                   attributes: [
-                    ["href", "/bienvenue"],
+                    ["href", "/"],
                     ["class", "navbar-logo-link"],
                   ],
                   events: {
@@ -34,40 +35,35 @@ export default function Navbar(props = {}) {
                     {
                       tag: "img",
                       attributes: [
-                        ["src", "./Assets/images/favicon4x.png"],
+                        ["src", "/Assets/images/favicon4x.png"],
                         ["alt", "Meetup Connect Logo"],
                         ["class", "navbar-logo"],
                       ],
                     }
                   ],
                 },
+                {
+                  tag: "div",
+                  attributes: [["class", "search-container"]],
+                  children: [
+                    {
+                      tag: "input",
+                      attributes: [
+                        ["type", "text"],
+                        ["placeholder", "Rechercher sur le site"],
+                        ["class", "search-input"],
+                      ],
+                    },
+                    {
+                      tag: "button",
+                      attributes: [["class", "search-button"]],
+                      children: ["🔍"],
+                    },
+                  ],
+                },
               ],
-            },
-          {
-            tag: "div",
-            attributes: [["class", "navbar-center"]],
-            children: [
-              {
-                tag: "div",
-                attributes: [["class", "search-container"]],
-                children: [
-                  {
-                    tag: "input",
-                    attributes: [
-                      ["type", "text"],
-                      ["placeholder", "Rechercher sur le site"],
-                      ["class", "search-input"],
-                    ],
-                  },
-                  {
-                    tag: "button",
-                    attributes: [["class", "search-button"]],
-                    children: ["🔍"],
-                  },
-                ],
-              },
-            ],
           },
+          
           {
             tag: "div",
             attributes: [["class", "navbar-right"]],
@@ -119,14 +115,14 @@ export default function Navbar(props = {}) {
                     attributes: [
                       ["link", "/compte"],
                       ["title", "Compte"],
-                      ["class", "btn-auth"],
+                      ["class", "bouton-primary-1"],
                     ],
                   } : {
                     tag: Link,
                     attributes: [
                       ["link", "/inscription"],
                       ["title", "Se connecter"],
-                      ["class", "btn-auth"],
+                      ["class", "bouton-primary-1"],
                     ],
                   },
                 ],
