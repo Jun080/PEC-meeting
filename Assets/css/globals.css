@@ -169,6 +169,22 @@ button {
     color: var(--text-dark-imperial-blue);
 }
 
+.bouton-primary-4 {
+    display: inline-flex;
+    width: max-content;
+    padding: 12px 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background: var(--bg-dark-imperial-blue);
+    color: var(--text-alice-blue);
+    height: min-content;
+}
+
+.bouton-primary-4:hover {
+    background: var(--bg-cornflower-blue);
+}
+
 .bouton-secondary-1 {
     display: inline-flex;
     width: max-content;
@@ -233,7 +249,7 @@ button {
 
 .card-big {
     border-radius: 6px;
-    padding: 1rem;
+    padding: 1.5rem;
     position: relative;
     width: 100%;
     max-width: 270px;
@@ -431,6 +447,9 @@ button {
     align-items: flex-start;
     border-radius: 10px;
     border: 1px solid;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
 }
 
 .pastille.pastille-dark-imperial-blue {

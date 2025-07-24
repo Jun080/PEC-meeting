@@ -53,7 +53,7 @@ export function CarouselCard(eventData) {
                         children: []
                     },
                     ...(showPrice && price !== undefined ? [{
-                        tag: "div",
+                        tag: "p",
                         attributes: [
                             ["class", "pastille pastille-dark-imperial-blue"]
                         ],
@@ -81,25 +81,25 @@ export function CarouselCard(eventData) {
                                 ],
                                 children: [
                                     {
-                                        tag: "div",
+                                        tag: "p",
                                         attributes: [
-                                            ["class", "carousel-card-month"]
+                                            ["class", "carousel-card-month h2-footer"]
                                         ],
                                         children: [month]
                                     },
                                     {
-                                        tag: "div",
+                                        tag: "p",
                                         attributes: [
-                                            ["class", "carousel-card-day"]
+                                            ["class", "carousel-card-day h2-footer"]
                                         ],
                                         children: [day]
                                     }
                                 ]
                             },
                             {
-                                tag: "div",
+                                tag: "p",
                                 attributes: [
-                                    ["class", "carousel-card-time"]
+                                    ["class", "carousel-card-time h2"]
                                 ],
                                 children: [time]
                             }
@@ -123,20 +123,27 @@ export function CarouselCard(eventData) {
                             {
                                 tag: "div",
                                 attributes: [
-                                    ["class", "carousel-card-location"]
+                                    ["class", "carousel-card-details-texte"]
                                 ],
                                 children: [
                                     {
-                                        tag: "span",
+                                        tag: "div",
                                         attributes: [
-                                            ["class", "carousel-card-location-icon"]
+                                            ["class", "carousel-card-location"]
                                         ],
-                                        children: ["📍"]
+                                        children: [
+                                            {
+                                                tag: "img",
+                                                attributes: [
+                                                    ["src", "/Assets/images/svg/icon-lieu-han-blue.svg"],
+                                                    ["class", "icon-location"]
+                                        ],
+                                                children: []
                                     },
                                     {
-                                        tag: "span",
+                                                tag: "p",
                                         attributes: [
-                                            ["class", "carousel-card-location-text"]
+                                                    ["class", "carousel-card-location-text p-small"]
                                         ],
                                         children: [location]
                                     }
@@ -146,11 +153,12 @@ export function CarouselCard(eventData) {
                             {
                                 tag: "h3",
                                 attributes: [
-                                    ["class", "carousel-card-title"]
+                                            ["class", "carousel-card-title h1"]
                                 ],
                                 children: [title]
                             },
-
+                                ]
+                            },
                             {
                                 tag: "p",
                                 attributes: [

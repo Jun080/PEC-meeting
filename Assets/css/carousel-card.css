@@ -3,8 +3,9 @@
     flex-direction: column;
     border-radius: 16px;
     overflow: hidden;
-    width: 468px;
-    max-width: 100%;
+    min-width: 537px;
+    padding: 8px;
+    cursor: pointer;
 }
 
 .carousel-card.dark {
@@ -25,6 +26,7 @@
 
 .carousel-card-image-container {
     position: relative;
+    border-radius: 15px;
     width: 100%;
     max-height: 243px;
     height: 100%;
@@ -38,15 +40,17 @@
 }
 
 .carousel-card-content {
-    padding: 16px;
+    padding: 24px;
     display: flex;
-    flex-direction: column;
+    min-height: 162px;
     gap: 24px;
 }
 
 .carousel-card-datetime {
     display: flex;
     align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
     gap: 12px;
 }
 
@@ -57,20 +61,15 @@
 }
 
 .carousel-card.dark .carousel-card-date {
-    background: var(--bg-alice-blue);
-    color: var(--text-dark-imperial-blue);
-}
-
-.carousel-card.light .carousel-card-date {
-    background: var(--bg-dark-imperial-blue);
     color: var(--text-alice-blue);
 }
 
+.carousel-card.light .carousel-card-date {
+    color: var(--text-dark-imperial-blue);
+}
+
 .carousel-card-month {
-    font-size: var(--h2-footer-font-size, 11px);
-    font-weight: var(--h2-footer-font-weight, 600);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .carousel-card-day {
@@ -86,7 +85,7 @@
 }
 
 .carousel-card-separator {
-    height: 1px;
+    width: 3px;
     background: var(--han-blue);
     margin: 4px 0;
 }
@@ -94,15 +93,19 @@
 .carousel-card-details {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    justify-content: space-between;
+}
+
+.carousel-card-details-texte {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .carousel-card-location {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: var(--p-small-font-size, 13px);
-    font-weight: var(--p-small-font-weight, 400);
 }
 
 .carousel-card.dark .carousel-card-location {
@@ -113,18 +116,7 @@
     color: var(--text-dark-imperial-blue);
 }
 
-.carousel-card-location-icon {
-    font-size: 14px;
-}
-
-.carousel-card-location-text {
-    font-weight: 500;
-}
-
 .carousel-card-title {
-    font-size: var(--h1-font-size, 16px);
-    font-weight: var(--h1-font-weight, 700);
-    line-height: 1.3;
     margin: 0;
 }
 
@@ -137,9 +129,6 @@
 }
 
 .carousel-card-description {
-    font-size: var(--p-font-size, 13px);
-    font-weight: var(--p-font-weight, 400);
-    line-height: 1.4;
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -150,8 +139,8 @@
 
 .carousel-card.dark .carousel-card-description {
     color: var(--text-alice-blue);
-}
-
+    }
+    
 .carousel-card.light .carousel-card-description {
     color: var(--text-dark-imperial-blue);
 }

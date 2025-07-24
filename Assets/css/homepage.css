@@ -23,7 +23,7 @@
 }
 
 .homepage-page .latest-events-section .p-text-latest-events{
-    margin: 1.5rem auto 2rem;
+    margin: 1rem auto 2rem;
     color: var(--text-dark-imperial-blue);
 }
 
@@ -42,11 +42,11 @@
 
 .view-all-events-container {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
 }
 
 .homepage-page section:not(:first-child) {
-    margin-top: 152px;
+    margin-top: 100px;
 }
 
 .homepage-page .latest-events-section.bottom-events {
@@ -84,4 +84,57 @@
 
 .similar-events-grid .event-card.event-card-bright-gray .event-date-time {
     color: var(--text-shadow-blue);
+}
+
+.homepage-page .bento-stars {
+    background-color: var(--bg-shadow-blue);
+}
+
+.bento-logo,
+.bento-disponible {
+    background-color: var(--bg-cornflower-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 1rem;
+    height: calc(100% - 2rem);
+    padding: 1rem;
+}
+
+.bento-disponible {
+    background-color: var(--bg-dark-imperial-blue);
+    background-image: url(../images/svg/shape-triangle-bottom-right.svg), url(../images/svg/shape-triangle-top-left.svg);
+    background-repeat: no-repeat;
+    background-position: bottom right, top left;
+}
+
+.bento-disponible p {
+    color: var(--text-alice-blue);
+}
+
+body .homepage-page .simplicite-title {
+    margin-bottom: 56px;
+}
+
+.homepage-page .etape-content {
+    gap: 8px;
+}
+
+.homepage-page .etape-content p {
+    margin-bottom: 24px !important;
+    color: var(--text-dark-imperial-blue);
+}
+
+.homepage-page .community-carousel-section {
+    padding: 136px 0;
+    background-color: var(--vodka);
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    border-radius: 2rem;
 }
