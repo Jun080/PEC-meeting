@@ -184,27 +184,6 @@ function exportEventToGoogleCalendar(event) {
     window.open(googleCalendarUrl, '_blank');
 }
 
-function exportAllToGoogleCalendar() {
-    if (userEvents.length === 0) {
-        alert('Aucun événement à exporter');
-        return;
-    }
-    
-    const allEventsText = userEvents.map(event => {
-        const eventDate = new Date(event.date);
-        return `• ${event.nom} - ${eventDate.toLocaleDateString('fr-FR')} à ${eventDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
-    }).join('\\n');
-    
-    const summaryEvent = {
-        nom: `Mes événements MeetUp Connect (${userEvents.length} événements)`,
-        date: new Date().toISOString(),
-        description_longue: `Récapitulatif de tous vos événements MeetUp Connect:\\n\\n${allEventsText}`,
-        adresse: 'Voir détails des événements individuels'
-    };
-    
-    exportEventToGoogleCalendar(summaryEvent);
-}
-
 function showCalendarError(message) {
     const container = document.getElementById('calendar-container');
     if (container) {
@@ -295,22 +274,6 @@ export default function Calendar() {
                         tag: "div",
                         attributes: [["class", "calendar-days"], ["id", "calendar-days"]],
                         children: []
-                    }
-                ]
-            },
-            {
-                tag: "div",
-                attributes: [["class", "calendar-actions"]],
-                children: [
-                    {
-                        tag: "button",
-                        attributes: [["class", "calendar-export-btn"], ["id", "export-to-google"]],
-                        events: {
-                            click: [exportAllToGoogleCalendar]
-                        },
-                        children: [
-                            "📅 Ajouter tous mes événements à Google Calendar"
-                        ]
                     }
                 ]
             }
