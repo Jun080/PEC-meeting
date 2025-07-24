@@ -18,7 +18,7 @@ export default function Navbar(props = {}) {
                 {
                   tag: "a",
                   attributes: [
-                    ["href", "/bienvenue"],
+                    ["href", "/"],
                     ["class", "navbar-logo-link"],
                   ],
                   events: {
