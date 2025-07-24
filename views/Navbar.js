@@ -25,7 +25,7 @@ export default function Navbar(props = {}) {
                     click: [
                       function (event) {
                         event.preventDefault();
-                        window.history.pushState({}, undefined, "/bienvenue");
+                        window.history.pushState({}, undefined, "/");
                         window.dispatchEvent(new Event("pushstate"));
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       },
