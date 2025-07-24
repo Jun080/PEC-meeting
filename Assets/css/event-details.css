@@ -191,7 +191,6 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
 }
 
 .similar-events-container {
@@ -363,10 +362,6 @@
     .similar-event-card {
         flex: 1 1 100%;
         min-width: 280px;
-    }
-    
-    .similar-events-carousel {
-        padding: 0 1rem;
     }
 
     .similar-events-grid {

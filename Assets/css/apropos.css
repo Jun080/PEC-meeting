@@ -3,11 +3,13 @@
 }
 
 .apropos-communautes p,
+.homepage-communautes p,
 .a-propos-header p {
     color: var(--text-cobalt-blue);
 }
 
 .apropos-communautes p strong,
+.homepage-communautes p strong,
 .a-propos-header p strong {
     color: var(--text-dark-imperial-blue);
 }
@@ -78,22 +80,26 @@
     object-fit: cover;
 }
 
-.apropos-communautes {
+.apropos-communautes,
+.homepage-communautes {
     display: flex;
     flex-direction: column;
     gap: 24px;
     margin-bottom: 64px;
 }
 
-.apropos-communautes h2 {
+.apropos-communautes h2,
+.homepage-communautes h2 {
     color: var(--text-dark-imperial-blue);
 }
 
-.apropos-communautes p:first-child {
+.apropos-communautes p:first-child,
+.homepage-communautes p:first-child {
     max-width: 63%;
 }
 
-.apropos-bento {
+.apropos-bento,
+.homepage-bento {
     display: grid;
     grid-template-columns: 40% 60%;
     gap: 1rem;
@@ -137,6 +143,13 @@
 .bento-right-bottom {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.bento-right-middle {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
     align-items: center;
 }
@@ -238,7 +251,7 @@
 }
 
 .apropos-page section:not(:first-child) {
-    margin-top: 152px;
+    margin-top: 100px;
 }
 
 body .simplicite-title {
@@ -335,181 +348,21 @@ body .simplicite-title {
 .banner-femme .banner {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 4px;
     padding: 40px 56px;
     justify-content: center;
     align-items: flex-start;
     border-radius: 0px 16px 16px 0px;
-    background-color: var(--bg-shadow-blue);
-    color: var(--text-alice-blue);
+    background-color: var(--vodka);
+    color: var(--text-dark-imperial-blue);
     width: 100%;
+}
+
+.banner-femme .banner .bouton-primary-4 {
+    margin-top: 28px;
 }
 
 .banner-femme .banner h2,
 .banner-femme .banner p {
     margin: 0 !important;
-}
-
-@media (max-width: 968px) {
-    .apropos-header {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .apropos-page {
-        padding: 2rem 0;
-    }
-    
-    .apropos-content {
-        max-width: 100%;
-    }
-    
-    .apropos-communautes p {
-        max-width: 100%;
-    }
-    
-    .apropos-bento {
-        grid-template-columns: 1fr;
-    }
-    
-    .apropos-mission,
-    .apropos-pourquoi {
-        padding: 3rem 0;
-        margin-top: 3rem;
-        margin-bottom: 3rem;
-    }
-    
-    .apropos-page > .container > section,
-    .apropos-image-section,
-    .apropos-mission,
-    .apropos-pourquoi,
-    .apropos-simplicite {
-        margin-bottom: 100px;
-    }
-    
-    .apropos-simplicite {
-        margin-top: 100px;
-    }
-    
-    body .simplicite-title {
-        margin-bottom: 60px;
-    }
-    
-    .etape {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-    }
-    
-    .etape-2 .etape-content,
-    .etape-4 .etape-content,
-    .etape-2 .etape-image,
-    .etape-4 .etape-image {
-        order: unset;
-    }
-    
-    .apropos-pourquoi {
-        padding: 3rem 0;
-        margin-top: 3rem;
-        margin-bottom: 3rem;
-    }
-    
-    .apropos-pourquoi p {
-        max-width: 90%;
-    }
-}
-
-@media (max-width: 768px) {
-    .apropos-features li {
-        padding-left: 2.5rem;
-    }
-    
-    .apropos-features li::before {
-        width: 30px;
-        height: 30px;
-    }
-    
-    .apropos-content {
-        gap: 1rem;
-    }
-    
-    .apropos-image-section {
-        margin-top: 80px;
-        margin-bottom: 80px;
-    }
-    
-    .bento-right-bottom {
-        grid-template-columns: 1fr;
-    }
-    
-    .bento-stars img {
-        width: 16px;
-        height: 16px;
-    }
-    
-    .bento-users {
-        padding: 1.5rem;
-    }
-    
-    .planet-bottom-left {
-        width: 45px;
-        height: 45px;
-        bottom: -8px;
-        left: -8px;
-    }
-    
-    .planet-top-right {
-        width: 30px;
-        height: 30px;
-        top: -4px;
-        right: -4px;
-    }
-    
-    .apropos-mission {
-        padding: 2rem 0;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .apropos-mission .container-small {
-        gap: 24px;
-    }
-    
-    .apropos-page > .container > section,
-    .apropos-image-section,
-    .apropos-mission,
-    .apropos-simplicite {
-        margin-bottom: 64px;
-    }
-    
-    .apropos-simplicite {
-        margin-top: 64px;
-    }
-    
-    body .simplicite-title {
-        margin-bottom: 40px;
-    }
-    
-    .etapes-container {
-        gap: 3rem;
-    }
-    
-    .etape-content {
-        gap: 1rem;
-    }
-    
-    .apropos-pourquoi {
-        padding: 2rem 0;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .apropos-pourquoi .container {
-        gap: 24px;
-    }
-    
-    .apropos-pourquoi p {
-        max-width: 95%;
-    }
 }

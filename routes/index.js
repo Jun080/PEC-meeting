@@ -14,11 +14,12 @@ import OAuthCallback from "../views/OAuthCallback.js";
 import { EventDetails } from "../views/EventDetails.js";
 import { CommunauteDetails } from "../views/CommunauteDetails.js";
 import CreateEvent from "../views/CreateEvent.js";
+import Homepage from "../views/Homepage.js";
 
 export default {
   "/": {
     tag: Layout,
-    attributes: [["content", { tag: Bienvenue }]],
+    attributes: [["content", { tag: Homepage }]],
   },
   "/users": {
     tag: Layout,

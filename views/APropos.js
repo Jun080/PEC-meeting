@@ -554,12 +554,12 @@ const APropos = function () {
                       children: [
                           {
                               tag: "h2",
-                              attributes: [["class", "h2"]],
+                              attributes: [["class", "p-small"]],
                               children: ["Fais vivre tes idées\u00A0: crée ta communauté\u00A0!"],
                           },
                           {
                               tag: "p",
-                              attributes: [["class", "p"]],
+                              attributes: [["class", "h2-footer"]],
                               children: [
                                   "Rassemble les bonnes personnes autour de tes passions, idées ou projets. En quelques clics, lance ton propre espace et commence à organiser tes événements",
                               ],

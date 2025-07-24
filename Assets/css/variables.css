@@ -123,7 +123,7 @@ p, .p, input, input::placeholder, textarea::placeholder, .account-nav a, label, 
     margin: 0;
 }
 
-button, .btn, .card-big p, .nav-link, .bouton-primary-1, .bouton-primary-2, .bouton-secondary-1, .bouton-secondary-2, .bouton-tertiary-1, .bouton-tertiary-2 {
+button, .btn, .card-big p, .nav-link, .bouton-primary-1, .bouton-primary-2, .bouton-primary-3, .bouton-primary-4, .bouton-secondary-1, .bouton-secondary-2, .bouton-tertiary-1, .bouton-tertiary-2 {
     font-family: "Noto Sans", sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -135,9 +135,21 @@ button, .btn, .card-big p, .nav-link, .bouton-primary-1, .bouton-primary-2, .bou
     margin: 0 auto;
 }
 
+@keyframes background-pan {
+    from {
+        background-position: 0% center
+    }
+
+    to {
+        background-position: -200% center
+    }
+}
+
 .gradient-fonce {
-    background: linear-gradient(90deg, #7897FF 0%, #0043B1 33%, #00126D 66.35%, #0043B1 100%);
+    background: linear-gradient(90deg, #7897FF 0%, #0043B1 33%, #00126D 66.35%, #0043B1 80%, #7897FF 100%);
+    background-size: 200%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: background-pan 10s linear infinite;
 }
