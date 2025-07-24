@@ -224,7 +224,7 @@ async function createCommunauteCard(communaute) {
   
   const cardContent = card.querySelector('.event-card-info');
   cardContent.addEventListener('click', () => {
-    window.location.pathname = `/communaute/${communaute.id}`;
+    window.router.navigate(`/communautes/${communaute.id}`);
   });
   
   const button = card.querySelector('.btn-comm-action');

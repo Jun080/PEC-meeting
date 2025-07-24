@@ -87,7 +87,7 @@ export function EventDetails(props) {
                                     },
                                     {
                                         tag: 'p',
-                                        attributes: [['class', 'event-description'], ['id', 'event-description']],
+                                        attributes: [['class', 'event-description-details'], ['id', 'event-description']],
                                         children: ['Chargement de la description...']
                                     }
                                 ]
@@ -518,7 +518,7 @@ export function EventDetails(props) {
                             <h3 class="event-title">${event.nom || 'Événement sans nom'}</h3>
                             <p class="event-date-time highlight">${formatSimpleDate(event.date)}</p>
                             <p class="event-location highlight">${event.adresse || 'Lieu à définir'}</p>
-                            <p class="event-description">${truncateText(description, 80)}</p>
+                            <p class="event-description-details">${truncateText(description, 80)}</p>
                         </div>
                         <p class="event-price h2">${priceText}</p>
                     </div>

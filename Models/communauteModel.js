@@ -17,6 +17,16 @@ export async function getAllCommunautes() {
     return data;
 }
 
+export async function getCommunauteById(communauteId) {
+    const { data, error } = await client
+        .from('communautes')
+        .select('*')
+        .eq('id', communauteId)
+        .single();
+    if (error) throw error;
+    return data;
+}
+
 export async function createCommunaute({ nom, description, referent, date_creation, lieu, status, image }) {
     const { data, error } = await client
         .from('communautes')

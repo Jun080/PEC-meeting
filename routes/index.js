@@ -12,6 +12,7 @@ import Dashboard from "../views/Dashboard.js";
 import AccountPage from "../views/AccountPage.js";
 import OAuthCallback from "../views/OAuthCallback.js";
 import { EventDetails } from "../views/EventDetails.js";
+import { CommunauteDetails } from "../views/CommunauteDetails.js";
 import CreateEvent from "../views/CreateEvent.js";
 
 export default {
@@ -52,6 +53,10 @@ export default {
   "/communautes": {
     tag: Layout,
     attributes: [["content", { tag: CommunautesListing }]],
+  },
+  "/communautes/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: CommunauteDetails }]],
   },
   "/dashboard": {
     tag: Layout,
