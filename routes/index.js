@@ -13,6 +13,7 @@ import AccountPage from "../views/AccountPage.js";
 import OAuthCallback from "../views/OAuthCallback.js";
 import { EventDetails } from "../views/EventDetails.js";
 import CreateEvent from "../views/CreateEvent.js";
+import TestPageFunction from "../views/TestModifPage.js";
 
 export default {
   "/": {
@@ -71,6 +72,10 @@ export default {
   "*": {
     tag: Layout,
     attributes: [["content", { tag: Page404 }]],
+  },
+  "/test": {
+    tag: Layout,
+    attributes: [["content", { tag: TestPageFunction }]],
   },
 };
 
