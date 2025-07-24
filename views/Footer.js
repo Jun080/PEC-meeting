@@ -76,19 +76,6 @@ export default function Footer() {
                               }
                             ] 
                           },
-                          { 
-                            tag: "li", 
-                            children: [
-                              {
-                                tag: Link,
-                                attributes: [
-                                  ["link", "/a-propos"],
-                                  ["title", "Contact"],
-                                  ["class", "h2-footer footer-link"],
-                                ],
-                              }
-                            ] 
-                          },
                         ],
                       },
                     ],
@@ -171,7 +158,7 @@ export default function Footer() {
                   {
                     tag: Link,
                     attributes: [
-                      ["link", "/evenements"],
+                      ["link", "/evenement/creer-evenement"],
                       ["title", ""],
                       ["class", "card-big cornflower-blue"],
                     ],
