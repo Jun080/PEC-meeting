@@ -71,7 +71,46 @@ export async function getCommunauteMemberCount(communaute_id) {
   }
 }
 
+export async function deleteCommunaute(communauteId) {
+    try {
+        const { error } = await client
+            .from('communautes')
+            .delete()
+            .eq('id', communauteId);
+        if (error) throw error;
+        return true;
+    } catch (error) {
+        console.error('Erreur lors de la suppression de la communauté:', error);
+        throw error;
+    }
+}
+
 export async function getAllCommunautesWithMemberCount() {
+
+    const { data: communautes, error: communautesError } = await client
+        .from('communautes')
+        .select('*');
+
+    if (communautesError) throw communautesError;
+
+    const communautesWithCount = await Promise.all(
+        communautes.map(async (communaute) => {
+            const { count, error: countError } = await client
+                .from('communaute_membres')
+                .select('*', { count: 'exact', head: true })
+                .eq('communaute_id', communaute.id);
+
+            if (countError) {
+                console.warn(`Erreur lors du comptage des membres pour la communauté ${communaute.id}:`, countError);
+                return { ...communaute, member_count: 0 };
+            }
+
+            return { ...communaute, member_count: count || 0 };
+        })
+    );
+
+    return communautesWithCount;
+
   const communautes = await getAllCommunautes();
   if (!Array.isArray(communautes)) return [];
   return Promise.all(
