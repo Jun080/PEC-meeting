@@ -1,6 +1,5 @@
 import { getAllCommunautesWithMemberCount } from '../Models/communauteModel.js';
-import { ajouterMembreCommunaute, retirerMembreCommunaute, estMembreCommunaute } from '../Models/communauteMembresModel.js';
-import { getCurrentUser } from '../Models/userModel.js';
+import { CommunityCarouselCard } from '../components/CommunityCarouselCard.js';
 
 let communautesData = [];
 
@@ -172,107 +171,39 @@ async function clearFilters() {
 
 async function displayCommunautes(communautes, container) {
   if (!container) return;
-  
   container.innerHTML = '';
-  
   if (communautes.length === 0) {
     container.innerHTML = '<div class="no-events"><p>Aucune communauté disponible pour le moment.</p></div>';
     return;
   }
-  
   for (const communaute of communautes) {
-    const communauteCard = await createCommunauteCard(communaute);
-    container.appendChild(communauteCard);
+    const cardVNode = CommunityCarouselCard({ ...communaute, variant: 'dark' });
+    const card = renderVNode(cardVNode);
+    await enhanceCommunityCard(card, communaute);
+    container.appendChild(card);
   }
 }
 
-async function createCommunauteCard(communaute) {
-  const card = document.createElement('div');
-  card.className = 'event-card';
-  
-  const date = communaute.date_creation ? new Date(communaute.date_creation) : null;
-  const formattedDate = date ? formatCommunauteDate(date) : '';
-  
-  const locationLine = communaute.lieu || '';
-  
-  const description = communaute.description || 'Aucune description disponible';
-  
-  const memberCount = communaute.member_count || 0;
-  const memberText = memberCount === 0 ? 'Aucun membre' : 
-                    memberCount === 1 ? '1 membre' : 
-                    `${memberCount} membres`;
-  
-  card.innerHTML = `
-    <div class="event-card-image">
-      <img src="${communaute.image || '/Assets/images/banner-femme.webp'}" alt="${communaute.nom}" />
-    </div>
-    <div class="event-card-content">
-      <div class="event-card-info">
-        <h3 class="event-title">${communaute.nom || 'Communauté sans nom'}</h3>
-        ${formattedDate ? `<p class="event-date-time highlight">Créée le ${formattedDate}</p>` : ''}
-        ${locationLine ? `<p class="event-location highlight">${locationLine}</p>` : ''}
-        <p class="event-description">${description}</p>
-      </div>
-      <div class="event-card-actions">
-        <p class="event-price h2">${memberText}</p>
-        <button class="btn-comm-action bouton-primary-2" data-communaute-id="${communaute.id}">
-          <span class="btn-text">...</span>
-        </button>
-      </div>
-    </div>
-  `;
-  
-  const cardContent = card.querySelector('.event-card-info');
-  cardContent.addEventListener('click', () => {
-    window.router.navigate(`/communautes/${communaute.id}`);
-  });
-  
-  const button = card.querySelector('.btn-comm-action');
-  const buttonText = button.querySelector('.btn-text');
-  
-  try {
-    const user = await getCurrentUser();
-    if (user && user.id !== communaute.referent) {
-      button.disabled = true;
-      const isMember = await estMembreCommunaute(user.id, communaute.id);
-      buttonText.textContent = isMember ? 'Quitter' : 'Rejoindre';
-      button.disabled = false;
-      
-      button.onclick = async (e) => {
-        e.stopPropagation();
-        button.disabled = true;
-        try {
-          if (isMember) {
-            await retirerMembreCommunaute(user.id, communaute.id);
-            buttonText.textContent = 'Rejoindre';
-          } else {
-            await ajouterMembreCommunaute(user.id, communaute.id);
-            buttonText.textContent = 'Quitter';
-          }
-          setTimeout(() => loadCommunautes());
-        } catch (error) {
-          alert('Erreur : ' + error.message);
-        } finally {
-          button.disabled = false;
-        }
-      };
-    } else {
-      button.style.display = 'none';
-    }
-  } catch (error) {
-    button.style.display = 'none';
+async function enhanceCommunityCard(card, communaute) {
+  const title = card.querySelector('.carousel-card-title');
+  if (title) {
+    title.style.cursor = 'pointer';
+    title.addEventListener('click', () => {
+      window.router.navigate(`/communautes/${communaute.id}`);
+    });
   }
-  
-  return card;
 }
 
-function formatCommunauteDate(date) {
-  const options = { 
-    day: 'numeric', 
-    month: 'long',
-    year: 'numeric'
-  };
-  return date.toLocaleDateString('fr-FR', options);
+function renderVNode(vnode) {
+  if (typeof vnode === 'string') return document.createTextNode(vnode);
+  const el = document.createElement(vnode.tag);
+  if (vnode.attributes) {
+    vnode.attributes.forEach(([key, value]) => el.setAttribute(key, value));
+  }
+  if (vnode.children) {
+    vnode.children.forEach(child => el.appendChild(renderVNode(child)));
+  }
+  return el;
 }
 
 export default CommunautesListing;
