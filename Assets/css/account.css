@@ -6,6 +6,12 @@
     position: relative;
 }
 
+.profile-content {
+    display: flex;
+    padding: 2rem;
+    justify-content: center;
+}
+
 .account-sidebar {
     width: 280px;
     height: calc(100vh - 192px);
