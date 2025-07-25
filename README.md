@@ -1,6 +1,8 @@
 # PEC Meeting
-
 Plateforme de gestion et d'organisation d'événements communautaires, construite avec JavaScript et Supabase
+
+## Livrables:
+Lien Figma: https://www.figma.com/design/4alpZh1Yh7tYJbUJSzoGLx/PEC-2---Meetup-Connect?node-id=30-2&t=GIUw64D14Zvdxsck-1
 
 ## Installation
 
