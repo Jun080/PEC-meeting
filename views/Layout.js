@@ -1,64 +1,42 @@
 import { BrowserLink as Link } from "../components/BrowserRouter.js";
+import Footer from "./Footer.js";
+import Navbar from "./Navbar.js";
+
+// Fonction simulée pour vérifier l'état de connexion
+function isUserLoggedIn() {
+  // Pour l'instant, retourne false par défaut
+  // À remplacer par votre logique d'authentification
+  return localStorage.getItem('user') !== null;
+}
 
 export default function Layout(props) {
   const content = props.content;
+  const params = props.params;
+  const isLoggedIn = isUserLoggedIn();
+
+  let contentWithParams = content;
+  if (params && content && content.tag) {
+    contentWithParams = {
+      ...content,
+      attributes: [...(content.attributes || []), ["params", params]],
+    };
+  }
+
   return {
     tag: "div",
     attributes: [["class", "layout"]],
     children: [
       {
-        tag: "div",
-        attributes: [["class", "header"]],
-        children: [
-          {
-            tag: "nav",
-            children: [
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/"],
-                  ["title", "Accueil"],
-                ],
-              },
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/users"],
-                  ["title", "Utilisateurs"],
-                ],
-              },
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/inscription"],
-                  ["title", "Inscription"],
-                ],
-              },
-              {
-                tag: Link,
-                attributes: [
-                  ["link", "/bienvenue"],
-                  ["title", "Bienvenue"],
-                ],
-              },
-            ],
-          },
-        ],
+        tag: Navbar,
+        attributes: [["isLoggedIn", isLoggedIn]],
       },
       {
         tag: "main",
-        attributes: [["class", "page-content"]],
-        children: content ? [content] : [],
+        attributes: [["class", "page-content container"]],
+        children: contentWithParams ? [contentWithParams] : [],
       },
       {
-        tag: "footer",
-        attributes: [["class", "app-footer"]],
-        children: [
-          {
-            tag: "p",
-            children: ["2025 Meetup"],
-          },
-        ],
+        tag: Footer,
       },
     ],
   };

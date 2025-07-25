@@ -1,0 +1,29 @@
+.oauth-callback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1d4ed8 0%, #7897FF 100%);
+}
+
+.loading-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.loading-container h2 {
+    color: #1d4ed8;
+    margin-bottom: 1rem;
+    font-family: 'Climate Crisis', sans-serif;
+}
+
+.loading-container p {
+    color: #666;
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+}

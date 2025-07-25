@@ -1,0 +1,431 @@
+.community-details-page {
+    background: var(--bg-alice-blue);
+}
+
+.community-hero {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.community-hero-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.community-hero-card {
+    background: var(--bg-cobalt-blue);
+    border-radius: 20px;
+    padding: 2rem;
+    flex: 2;
+    color: var(--text-alice-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(300px - 4rem);
+    position: relative;
+}
+
+.community-category-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.community-hero-image {
+    flex: 1;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+}
+
+.community-hero-title {
+    margin: 0 7rem 1rem 0;
+    color: var(--text-alice-blue);
+}
+
+.community-hero-date,
+.community-hero-location {
+    color: var(--text-bright-gray);
+}
+
+.community-hero-location {
+    margin-top: 2rem;
+}
+
+.community-hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+.community-subscribe-btn.joined {
+    background: var(--bg-cornflower-blue);
+    border-color: var(--bg-cornflower-blue);
+}
+
+.community-main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: flex;
+    gap: 3rem;
+    align-items: stretch;
+}
+
+.community-content-left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+.community-content-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.community-about h2 {
+    color: var(--text-dark-imperial-blue);
+    margin: 0 0 1rem 0;
+}
+
+.community-description-details {
+    color: var(--text-dark-imperial-blue);
+    margin: 0;
+}
+
+.community-stats {
+    display: flex;
+    gap: 0.5rem;
+    height: 100%;
+}
+
+.community-card-actions {
+    gap: 12px;
+  display: grid;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.community-stat {
+    border-radius: 12px;
+    border: 2px solid var(--bg-cornflower-blue);
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-dark-imperial-blue);
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.community-stat-label {
+    margin-bottom: 0.5rem;
+}
+
+.community-details-card {
+    background: var(--bg-cornflower-blue);
+    border-radius: 20px;
+    padding: 2rem;
+    color: var(--text-alice-blue);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.community-details-card h3 {
+    margin: 0 0 1.5rem 0;
+}
+
+.community-detail-item {
+    margin-bottom: 1rem;
+}
+
+.community-detail-item strong {
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.community-detail-item ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.community-detail-item li {
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+}
+
+
+.similar-communities-section {
+    padding: 3rem 0;
+    margin-top: 2rem;
+}
+
+.similar-communities-section h2 {
+    color: var(--text-dark-imperial-blue);
+    text-align: center;
+    margin: 0 0 2rem 0;
+}
+
+.similar-communities-carousel {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.similar-communities-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.similar-communities-grid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: nowrap;
+}
+
+.similar-communities-grid .community-card {
+    background: var(--bg-dark-imperial-blue);
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    min-width: calc(50% - 1rem);
+    max-width: calc(50% - 1rem);
+    flex: 0 0 calc(50% - 1rem);
+    height: 400px;
+    color: var(--text-alice-blue);
+}
+
+.similar-community-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.similar-community-content {
+    padding: 1.5rem;
+    position: relative;
+    height: 200px;
+}
+
+.similar-community-content h4 {
+    color: var(--text-alice-blue);
+    margin: 0 0 0.5rem 0;
+}
+
+.similar-community-date {
+    color: var(--text-bright-gray);
+    margin-bottom: 0.3rem;
+}
+
+.similar-community-location {
+    color: var(--text-shadow-blue);
+    margin-bottom: 0.8rem;
+}
+
+.similar-community-description {
+    color: var(--text-bright-gray);
+    margin-bottom: 1rem;
+}
+
+
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.carousel-indicators {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.carousel-nav-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.carousel-nav-btn {
+    position: relative;
+    background: var(--bg-cornflower-blue);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-alice-blue);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.carousel-nav-btn.carousel-prev {
+    background-image: url('../images/icons/icon-carousel-cornflower-blue-left.svg');
+}
+
+.carousel-nav-btn.carousel-next {
+    background-image: url('../images/icons/icon-carousel-cornflower-blue-right.svg');
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--bg-cornflower-blue);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.carousel-indicator.active,
+.carousel-indicator:hover {
+    background-color: var(--bg-cornflower-blue);
+}
+
+
+@media (max-width: 768px) {
+    .community-hero {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .community-hero-card {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+    
+    .community-hero-image {
+        min-height: 200px;
+    }
+    
+    .community-hero-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .community-subscribe-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .community-main-content {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+    
+    .community-content-left,
+    .community-content-right {
+        flex: none;
+    }
+    
+    .community-stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .community-stat {
+        flex: 1 1 calc(33.333% - 1rem);
+        min-width: 100px;
+        padding: 1rem;
+    }
+    
+    .similar-community-card {
+        flex: 1 1 100%;
+        min-width: 280px;
+    }
+    
+    .similar-communities-carousel {
+        padding: 0 1rem;
+    }
+
+    .similar-communities-grid {
+        gap: 1rem;
+    }
+
+    .carousel-controls {
+        padding: 0 1rem;
+    }
+    
+    .carousel-nav-btn {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .community-hero {
+        padding: 0.5rem;
+    }
+    
+    .community-hero-card {
+        padding: 1rem;
+    }
+    
+    .community-category-badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+    
+    .community-hero-image {
+        min-height: 150px;
+    }
+    
+    .community-subscribe-btn {
+        padding: 0.6rem 1.5rem;
+    }
+}
+
+.community-details-card h3 {
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.community-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.community-detail-item {
+    margin-bottom: 1rem;
+}
+
+.community-detail-item strong {
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.similar-community-price {
+    color: var(--text-alice-blue);
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+}

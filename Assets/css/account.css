@@ -1,0 +1,531 @@
+.account-page {
+    display: flex;
+    min-height: 100vh;
+    margin: 56px 0;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.account-sidebar {
+    width: 280px;
+    height: calc(100vh - 192px);
+    position: sticky;
+    top: 56px;
+    background: var(--bg-cornflower-blue);
+    padding: 2.5rem;
+    border-radius: 1rem;
+}
+
+.account-sidebar .h2 {
+    color: var(--text-dark-imperial-blue);
+    margin-bottom: 2.5rem;
+    margin-top: 0;
+}
+
+.account-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 72px);
+}
+
+.account-nav .bouton-primary-3 {
+    max-width: 100%;
+    width: auto;
+}
+
+.account-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.account-nav-link {
+    display: flex;
+    height: 50px;
+    padding: 0px 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 10px;
+    background: var(--bg-cornflower-blue);
+    color: var(--text-dark-imperial-blue);
+    cursor: pointer;
+}
+
+.account-nav-link:hover,
+.account-nav-link.active {
+    background: var(--bg-dark-imperial-blue);
+    color: var(--text-alice-blue);
+}
+
+.account-content {
+    flex: 1;
+    min-height: calc(100vh - 112px);
+    box-sizing: border-box;
+}
+
+.account-tab {
+    display: none;
+}
+
+.account-tab.active {
+    display: block;
+}
+
+.account-tab h2 {
+    color: var(--text-dark-imperial-blue);
+    margin-bottom: 1rem;
+}
+
+.profile-section {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem;
+    border: 3px solid var(--bg-cornflower-blue);
+    border-radius: 16px;
+}
+
+.profile-photo-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--bg-cornflower-blue);
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    background: var(--bg-cornflower-blue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.profile-photo-container:hover .photo-overlay {
+    opacity: 1;
+}
+
+.profile-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profile-name {
+    color: var(--text-dark-imperial-blue);
+    margin: 0;
+}
+
+.profile-row {
+    display: flex;
+    gap: 2rem;
+}
+
+.profile-first-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.profile-first-row .profile-field {
+    flex: revert;
+}
+
+.profile-field {
+    flex: 1;
+}
+
+.profile-value {
+    color: var(--text-dark-imperial-blue);
+}
+
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .profile-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 968px) {
+    .account-page {
+        flex-direction: column;
+        margin: 0;
+    }
+    
+    .account-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1.5rem 1rem;
+    }
+    
+    .account-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        height: auto;
+        justify-content: flex-start;
+    }
+    
+    .account-nav-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        flex: 1;
+    }
+    
+    .account-nav-link {
+        flex: 1;
+        min-width: 120px;
+        height: 40px;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .account-nav .bouton-primary-1 {
+        margin-top: 0;
+        height: 40px;
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    .account-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .account-tab h2 {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .account-sidebar {
+        padding: 1rem 0.5rem;
+    }
+    
+    .account-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        height: auto;
+    }
+    
+    .account-nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .account-nav-link {
+        width: 100%;
+        height: 45px;
+    }
+    
+    .account-content {
+        padding: 1rem 0.5rem;
+    }
+    
+    .account-tab h2 {
+        margin-bottom: 1rem;
+    }
+}
+
+.events-header {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-bottom: 2rem;
+}
+
+.events-header h2 {
+    margin: 0;
+    color: var(--text-dark-imperial-blue);
+}
+
+.account-tab[data-tab-content="evenements"] > h2:first-child {
+    margin: 0 0 2rem 0;
+    color: var(--text-dark-imperial-blue);
+}
+
+.user-events-container {
+    width: 100%;
+    margin-top: 5rem;
+}
+
+
+.user-events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.user-event-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.user-event-card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.user-event-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.user-event-card:hover .user-event-card-image img {
+    transform: scale(1.05);
+}
+
+.user-event-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.user-event-card-info {
+    flex: 1;
+}
+
+.user-event-title {
+    color: var(--text-dark-imperial-blue);
+    margin: 0 0 0.5rem 0;
+}
+
+.user-event-date-time {
+    color: var(--text-cobalt-blue);
+    margin-bottom: 0.3rem;
+}
+
+.user-event-location {
+    color: var(--text-dark-imperial-blue);
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.user-event-price {
+    color: var(--bg-cornflower-blue);
+    margin: 0;
+    text-align: right;
+}
+
+.user-events-empty {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-dark-imperial-blue);
+    opacity: 0.7;
+}
+
+.user-events-empty p {
+    margin: 0;
+}
+
+
+@media (max-width: 768px) {
+    .user-events-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    .user-event-card-content {
+        padding: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .user-events-grid {
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .user-event-card-content {
+        padding: 1rem;
+        gap: 0.8rem;
+    }
+    
+    .user-event-card-image {
+        height: 160px;
+    }
+}
+
+.user-events-section {
+    margin-bottom: 2rem;
+}
+
+#user-events-list .user-events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.organizer-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--bg-cornflower-blue);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+}
+
+.user-event-card-organizer {
+    border: 2px solid var(--bg-cornflower-blue);
+}
+
+.user-event-participants {
+    color: var(--text-dark-imperial-blue);
+    margin-top: 0.3rem;
+}
+
+
+#create-communaute-form {
+    background: var(--bg-dark-imperial-blue);
+    padding: 2rem;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+#create-communaute-form > * {
+    position: relative;
+    z-index: 2;
+}
+
+#create-communaute-form input,
+#create-communaute-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--bg-alice-blue);
+    background-color: var(--bg-alice-blue);
+    color: var(--text-dark-imperial-blue);
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+#create-communaute-form input:focus,
+#create-communaute-form textarea:focus {
+    background-color: var(--bg-dark-imperial-blue);
+    color: var(--text-alice-blue);
+    box-shadow: none;
+    outline: none;
+}
+
+#create-communaute-form input:focus::placeholder,
+#create-communaute-form textarea:focus::placeholder {
+    color: var(--text-alice-blue);
+}
+
+#create-communaute-form input::placeholder,
+#create-communaute-form textarea::placeholder {
+    color: var(--text-dark-imperial-blue);
+}
+
+#create-communaute-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#create-communaute-form button[type="submit"] {
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+#create-communaute-form input[type="file"] {
+    background: transparent;
+    border: 2px dashed var(--text-alice-blue);
+    color: var(--text-alice-blue);
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+}
+
+#create-communaute-form input[type="file"]:hover {
+    border-color: var(--bg-cornflower-blue);
+}
+
+@media (max-width: 768px) {
+    #create-communaute-form {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.user-communautes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0 6rem;
+}
+
+@media (max-width: 768px) {
+    .user-communautes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+}
+
+.edit-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-dark-imperial-blue);
+    border: 2px solid var(--bg-cornflower-blue);
+    color: var(--text-alice-blue);
+    padding: 12px 20px;
+    border-radius: 25px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .edit-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+    }
+}

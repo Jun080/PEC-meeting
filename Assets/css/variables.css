@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap");
+
+:root {
+    --text-cornflower-blue: #7897ff;
+    --text-cobalt-blue: #0043b1;
+    --text-dark-imperial-blue: #00126d;
+    --text-outer-space: #444655;
+    --text-bright-gray: #e6f4f1;
+    --text-shadow-blue: #7878ac;
+    --text-alice-blue: #efedff;
+    --text-blue-marble: #82b4d3;
+    --text-gunmetal: #212b30;
+
+    --bg-gunmetal: #212b30;
+    --bg-charcoal: #324048;
+    --bg-paynes-gray: #4b606c;
+    --bg-slate-grey: #66808f;
+    --bg-cadet-grey: #9fb1bc;
+    --bg-cornflower-blue: #7897ff;
+    --bg-dark-imperial-blue: #00126d;
+    --bg-cobalt-blue: #0043b1;
+    --bg-outer-space: #444655;
+    --bg-bright-gray: #e6f4f1;
+    --bg-shadow-blue: #7878ac;
+    --bg-alice-blue: #efedff;
+    --bg-blue-marble: #82b4d3;
+
+    --indigo: #203066;
+    --vodka: #B5C6FF;
+    --han-blue: #5570CC;
+    --persian-blue: #2139B1;
+    --platinium: #EFF1FF;
+    --ghost-white: #F9F9FF;
+}
+
+.h1-big {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 80px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 80px;
+    margin: 0;
+}
+
+h1, .h1 {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    margin: 0;
+}
+
+h2, .h2 {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 22px;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.h2-chiffres-bento {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 23px;
+    margin: 0;
+}
+
+.h2-footer {
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    margin: 0;
+}
+
+.h2-big {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 30px;
+    margin: 0;
+}
+
+h3, .h3 {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    margin: 0;
+}
+
+p, .p, input, input::placeholder, textarea::placeholder, .account-nav a, label, textarea, select, select option {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    margin: 0;
+}
+
+.highlight {
+    font-weight: 700;
+}
+
+.p-small {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    margin: 0;
+}
+
+button, .btn, .card-big p, .nav-link, .bouton-primary-1, .bouton-primary-2, .bouton-primary-3, .bouton-primary-4, .bouton-secondary-1, .bouton-secondary-2, .bouton-tertiary-1, .bouton-tertiary-2 {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+}
+
+.m-auto {
+    margin: 0 auto;
+}
+
+@keyframes background-pan {
+    from {
+        background-position: 0% center
+    }
+
+    to {
+        background-position: -200% center
+    }
+}
+
+.gradient-fonce {
+    background: linear-gradient(90deg, #7897FF 0%, #0043B1 33%, #00126D 66.35%, #0043B1 80%, #7897FF 100%);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: background-pan 10s linear infinite;
+}

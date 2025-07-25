@@ -1,0 +1,368 @@
+.apropos-page {
+    padding: 4rem 0 9.5rem;
+}
+
+.apropos-communautes p,
+.homepage-communautes p,
+.a-propos-header p {
+    color: var(--text-cobalt-blue);
+}
+
+.apropos-communautes p strong,
+.homepage-communautes p strong,
+.a-propos-header p strong {
+    color: var(--text-dark-imperial-blue);
+}
+
+.apropos-header {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    align-items: flex-end;
+    margin-bottom: 4.5rem;
+}
+
+.apropos-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 80%;
+}
+
+.apropos-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.apropos-features li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 3.5rem;
+    min-height: 35px;
+}
+
+.apropos-features li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 35px;
+    height: 35px;
+    background-image: url('../images/icons/icon-check-dark-imperial-blue.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.apropos-features li p {
+    margin: 0;
+}
+
+.apropos-image-section {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 125px;
+    margin-bottom: 125px;
+}
+
+.apropos-full-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.apropos-communautes,
+.homepage-communautes {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 64px;
+}
+
+.apropos-communautes h2,
+.homepage-communautes h2 {
+    color: var(--text-dark-imperial-blue);
+}
+
+.apropos-communautes p:first-child,
+.homepage-communautes p:first-child {
+    max-width: 63%;
+}
+
+.apropos-bento,
+.homepage-bento {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 1rem;
+    margin-top: 2rem;
+    min-height: 485px;
+}
+
+.bento-left,
+.bento-right-top,
+.bento-events {
+    display: flex;
+    flex-direction: column;
+}
+
+.bento-right-top {
+    background-color: var(--bg-shadow-blue);
+    border-radius: 1rem;
+}
+
+.bento-right-top p {
+    color: var(--text-alice-blue);
+}
+
+.bento-events {
+    background-color: var(--bg-bright-gray);
+    border: 2px solid var(--bg-cornflower-blue);
+    border-radius: 1rem;
+    height: calc(100% - 2rem);
+    padding: 1rem;
+}
+
+.bento-events p {
+    color: var(--text-dark-imperial-blue);
+}
+
+.bento-right {
+    display: grid;
+    gap: 1rem;
+}
+
+.bento-right-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.bento-right-middle {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.bento-stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: var(--bg-dark-imperial-blue);
+    height: 100%;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.bento-stars img {
+    width: 30px;
+    height: 30px;
+}
+
+.bento-users {
+    position: relative;
+    background-color: var(--bg-cornflower-blue);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.bento-users,
+.bento-right-top,
+.bento-events {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.bento-users .h1-big,
+.bento-users .h2 {
+    color: var(--text-dark-imperial-blue);
+    position: relative;
+    z-index: 2;
+}
+
+.planet-bottom-left {
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    width: 193px;
+    height: 130px;
+    z-index: 1;
+}
+
+.planet-top-right {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 225px;
+    height: 225px;
+    z-index: 1;
+}
+
+.apropos-mission,
+.apropos-pourquoi {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background-color: var(--bg-dark-imperial-blue);
+    border-radius: 0.5rem;
+    padding: 8rem 0;
+    border-radius: 1rem;
+}
+
+.apropos-mission .container {
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.apropos-mission .h2-big {
+    color: var(--text-alice-blue);
+}
+
+.apropos-mission .h2-big strong {
+    color: var(--text-cornflower-blue);
+}
+
+.apropos-mission .text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.apropos-mission p {
+    color: var(--text-alice-blue);
+}
+
+.apropos-page section:not(:first-child) {
+    margin-top: 100px;
+}
+
+body .simplicite-title {
+    text-align: center;
+    color: var(--text-dark-imperial-blue);
+    margin-bottom: 79px;
+}
+
+.etapes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.etape {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.etape-1,
+.etape-3 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.etape-2,
+.etape-4 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.etape-2 .etape-content,
+.etape-4 .etape-content {
+    order: 2;
+}
+
+.etape-2 .etape-image,
+.etape-4 .etape-image {
+    order: 1;
+}
+
+.etape-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.etape-content h3 {
+    color: var(--text-dark-imperial-blue);
+}
+
+.etape-content strong {
+    color: var(--text-cobalt-blue);
+}
+
+.etape-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+}
+
+.apropos-pourquoi {
+    background-color: var(--bg-cornflower-blue);
+}
+
+.apropos-pourquoi .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.apropos-pourquoi .h2-big {
+    color: var(--text-dark-imperial-blue);
+}
+
+.apropos-pourquoi p {
+    color: var(--text-dark-imperial-blue);
+}
+
+.apropos-pourquoi p:first-child {
+    margin-bottom: 0.5rem;
+}
+
+.banner-femme {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.banner-femme img {
+    max-width: 364px;
+}
+
+.banner-femme .banner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 40px 56px;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 0px 16px 16px 0px;
+    background-color: var(--vodka);
+    color: var(--text-dark-imperial-blue);
+    width: 100%;
+}
+
+.banner-femme .banner .bouton-primary-4 {
+    margin-top: 28px;
+}
+
+.banner-femme .banner h2,
+.banner-femme .banner p {
+    margin: 0 !important;
+}

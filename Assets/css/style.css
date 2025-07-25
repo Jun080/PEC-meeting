@@ -1,0 +1,39 @@
+@import url("./footer.css");
+@import url("./navbar.css");
+@import url("./globals.css");
+@import url("./bienvenue.css");
+@import url("./login.css");
+@import url("./register.css");
+@import url("./dashboard.css");
+@import url("./account.css");
+@import url("./apropos.css");
+@import url("./evenements.css");
+@import url("./oauth-callback.css");
+@import url("./event-details.css");
+@import url("./community-details.css");
+@import url("./create-event.css");
+@import url("./evenements.css");
+@import url("./calendar.css");
+@import url("./homepage.css");
+@import url("./carousel-card.css");
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-content {
+    flex: 1;
+}

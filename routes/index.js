@@ -1,30 +1,82 @@
 import Page404 from "../views/Page404.js";
 import ShowUsers from "../views/ShowUsers.js";
-import HomePage from "../views/HomePage.js";
+import ShowUser from "../views/ShowUser.js";
 import Layout from "../views/Layout.js";
 import RegisterPage from "../views/RegisterPage.js";
+import LoginPage from "../views/LoginPage.js";
 import Bienvenue from "../views/Bienvenue.js";
+import APropos from "../views/APropos.js";
+import EvenementsListing from "../views/EvenementsListing.js";
+import CommunautesListing from "../views/CommunautesListing.js";
+import Dashboard from "../views/Dashboard.js";
+import AccountPage from "../views/AccountPage.js";
+import OAuthCallback from "../views/OAuthCallback.js";
+import { EventDetails } from "../views/EventDetails.js";
+import { CommunauteDetails } from "../views/CommunauteDetails.js";
+import CreateEvent from "../views/CreateEvent.js";
+import Homepage from "../views/Homepage.js";
 
 export default {
   "/": {
     tag: Layout,
-    attributes: [["content", { tag: HomePage }]],
-  },
-  "*": {
-    tag: Layout,
-    attributes: [["content", { tag: Page404 }]],
+    attributes: [["content", { tag: Homepage }]],
   },
   "/users": {
     tag: Layout,
     attributes: [["content", { tag: ShowUsers }]],
   },
-  "/inscription": {
+  "/user/:id": {
     tag: Layout,
-    attributes: [["content", { tag: RegisterPage }]],
+    attributes: [["content", { tag: ShowUser }]],
+  },
+  "/inscription": {
+    tag: RegisterPage,
+  },
+  "/connexion": {
+    tag: LoginPage,
   },
   "/bienvenue": {
     tag: Layout,
     attributes: [["content", { tag: Bienvenue }]],
+  },
+  "/a-propos": {
+    tag: Layout,
+    attributes: [["content", { tag: APropos }]],
+  },
+  "/evenements": {
+    tag: Layout,
+    attributes: [["content", { tag: EvenementsListing }]],
+  },
+  "/evenements/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: EventDetails }]],
+  },
+  "/communautes": {
+    tag: Layout,
+    attributes: [["content", { tag: CommunautesListing }]],
+  },
+  "/communautes/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: CommunauteDetails }]],
+  },
+  "/dashboard": {
+    tag: Layout,
+    attributes: [["content", { tag: Dashboard }]],
+  },
+  "/compte": {
+    tag: Layout,
+    attributes: [["content", { tag: AccountPage }]],
+  },
+  "/evenement/creer-evenement": {
+    tag: Layout,
+    attributes: [["content", { tag: CreateEvent }]],
+  },
+  "/auth-callback": {
+    tag: OAuthCallback,
+  },
+  "*": {
+    tag: Layout,
+    attributes: [["content", { tag: Page404 }]],
   },
 };
 
