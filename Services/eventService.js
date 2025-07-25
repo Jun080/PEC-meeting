@@ -1,5 +1,6 @@
 import { getCurrentUser } from "../Models/userModel.js";
 import { getAllEvents as getEventsFromModel, getEventById as getEventByIdFromModel } from '../Models/eventModel.js';
+import { client } from '../supabase.js';
 
 export async function getAllPopularEvents() {
   const events = await getAllEvents();
@@ -35,16 +36,30 @@ export async function getEventsNearUser() {
 }
 
 export async function getAllEvents() {
-    return await getEventsFromModel();
+  return await getEventsFromModel();
 }
 
 export async function getUpcomingEvents() {
-    const allEvents = await getEventsFromModel();
-    const now = new Date().toISOString();
-    return allEvents.filter(event => event.date >= now);
+  const allEvents = await getEventsFromModel();
+  const now = new Date().toISOString();
+  return allEvents.filter(event => event.date >= now);
 }
 
 export async function getEventById(eventId) {
-    return await getEventByIdFromModel(eventId);
+  return await getEventByIdFromModel(eventId);
+}
+
+export async function deleteEvent(eventId) {
+  try {
+    const { error } = await client
+      .from('evenements')
+      .delete()
+      .eq('id', eventId);
+    if (error) throw error;
+    return true;
+  } catch (error) {
+    console.error('Erreur lors de la suppression de l\'événement:', error);
+    throw error;
+  }
 }
 
