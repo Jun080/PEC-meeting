@@ -40,11 +40,11 @@ const EditCommunaute = async function () {
 
     return {
         tag: "div",
-        attributes: [["class", "create-event-page"]],
+        attributes: [["class", "create-event-container"]],
         children: [
             {
                 tag: "h1",
-                attributes: [["class", "h1"]],
+                attributes: [["class", "create-event-title h1"]],
                 children: ["Modifier la communauté"]
             },
             {
@@ -123,7 +123,7 @@ const EditCommunaute = async function () {
                                 tag: "button",
                                 attributes: [
                                     ["type", "submit"],
-                                    ["class", "bouton-primary"]
+                                    ["class", "bouton-primary-1"]
                                 ],
                                 children: ["Enregistrer les modifications"]
                             }
