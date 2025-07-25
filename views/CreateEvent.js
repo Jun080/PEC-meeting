@@ -1,5 +1,5 @@
-import { getCurrentUser } from '../Models/userModel.js';
 import { createEvent } from '../Services/eventCreationService.js';
+import { getCommunautesByReferent } from '../Models/communauteModel.js';
 
 export default function CreateEvent() {
     return {
@@ -18,11 +18,6 @@ export default function CreateEvent() {
                                 tag: "h1",
                                 attributes: [["class", "create-event-title"]],
                                 children: ["Créer un nouvel événement"]
-                            },
-                            {
-                                tag: "p",
-                                attributes: [["class", "create-event-subtitle"]],
-                                children: ["Partagez votre passion avec la communauté"]
                             }
                         ]
                     },
@@ -80,6 +75,31 @@ export default function CreateEvent() {
                                                     ["name", "categorie"],
                                                     ["required", "required"],
                                                     ["placeholder", "Ex: Concert, Conférence, Sport..."]
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        tag: "div",
+                                        attributes: [["class", "form-group"]],
+                                        children: [
+                                            {
+                                                tag: "label",
+                                                attributes: [["for", "event-communaute"]],
+                                                children: ["Lier à une de vos communautés"]
+                                            },
+                                            {
+                                                tag: "select",
+                                                attributes: [
+                                                    ["id", "event-communaute"],
+                                                    ["name", "communaute_id"]
+                                                ],
+                                                children: [
+                                                    {
+                                                        tag: "option",
+                                                        attributes: [["value", ""]],
+                                                        children: ["Aucune"]
+                                                    }
                                                 ]
                                             }
                                         ]
@@ -236,11 +256,6 @@ export default function CreateEvent() {
                                             ["name", "image"],
                                             ["accept", "image/jpeg,image/jpg,image/png,image/webp"]
                                         ]
-                                    },
-                                    {
-                                        tag: "small",
-                                        attributes: [["class", "form-help"]],
-                                        children: ["JPEG, PNG, WebP - Max 5MB"]
                                     }
                                 ]
                             },
@@ -262,11 +277,6 @@ export default function CreateEvent() {
                                             ["maxlength", "200"],
                                             ["placeholder", "Résumé de votre événement (200 caractères max)"]
                                         ]
-                                    },
-                                    {
-                                        tag: "small",
-                                        attributes: [["class", "form-help character-count"]],
-                                        children: ["0/200 caractères"]
                                     }
                                 ]
                             },
@@ -296,12 +306,12 @@ export default function CreateEvent() {
                                 children: [
                                     {
                                         tag: "button",
-                                        attributes: [["type", "button"], ["class", "btn-secondary"], ["onclick", "window.history.back()"]],
+                                        attributes: [["type", "button"], ["class", "bouton-primary-2"], ["onclick", "window.history.back()"]],
                                         children: ["Annuler"]
                                     },
                                     {
                                         tag: "button",
-                                        attributes: [["type", "submit"], ["class", "btn-primary"]],
+                                        attributes: [["type", "submit"], ["class", "bouton-primary-1"]],
                                         children: ["Créer l'événement"]
                                     }
                                 ]
@@ -353,7 +363,8 @@ async function creerEvenement(form) {
             image: imageUrl,
             description_courte: formData.get('description_courte'),
             description_longue: formData.get('description_longue'),
-            organisateur_id: currentUser.id
+            organisateur_id: currentUser.id,
+            communaute_id: formData.get('communaute_id') || null
         };
 
         const result = await createEvent(eventData);
@@ -424,5 +435,21 @@ setTimeout(() => {
             counter.textContent = `${count}/200 caractères`;
             counter.style.color = count > 180 ? '#ff9800' : count === 200 ? '#f44336' : '#666';
         });
+    }
+}, 100);
+
+setTimeout(async () => {
+    const select = document.getElementById('event-communaute');
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (select && user && user.id) {
+        try {
+            const communautes = await getCommunautesByReferent(user.id);
+            communautes.forEach(communaute => {
+                const option = document.createElement('option');
+                option.value = communaute.id;
+                option.textContent = communaute.nom;
+                select.appendChild(option);
+            });
+        } catch (e) {}
     }
 }, 100);
