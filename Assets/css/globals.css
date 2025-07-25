@@ -319,27 +319,40 @@ button {
 
 
 
-.form-group input {
-    padding: 14px 16px;
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 10px 16px;
     border-radius: 10px;
-    border: 1px solid var(--bg-dark-imperial-blue);
-    background-color: var(--bg-dark-imperial-blue);
-    color: var(--text-alice-blue);
-}
-
-.form-group input:focus {
     background-color: var(--bg-alice-blue);
     color: var(--text-dark-imperial-blue);
     box-shadow: none;
+    border: none;
     outline: none;
+    height: 45px;
+    max-height: 45px;
 }
 
-.form-group input:focus::placeholder {
-    color: var(--text-dark-imperial-blue);
+input#event-image {
+    padding: 14px 16px 0 16px;
 }
 
-.form-group input::placeholder {
+.form-group input:focus,
+.form-group textarea:focus {
+    border: 1px solid var(--bg-dark-imperial-blue);
+    background-color: var(--bg-dark-imperial-blue);
     color: var(--text-alice-blue);
+    border: none;
+}
+
+.form-group input:focus::placeholder,
+.form-group textarea:focus::placeholder {
+    color: var(--text-alice-blue);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-dark-imperial-blue);
 }
 
 

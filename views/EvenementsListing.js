@@ -1,4 +1,5 @@
 import { getUpcomingEvents } from '../Services/eventService.js';
+import { CarouselCard } from '../components/CarouselCard.js';
 
 let eventsData = [];
 
@@ -343,70 +344,42 @@ function clearFilters() {
 
 function displayEvents(events, container) {
   if (!container) return;
-  
   container.innerHTML = '';
-  
   if (events.length === 0) {
     container.innerHTML = '<div class="no-events"><p>Aucun événement à venir pour le moment.</p></div>';
     return;
   }
-  
   events.forEach(event => {
-    const eventCard = createEventCard(event);
-    container.appendChild(eventCard);
+    const cardVNode = CarouselCard({
+      id: event.id,
+      title: event.nom,
+      description: event.description_courte || event.description_longue || '',
+      image: event.image,
+      date: event.date,
+      time: formatEventTime(new Date(event.date)),
+      location: (event.lieu ? event.lieu : '') + (event.adresse ? (event.lieu ? ' - ' : '') + event.adresse : ''),
+      price: event.prix,
+      showPrice: true,
+      variant: 'dark'
+    });
+    const card = renderVNode(cardVNode);
+    card.addEventListener('click', () => {
+      window.location.pathname = `/evenements/${event.id}`;
+    });
+    container.appendChild(card);
   });
 }
 
-function createEventCard(event) {
-  const card = document.createElement('div');
-  card.className = 'event-card';
-  
-  const date = new Date(event.date);
-  const formattedDate = formatEventDate(date);
-  const formattedTime = formatEventTime(date);
-  
-  let locationLine = '';
-  if (event.lieu) {
-    locationLine = event.lieu;
+function renderVNode(vnode) {
+  if (typeof vnode === 'string') return document.createTextNode(vnode);
+  const el = document.createElement(vnode.tag);
+  if (vnode.attributes) {
+    vnode.attributes.forEach(([key, value]) => el.setAttribute(key, value));
   }
-  if (event.adresse) {
-    locationLine += locationLine ? ` - ${event.adresse}` : event.adresse;
+  if (vnode.children) {
+    vnode.children.forEach(child => el.appendChild(renderVNode(child)));
   }
-  
-  const priceText = event.prix === 0 || event.prix === '0' ? 'Gratuit' : `${event.prix}€`;
-  
-  const description = event.description_courte || event.description_longue || '';
-  
-  card.innerHTML = `
-    <div class="event-card-image">
-      <img src="${event.image || '/Assets/images/banner-femme.webp'}" alt="${event.nom}" />
-    </div>
-    <div class="event-card-content">
-      ${event.categorie ? `<p class="event-category-badge">${event.categorie}</p>` : ''}
-      <div class="event-card-info">
-        <h3 class="event-title">${event.nom || 'Événement sans titre'}</h3>
-        <p class="event-date-time highlight">${formattedDate} ${formattedTime}</p>
-        ${locationLine ? `<p class="event-location highlight">${locationLine}</p>` : ''}
-        <p class="event-description">${description}</p>
-      </div>
-      <p class="event-price h2">${priceText}</p>
-    </div>
-  `;
-  
-  card.addEventListener('click', () => {
-    window.location.pathname = `/evenements/${event.id}`;
-
-  });
-  
-  return card;
-}
-
-function formatEventDate(date) {
-  const options = { 
-    day: 'numeric', 
-    month: 'long'
-  };
-  return date.toLocaleDateString('fr-FR', options);
+  return el;
 }
 
 function formatEventTime(date) {

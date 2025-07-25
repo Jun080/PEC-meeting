@@ -110,7 +110,7 @@
 }
 
 .evenements-filters {
-    background: var(--bg-dark-imperial-blue);
+    background: var(--vodka);
     border-radius: 1rem;
     padding: 1.5rem;
     margin-bottom: 2rem;
@@ -127,7 +127,7 @@
 }
 
 .filter-group label {
-    color: var(--text-alice-blue);
+    color: var(--text-dark-imperial-blue);
 }
 
 .filter-select {
