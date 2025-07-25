@@ -14,6 +14,8 @@ import OAuthCallback from "../views/OAuthCallback.js";
 import { EventDetails } from "../views/EventDetails.js";
 import { CommunauteDetails } from "../views/CommunauteDetails.js";
 import CreateEvent from "../views/CreateEvent.js";
+import EditEvent from "../views/EditEvent.js";
+import EditCommunaute from "../views/EditCommunaute.js";
 import Homepage from "../views/Homepage.js";
 
 export default {
@@ -70,6 +72,14 @@ export default {
   "/evenement/creer-evenement": {
     tag: Layout,
     attributes: [["content", { tag: CreateEvent }]],
+  },
+  "/modifier-evenement/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: EditEvent }]],
+  },
+  "/modifier-communaute/:id": {
+    tag: Layout,
+    attributes: [["content", { tag: EditCommunaute }]],
   },
   "/auth-callback": {
     tag: OAuthCallback,
